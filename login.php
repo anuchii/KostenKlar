@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 
 <head>
   <meta charset="utf-8">
@@ -12,12 +12,23 @@
 </head>
 
 <body class="p-3 mb-2 bg-primary-subtle text-primary-emphasis">
+   <!-- hintergrundbild-->
+    <style>
+      body {
+        background-image: url('images/option2_hintergrund.png');
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+        height: 100%;
+
+      }
+    </style>
   <div class="container">
 
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0,0,0,0.5);">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0,0,0,0.1);">
       <div class="container">
         <a class="navbar-brand text-white" href="#">
-          <img class="me-2" src="images/logo_schnell.png" width="50px" alt="logo_kostenklar">
+          <img class="me-2" src="images/logo_schnell3.png" width="50px" alt="logo_kostenklar">
           KostenKlar</a>
 
         <button class="navbar-toggler" type="button"
@@ -48,19 +59,6 @@
         </div>
       </div>
     </nav>
-
-
-    <!-- hintergrundbild-->
-    <style>
-      body {
-        background-image: url('images/option1_hintergrund.jpg.avif');
-        background-size: cover;
-        background-position: center center;
-        background-attachment: fixed;
-        height: 100%;
-
-      }
-    </style>
 
 
     <div class="mx-auto rounded text-white" class="text-center"
