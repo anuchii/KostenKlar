@@ -12,17 +12,17 @@
 </head>
 
 <body class="p-3 mb-2 bg-primary-subtle text-primary-emphasis">
-   <!-- hintergrundbild-->
-    <style>
-      body {
-        background-image: url('images/option2_hintergrund.png');
-        background-size: cover;
-        background-position: center center;
-        background-attachment: fixed;
-        height: 100%;
+  <!-- hintergrundbild-->
+  <style>
+    body {
+      background-image: url('images/option2_hintergrund.png');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+      height: 100%;
 
-      }
-    </style>
+    }
+  </style>
   <div class="container">
 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0,0,0,0.1);">
@@ -33,7 +33,7 @@
 
         <button class="navbar-toggler" type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent" 
+          data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -106,7 +106,7 @@
     </div>
 
   </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

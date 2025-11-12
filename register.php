@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                         <label class="form-label" for="password">Passwort: </label>
                         <input class="form-control" type="password" id="password" pattern="[a-z0-9]{12,}" name="password" required>
-                        <!-- wenn man passwort sehen möchte wird nur den type gewechselt-->
+                        <!-- wenn man passwort sehen möchte wird nur der type gewechselt-->
 
 
                     </div>
@@ -125,9 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <hr>
                     <div>
                         <label for="profilbild">Profilbild wählen <input id="profilbild" type="file" name="profilbild"> </label><br>
-    </div>
-
-
+                    </div>
                     <hr>
                     <label class="form-check-label" for="terms-and-conditions"> <input id="terms-and-conditions" type="checkbox" name="terms-and-conditions" required>
                         Ich akzeptiere die <a href="https://www.freecodecamp.org/news/terms-of-service/"> Allgemeinen Geschäftsbedingungen</a> </label><br>
