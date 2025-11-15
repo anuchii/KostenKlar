@@ -147,6 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profileImage'])) {
                     </div>
                 </div><!-- /container -->
             </div><!-- /col-10 -->
+            
         </div><!-- /row -->
     </div><!-- /container-fluid -->
     <?php include 'footer.php'; ?>

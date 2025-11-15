@@ -26,7 +26,7 @@
                                             href="dashboard.php">Übersicht</a></li>
                                     <li class="nav-item"><a class="nav-link text-white" href="#">Statistik</a></li>
                                     <li class="nav-item"><a class="nav-link active text-white" aria-current="page"
-                                            href="profil.html">Profil</a></li>
+                                            href="profil.php">Profil</a></li>
                                 </ul>
                             </div>
                         </div>
