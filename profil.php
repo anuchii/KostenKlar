@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profileImage'])) {
                                     <h5 class="card-title mb-0">Max Mustermann</h5>
                                     <p class="text-muted">@benutzer1</p>
                                     <button class="btn btn-warning btn-sm">
-                                        <i class="bi bi-pencil"></i> Profil bearbeiten
+                                        <i class="bi bi-pencil"></i> Profilbild bearbeiten
                                     </button>
                                 </div>
                             </div>
