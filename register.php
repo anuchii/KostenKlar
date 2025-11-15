@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $erfolgsmeldung = "Registrierung erfolgreich!";
     }
 }
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="de">

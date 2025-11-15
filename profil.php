@@ -1,3 +1,29 @@
+
+<?php
+    session_start();
+
+    //falls noch keines hochgeladen wurde: standard-Profilbild setzen
+    $profileImage = isset($_SESSION['profileImage'])
+        ? $_SESSION['profileImage']
+        : 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profileImage'])) {
+        if ($_FILES['profileImage']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = __DIR__ . '/uploads/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            $fileName = uniqid() . '_' . basename($_FILES['profileImage']['name']);
+            $destination = $uploadDir . $fileName;
+
+            if (move_uploaded_file($_FILES['profileImage']['tmp_name'], $destination)) {
+                $profileImage = 'uploads/' . $fileName;
+                $_SESSION['profileImage'] = $profileImage;
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="de">
 
@@ -76,10 +102,10 @@
                     <p class="text-muted mb-0">Persönliche Informationen</p>
                 </header>
 
-                <!-- Profilinhalt -->
+                <!-- Profil-Inhalt -->
                 <div class="container py-4">
                     <div class="row">
-                        <!-- Profilkästchen  -->
+                        <!-- Profil-Kästchen  -->
                         <div class="col-md-4">
                             <div class="card text-center shadow-sm">
                                 <div class="card-body">
