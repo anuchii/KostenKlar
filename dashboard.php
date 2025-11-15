@@ -1,31 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
-<body>
-    <div class="container-fluid">
-		<div class="row" style="height: 100vh">
-			<div class="col-2 bg-secondary">
-				<div class="sticky-top">
-					<nav class="navbar navbar-expand-lg bg-secondary border-bottom">
-						<div class="container-fluid">
-							<a class="navbar-brand text-white" href="#">KostenKlar</a>
-						</div>
-					</nav>
 
-					<nav class="nav flex-column border-bottom bg-secondary text-white">
-						<a class="nav-link active text-white" aria-current="page" href="dashboard.html">Übersicht</a>
-						<a class="nav-link text-white" href="#">Statistik</a>
-						<a class="nav-link text-white" href="profil.html">Profil</a>
-					</nav>
-				</div>
-			</div>
-		
+<body>
+	<div class="container-fluid">
+		<div class="row" style="height: 100vh">
+
+			<?php include 'sidebar.php'; ?>
+
 			<div class="col-10">
 				<nav class="navbar navbar-expand-lg bg-secondary border-bottom">
 					<div class="container-fluid">
@@ -36,55 +25,55 @@
 						</ul>
 					</div>
 				</nav>
-				
+
 				<header class="py-4">
 					<h2>Willkommen, Benutzer!</h2>
 				</header>
-				
+
 				<section class="py-4">
 					<h4>Buchungsübersicht</h4>
 				</section>
-				
+
 				<div class="mb-3">
 					<label for="month" class="col-form-label">Abrechnungsmonat</label>
-					<input type="month" class="form-control" id="month" name="month" style="width: auto";>
+					<input type="month" class="form-control" id="month" name="month" style="width: auto" ;>
 				</div>
-				
+
 				<table class="table">
-					  <thead>
+					<thead>
 						<tr>
-						  <th scope="col">Datum</th>
-						  <th scope="col">Bezeichnung</th>
-						  <th scope="col">Betrag</th>
-						  <th scope="col">Kategorie</th>
-						  <th scope="col">Notiz</th>
+							<th scope="col">Datum</th>
+							<th scope="col">Bezeichnung</th>
+							<th scope="col">Betrag</th>
+							<th scope="col">Kategorie</th>
+							<th scope="col">Notiz</th>
 						</tr>
-					  </thead>
-					  <tbody>
+					</thead>
+					<tbody>
 						<tr>
-						  <td>30.10.2025</td>
-						  <td>Gehalt</td>
-						  <td class="text-success">1545,00</td>
-						  <td>Gehalt</td>
-						  <td>Oktober 2025</td>
+							<td>30.10.2025</td>
+							<td>Gehalt</td>
+							<td class="text-success">1545,00</td>
+							<td>Gehalt</td>
+							<td>Oktober 2025</td>
 						</tr>
 						<tr>
-						  <td>30.10.2025</td>
-						  <td>Einkauf</td>
-						  <td class="text-danger">-22,54</td>
-						  <td>Lebensmittel</td>
-						  <td>Billa</td>
+							<td>30.10.2025</td>
+							<td>Einkauf</td>
+							<td class="text-danger">-22,54</td>
+							<td>Lebensmittel</td>
+							<td>Billa</td>
 						</tr>
-					  </tbody>
+					</tbody>
 				</table>
-				
+
 				<!-- Button trigger modal -->
 				<div class="mb-3">
 					<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#new-modal">
 						<i class="bi bi-plus-circle text-white"></i>
 					</button>
 				</div>
-				
+
 				<!-- Modal -->
 				<div class="modal fade" id="new-modal" tabindex="-1">
 					<div class="modal-dialog">
@@ -107,12 +96,12 @@
 										<label for="transaction-amount" class="col-form-label">Betrag</label>
 										<input type="number" class="form-control" id="transaction-amount" step="0.01" min="0" placeholder="0,00"></textarea>
 									</div>
-									
+
 									<div class="mb-3">
 										<label for="transaction-note" class="col-form-label">Notiz</label>
 										<textarea class="form-control" id="transaction-note"></textarea>
 									</div>
-									
+
 									<div class="mb-3">
 										<div class="form-group">
 											<label for="category" class="col-form-label">Kategorie</label>
@@ -124,7 +113,7 @@
 											</select>
 										</div>
 									</div>
-									
+
 									<div class="mb-3">
 										<label class="form-label">Buchungstyp</label>
 										<div class="form-check">
@@ -135,7 +124,7 @@
 											<input class="form-check-input" type="radio" name="transaction-type" id="income" value="option2">
 											<label class="form-check-label" for="income">Einnahme</label>
 										</div>
-										
+
 									</div>
 
 								</form>
@@ -147,17 +136,18 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<section class="py-4">
 					<h4>Gesamtübersicht</h4>
 				</section>
-				
+
 				<div class="d-sm-flex flex-sm-row gap-3">
 					<div class="my-3">
 						<div class="card" style="width: 18rem;">
 							<div class="card-body">
 								<h6 class="card-subtitle mb-2 text-body-secondary text-success">Einnahmen</h5>
-								<h5 class="card-title text-success">EUR 1545,00</h6>
+									<h5 class="card-title text-success">EUR 1545,00
+								</h6>
 							</div>
 						</div>
 					</div>
@@ -165,7 +155,8 @@
 						<div class="card" style="width: 18rem;">
 							<div class="card-body">
 								<h6 class="card-subtitle mb-2 text-body-secondary text-danger">Ausgaben</h5>
-								<h5 class="card-title text-danger">EUR 22,54</h6>
+									<h5 class="card-title text-danger">EUR 22,54
+								</h6>
 							</div>
 						</div>
 					</div>
@@ -173,6 +164,8 @@
 			</div>
 		</div>
 	</div>
+	<?php include 'footer.php'; ?>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
+
 </html>

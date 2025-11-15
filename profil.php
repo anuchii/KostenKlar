@@ -1,28 +1,27 @@
-
 <?php
-    session_start();
+session_start();
 
-    //falls noch keines hochgeladen wurde: standard-Profilbild setzen
-    $profileImage = isset($_SESSION['profileImage'])
-        ? $_SESSION['profileImage']
-        : 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
+//falls noch keines hochgeladen wurde: standard-Profilbild setzen
+$profileImage = isset($_SESSION['profileImage'])
+    ? $_SESSION['profileImage']
+    : 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profileImage'])) {
-        if ($_FILES['profileImage']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = __DIR__ . '/uploads/';
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
-            }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profileImage'])) {
+    if ($_FILES['profileImage']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = __DIR__ . '/uploads/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
 
-            $fileName = uniqid() . '_' . basename($_FILES['profileImage']['name']);
-            $destination = $uploadDir . $fileName;
+        $fileName = uniqid() . '_' . basename($_FILES['profileImage']['name']);
+        $destination = $uploadDir . $fileName;
 
-            if (move_uploaded_file($_FILES['profileImage']['tmp_name'], $destination)) {
-                $profileImage = 'uploads/' . $fileName;
-                $_SESSION['profileImage'] = $profileImage;
-            }
+        if (move_uploaded_file($_FILES['profileImage']['tmp_name'], $destination)) {
+            $profileImage = 'uploads/' . $fileName;
+            $_SESSION['profileImage'] = $profileImage;
         }
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -41,42 +40,8 @@
     <div class="container-fluid">
         <div class="row" style="min-height: 100vh">
 
-            <!-- Sidebar -->
-            <div class="col-12 col-lg-2 bg-secondary p-0">
-                <div class="sticky-top">
-                    <nav
-                        class="navbar navbar-dark navbar-expand-lg bg-secondary border-bottom flex-lg-column align-items-stretch p-3">
-                        <div class="container-fluid flex-lg-column align-items-stretch">
 
-                            <div class="d-flex w-100 justify-content-between align-items-center">
-                                <a class="navbar-brand d-flex align-items-center text-white gap-2" href="#">
-                                    <img src="images/logo_schnell3.png" alt="KostenKlar Logo" width="30" height="30"
-                                        class="d-inline-block align-text-top">
-                                    <span>KostenKlar</span>
-                                </a>
-
-
-                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-                                    aria-label="Menü umschalten">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                            </div>
-                            <hr>
-
-                            <div class="collapse navbar-collapse w-100 mt-3" id="sidebarMenu">
-                                <ul class="navbar-nav flex-column w-100">
-                                    <li class="nav-item"><a class="nav-link text-white"
-                                            href="dashboard.html">Übersicht</a></li>
-                                    <li class="nav-item"><a class="nav-link text-white" href="#">Statistik</a></li>
-                                    <li class="nav-item"><a class="nav-link active text-white" aria-current="page"
-                                            href="profil.html">Profil</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-            </div>
+            <?php include 'sidebar.php'; ?>
 
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
@@ -184,12 +149,7 @@
             </div><!-- /col-10 -->
         </div><!-- /row -->
     </div><!-- /container-fluid -->
-
-    <footer class="bg-secondary text-white text-center py-3 mt-1">
-        <p>© 2025 KostenKlar </p>
-        <a href="impressum.html" class="text-white-50 me-2">Impressum</a>
-        <a href="datenschutz.html" class="text-white-50">Datenschutz</a>
-    </footer>
+    <?php include 'footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
