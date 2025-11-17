@@ -1,50 +1,31 @@
 <?php
+require_once __DIR__ . "/registration_validation.php";
+require_once __DIR__ . '/users.php';
+$pageName = "Register";
+$errors = $errors ?? [];
+$erfolgsmeldung = $erfolgsmeldung ?? "";
+$maxGebdatum = (new DateTime('-16 years'))->format('Y-m-d');
+
+?>
 
 
-$errors = [];
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+<?php
+//Registrierungs-POST-Anfrage verarbeiten
+if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
+    $userData = $_POST;
+    $sucess = false;
 
-    if (empty($_POST["firstname"])) {
-        $errors["firstname"] = "Bitte geben Sie Ihren Vornamen ein.";
-    }
+$errors = validateRegistrationData($userData);
 
-    if (empty($_POST["lastname"])) {
-        $errors["lastname"] = "Bitte geben Sie Ihren Nachnamen ein.";
-    }
-
-    if (empty($_POST["email"]) || !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-        $errors["email"] = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
-    }
-
-    if (empty($_POST["gebdatum"])) {
-        $errors["gebdatum"] = "Bitte geben Sie Ihr Geburtsdatum ein.";
+if (empty($errors)) {
+    if (!isEmailRegistered($userData["email"], $pdo)) {
+        $success = createUser($userData, $pdo);
+        header("Location: login.php");
+        exit();
     } else {
-        $birthdate = new DateTime($_POST["gebdatum"]);
-        $today = new DateTime();
-        $age = $today->diff($birthdate)->y;
-        if ($age < 16) {
-            $errors["gebdatum"] = "Sie müssen mindestens 16 Jahre alt sein.";
-        }
+        $errors["email"] = "Email already registered.";
     }
-
-    if (empty($_POST["geschlecht"])) {
-        $errors["geschlecht"] = "Bitte wählen Sie ein Geschlecht aus.";
-    }
-
-    if (!isset($_POST["terms-and-conditions"])) {
-        $errors["terms-and-conditions"] = "Sie müssen die AGB akzeptieren.";
-    }
-
-    if (empty($errors)) {
-
-        //TODO: Speicherung einbauen, sobald Datenbank steht
-
-        //Felder zurücksetzen
-        $_POST = [];
-
-        // Erfolgsnachricht setzen--> vlt brauchen wir nicht wenn wir direkt zum login oder zum dashboard geschickt werden. 
-        $erfolgsmeldung = "Registrierung erfolgreich!";
-    }
+}
 }
 ?>
 
@@ -102,35 +83,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                         <label class="form-label" for="firstname"> Vorname: </label>
                         <input class="form-control <?php echo isset($errors['firstname']) ? 'is-invalid' : '' ?>"
-                            type="text" id="firstname" placeholder="Vorname" name="firstname"
-                            value="<?php echo htmlspecialchars($_POST['firstname'] ?? '') ?>">
-                        <?php if (isset($errors['firstname'])): ?>
+                            type="text" id="first_name" placeholder="Vorname" name="first_name"
+                            value="<?php echo htmlspecialchars($_POST['first_name'] ?? '') ?>">
+                        <?php if (isset($errors['first_name'])): ?>
                             <div class="invalid-feedback">
-                                <?php echo $errors['firstname']; ?>
+                                <?php echo $errors['first_name']; ?>
                             </div>
                         <?php endif; ?>
 
 
-                        <label class="form-label" for="lastname"> Nachname: </label>
-                        <input class="form-control <?php echo isset($errors['lastname']) ? 'is-invalid' : '' ?>"
-                            type="text" id="lastname" placeholder="Nachname" name="lastname" required
-                            value="<?php echo htmlspecialchars($_POST['lastname'] ?? '') ?>">
-                        <?php if (isset($errors['lastname'])): ?>
+                        <label class="form-label" for="last_name"> Nachname: </label>
+                        <input class="form-control <?php echo isset($errors['last_name']) ? 'is-invalid' : '' ?>"
+                            type="text" id="last_name" placeholder="Nachname" name="last_name" required
+                            value="<?php echo htmlspecialchars($_POST['last_name'] ?? '') ?>">
+                        <?php if (isset($errors['last_name'])): ?>
                             <div class="invalid-feedback">
-                                <?php echo $errors['lastname']; ?>
+                                <?php echo $errors['last_name']; ?>
                             </div>
                         <?php endif; ?>
 
-                        <label class="form-label" for="gebdatum">Geburtsdatum</label>
+                        <!-- Gebdatum noch nicht in der tabelle als Spalte-->
+
+                        <!--       <label class="form-label" for="gebdatum">Geburtsdatum</label>
                         <input class="form-control <?php echo isset($errors['gebdatum']) ? 'is-invalid' : '' ?>"
-                            id="gebdatum" type="date" min="1920-01-01" max="2009-11-02"
+                            id="gebdatum" type="date" min="1920-01-01" max="<?php echo $maxGebdatum; ?>"
                             name="gebdatum" required
                             value="<?php echo htmlspecialchars($_POST['gebdatum'] ?? '') ?>">
                         <?php if (isset($errors['gebdatum'])): ?>
                             <div class="invalid-feedback">
                                 <?php echo $errors['gebdatum']; ?>
                             </div>
-                        <?php endif; ?>
+                        <?php endif; ?> -->
+                        
 
                         <label class="form-label" for="email">E-Mail Adresse: </label>
                         <input class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : '' ?>"
@@ -146,13 +130,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label class="form-label" for="password">Passwort: </label>
                         <input class="form-control" type="password" id="password" pattern="[a-z0-9]{12,}" name="password" required>
 
-                        <label class="form-label" for="password">Passwort wiederholen: </label>
-                        <input class="form-control" type="password" id="password" pattern="[a-z0-9]{12,}" name="password" required>
+                        <label class="form-label" for="password-confirmation">Passwort wiederholen: </label>
+                        <input class="form-control" type="password" id="password-confirmation" pattern="[a-z0-9]{12,}" name="password-confirmation" required>
                         <!-- TODO:wenn man passwort sehen möchte wird nur der type gewechselt-->
 
 
                     </div>
-                    <label class="form-label d-block mt-2">Geschlecht</label>
+                    <!--Geschlecht noch nihct in der DB als Spalte-->
+
+                    <!--  <label class="form-label d-block mt-2">Geschlecht</label>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input <?php echo isset($errors['geschlecht']) ? 'is-invalid' : '' ?>"
                             id="weiblich" name="geschlecht" type="radio" value="weiblich"
@@ -178,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <?php echo $errors['geschlecht']; ?>
                         </div>
                     <?php endif; ?>
-                    <hr>
+                    <hr> -->
 
                     <hr>
                     <!-- Eigene test AGB erstellen, Zurzeit werden Vorläufer AGBs verwendet🫀-->

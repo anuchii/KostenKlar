@@ -1,3 +1,57 @@
+<?php
+    require_once __DIR__ . "/db_config.php";
+require_once __DIR__ . "/login_validation.php";
+require_once __DIR__ . "/users.php";
+$pageName = "Login";
+$validationErrors = [];
+$userData = [];
+?>
+
+<?php
+// Handle registration POST request
+if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
+  $userData = $_POST;
+  $sucess = false;
+
+  $validationErrors = validateLoginData($userData);
+
+  if (empty($validationErrors)) {
+
+    if (isEmailRegistered($userData["email"], $pdo)) {
+      $userData["user_id"] = getUserIDByEmail($userData["email"], $pdo)[0]["user_id"];
+      $userData_db = getUserDataByUserID($userData["user_id"], $pdo);
+
+      if (password_verify($userData["password"], $userData_db["password"]) && $userData_db["status"] === "active") {
+
+        if ($userData_db["status"] === "active") {
+          unset($userData_db["password"]);
+          session_start();
+          $_SESSION["user_data"] = $userData_db;
+
+          if ($userData_db["role"] === "user") {
+            header("Location: dashboard.php");
+            exit();
+          } else if ($userData_db["role"] === "admin") {
+            header("Location: admin_dashboard.php");
+            exit();
+          } else {
+            $validationErrors["role"] = "Role unknown.";
+          }
+        } else {
+          $validationErrors["account"] = "Account inactive.";
+        }
+      } else {
+        $validationErrors["password"] = "Incorrect password.";
+      }
+    } else {
+      $validationErrors["email"] = "Email not found. Please register.";
+    }
+  }
+}
+
+?>
+
+
 <!doctype html>
 <html lang="de">
 
@@ -12,7 +66,7 @@
 </head>
 
 <body class="p-3 mb-2 bg-primary-subtle text-primary-emphasis">
-  <!-- hintergrundbild-->
+  <!-- Hintergrundbild-->
   <style>
     body {
       background-image: url('images/option2_hintergrund.png');
@@ -67,14 +121,18 @@
       <h3 class="px-3 pt-3 ">Einloggen</h1>
         <hr>
 
-        <form style="max-width:480px; margin:auto;">
+        <form method="post" style="max-width:480px; margin:auto;">
 
           <div class="input-group mb-3">
             <span class="input-group-text bg-warning boder boder-warning" style="width: 50px">
               <i class="fas fa-user"></i>
             </span>
             <label for="emailAddress" class="sr-only"> </label>
-            <input type="email" id="emailAddress" class="form-control" placeholder="Email Adresse" requiered autofocus>
+            <input type="email" id="emailAddress" name="email" class="form-control" placeholder="Email Adresse" requiered autofocus>
+            <?php
+            echo (!isset($validationErrors["email"]) ? "" :
+              '<div class="invalid-feedback">' . $validationErrors["email"] . '</div>');
+            ?>
           </div>
 
           <div class="input-group mb-3">
@@ -82,7 +140,11 @@
               <i class="fas fa-key"></i>
             </span>
             <label for="password" class="sr-only"></label>
-            <input type="password" id="password" placeholder="Passwort" class="form-control">
+            <input type="password" id="password" name="password" placeholder="Passwort" class="form-control">
+            <?php
+            echo (!isset($validationErrors["password"]) ? "" :
+              '<div class="invalid-feedback">' . $validationErrors["password"] . '</div>');
+            ?>
           </div>
 
           <div class="form-check">
@@ -111,4 +173,3 @@
 </body>
 
 </html>
-<!--
