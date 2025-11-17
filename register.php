@@ -15,17 +15,17 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
     $userData = $_POST;
     $sucess = false;
 
-$errors = validateRegistrationData($userData);
+    $errors = validateRegistrationData($userData);
 
-if (empty($errors)) {
-    if (!isEmailRegistered($userData["email"], $pdo)) {
-        $success = createUser($userData, $pdo);
-        header("Location: login.php");
-        exit();
-    } else {
-        $errors["email"] = "Email already registered.";
+    if (empty($errors)) {
+        if (!isEmailRegistered($userData["email"], $pdo)) {
+            $success = createUser($userData, $pdo);
+            header("Location: login.php");
+            exit();
+        } else {
+            $errors["email"] = "Diese Email ist schon registriert.";
+        }
     }
-}
 }
 ?>
 
@@ -77,12 +77,13 @@ if (empty($errors)) {
                 <?php endif; ?>
 
                 <p>Bitte füllen Sie das Formular vollständig aus.</p>
-                <form class="p-3 needs validation" method="post" novalidate> <!--action hinzufügen-->
+
+                <form class="p-3 needs-validation" method="post" novalidate> <!--action hinzufügen-->
                     <div class="mb-3">
 
 
                         <label class="form-label" for="firstname"> Vorname: </label>
-                        <input class="form-control <?php echo isset($errors['firstname']) ? 'is-invalid' : '' ?>"
+                        <input class="form-control <?php echo isset($errors['first_name']) ? 'is-invalid' : '' ?>"
                             type="text" id="first_name" placeholder="Vorname" name="first_name"
                             value="<?php echo htmlspecialchars($_POST['first_name'] ?? '') ?>">
                         <?php if (isset($errors['first_name'])): ?>
@@ -114,7 +115,7 @@ if (empty($errors)) {
                                 <?php echo $errors['gebdatum']; ?>
                             </div>
                         <?php endif; ?> -->
-                        
+
 
                         <label class="form-label" for="email">E-Mail Adresse: </label>
                         <input class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : '' ?>"
@@ -128,10 +129,24 @@ if (empty($errors)) {
                         <?php endif; ?>
 
                         <label class="form-label" for="password">Passwort: </label>
-                        <input class="form-control" type="password" id="password" pattern="[a-z0-9]{12,}" name="password" required>
+                        <input class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : '' ?>" type="password" id="password" pattern="[a-z0-9]{12,}" name="password" required>
+
+                        <?php if (isset($errors['password'])): ?>
+                            <div class="invalid-feedback">
+                                <?php echo $errors['password']; ?>
+                            </div>
+                        <?php endif; ?>
 
                         <label class="form-label" for="password-confirmation">Passwort wiederholen: </label>
-                        <input class="form-control" type="password" id="password-confirmation" pattern="[a-z0-9]{12,}" name="password-confirmation" required>
+                        <input class="form-control <?php echo isset($errors['password-confirmation']) ? 'is-invalid' : '' ?>"
+                            type="password" id="password-confirmation" pattern="[a-z0-9]{12,}"
+                            name="password-confirmation" required>
+
+                        <?php if (isset($errors['password-confirmation'])): ?>
+                            <div class="invalid-feedback">
+                                <?php echo $errors['password-confirmation']; ?>
+                            </div>
+                        <?php endif; ?>
                         <!-- TODO:wenn man passwort sehen möchte wird nur der type gewechselt-->
 
 

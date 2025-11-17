@@ -1,5 +1,4 @@
 <?php
-    require_once __DIR__ . "/db_config.php";
 require_once __DIR__ . "/login_validation.php";
 require_once __DIR__ . "/users.php";
 $pageName = "Login";
