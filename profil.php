@@ -5,23 +5,7 @@ session_start();
 $profileImage = isset($_SESSION['profileImage'])
     ? $_SESSION['profileImage']
     : 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profileImage'])) {
-    if ($_FILES['profileImage']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = __DIR__ . '/uploads/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
-        $fileName = uniqid() . '_' . basename($_FILES['profileImage']['name']);
-        $destination = $uploadDir . $fileName;
-
-        if (move_uploaded_file($_FILES['profileImage']['tmp_name'], $destination)) {
-            $profileImage = 'uploads/' . $fileName;
-            $_SESSION['profileImage'] = $profileImage;
-        }
-    }
-}
+//TODO: Profilbild hinzufügen backend programmieren. (Präsenz9-Code anschauen)
 ?>
 <!DOCTYPE html>
 <html lang="de">
