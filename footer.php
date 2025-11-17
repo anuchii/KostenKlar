@@ -11,4 +11,3 @@
         </div>
     </div>
 </footer>
-<!--TODO: dynamische Jahreszahl implementieren, deshalb .php-->
