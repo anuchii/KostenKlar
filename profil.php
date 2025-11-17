@@ -1,6 +1,14 @@
 <?php
 session_start();
 
+if (!empty($_SESSION['user_data'])) {
+    $userData = $_SESSION['user_data'];
+} else {
+    header("Location: login_page.php");
+    exit();
+}
+
+
 //falls noch keines hochgeladen wurde: standard-Profilbild setzen
 $profileImage = isset($_SESSION['profileImage'])
     ? $_SESSION['profileImage']
@@ -48,8 +56,11 @@ $profileImage = isset($_SESSION['profileImage'])
                                     <!-- TODO: Profilbild upload -->
                                     <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Profilbild"
                                         class="rounded-circle mb-3" width="120" height="120">
-                                    <h5 class="card-title mb-0">Max Mustermann</h5>
-                                    <p class="text-muted">@benutzer1</p>
+                                    <h5 class="card-title mb-0">
+                                        <?php echo htmlspecialchars($userData['first_name'] . ' ' . $userData['last_name']); ?>
+                                    </h5>
+                                    
+                                   <p class="text-muted"></p>
                                     <button class="btn btn-warning btn-sm">
                                         <i class="bi bi-pencil"></i> Profilbild bearbeiten
                                     </button>
@@ -61,26 +72,32 @@ $profileImage = isset($_SESSION['profileImage'])
                         <!--TODO: padding einfügen wenn Bildschrim sehr klein,
                           damit allgemeine infos nicht mit Profil-Kästchen pickt-->
                         <div class="col-md-8">
+                              <br>
                             <div class="card shadow-sm mb-4">
+                  
                                 <div class="card-header bg-light">
                                     <strong>Allgemeine Informationen</strong>
                                 </div>
                                 <div class="card-body">
                                     <div class="row mb-2">
                                         <div class="col-sm-4 fw-bold">Vorname:</div>
-                                        <div class="col-sm-8">Max</div>
+                                        <div class="col-sm-8">
+                                            <?php echo htmlspecialchars($userData['first_name']); ?>
+                                        </div>
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-sm-4 fw-bold">Nachname:</div>
-                                        <div class="col-sm-8">Mustermann</div>
+                                        <div class="col-sm-8">
+                                            <?php echo htmlspecialchars($userData['last_name']); ?>
+                                        </div>
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-sm-4 fw-bold">Geburtsdatum:</div>
-                                        <div class="col-sm-8">20.05.1995</div>
+                                        <div class="col-sm-8">TODO</div>
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-sm-4 fw-bold">Geschlecht:</div>
-                                        <div class="col-sm-8">meinGeschlecht</div>
+                                        <div class="col-sm-8">TODO</div>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +109,9 @@ $profileImage = isset($_SESSION['profileImage'])
                                 <div class="card-body">
                                     <div class="row mb-2">
                                         <div class="col-sm-4 fw-bold">E-Mail:</div>
-                                        <div class="col-sm-8">max.mustermann@example.com</div>
+                                        <div class="col-sm-8">
+                                            <?php echo htmlspecialchars($userData['email']); ?>
+                                        </div>
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-sm-4 fw-bold">Passwort:</div>

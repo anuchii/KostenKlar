@@ -23,7 +23,7 @@
                             <div class="collapse navbar-collapse w-100 mt-3" id="sidebarMenu">
                                 <ul class="navbar-nav flex-column w-100">
                                     <li class="nav-item"><a class="nav-link text-white"
-                                            href="dashboard.php">Übersicht</a></li>
+                                            href="user_dashboard.php">Übersicht</a></li>
                                     <li class="nav-item"><a class="nav-link text-white" href="#">Statistik</a></li>
                                     <li class="nav-item"><a class="nav-link active text-white" aria-current="page"
                                             href="profil.php">Profil</a></li>

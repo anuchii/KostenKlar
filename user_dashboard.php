@@ -55,42 +55,7 @@
         <div class="row" style="min-height: 100vh">
 
             <!-- Sidebar -->
-            <div class="col-12 col-lg-2 bg-secondary p-0">
-                <div class="sticky-top">
-                    <nav
-                        class="navbar navbar-dark navbar-expand-lg bg-secondary border-bottom flex-lg-column align-items-stretch p-3">
-                        <div class="container-fluid flex-lg-column align-items-stretch">
-
-                            <div class="d-flex w-100 justify-content-between align-items-center">
-                                <a class="navbar-brand d-flex align-items-center text-white gap-2" href="#">
-                                    <img src="images/logo_schnell3.png" alt="KostenKlar Logo" width="30" height="30"
-                                        class="d-inline-block align-text-top">
-                                    <span>KostenKlar</span>
-                                </a>
-
-
-                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-                                    aria-label="Menü umschalten">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                            </div>
-                            <hr>
-
-                            <div class="collapse navbar-collapse w-100 mt-3" id="sidebarMenu">
-                                <ul class="navbar-nav flex-column w-100">
-                                    <li class="nav-item"><a class="nav-link text-white"
-                                            href="dashboard.html">Übersicht</a></li>
-                                    <li class="nav-item"><a class="nav-link text-white" href="#">Statistik</a></li>
-                                    <li class="nav-item"><a class="nav-link active text-white" aria-current="page"
-                                            href="profil.html">Profil</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-
+          <?php include 'sidebar.php';?>
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
 
@@ -171,8 +136,8 @@
                                     </table>
                                     <!-- Button trigger modal -->
                                     <div class="mb-3">
-                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#new-modal">
-                                            <i class="bi bi-plus-circle text-white"></i>
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#new-modal">
+                                            <i class="bi bi-plus-circle text-black"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -217,11 +182,7 @@
         </div><!-- /row -->
     </div><!-- /container-fluid -->
 
-    <footer class="bg-secondary text-white text-center py-3 mt-1">
-        <p>© 2025 KostenKlar </p>
-        <a href="impressum.html" class="text-white-50 me-2">Impressum</a>
-        <a href="datenschutz.html" class="text-white-50">Datenschutz</a>
-    </footer>
+   
 
      <!-- Modal -->
                     <div class="modal fade" id="new-modal" tabindex="-1">
@@ -287,6 +248,7 @@
                     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<?php include 'footer.php';?>
 </body>
 
 </html>
