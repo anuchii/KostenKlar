@@ -1,17 +1,30 @@
 <?php
     require_once __DIR__ . "/transactions.php";
+    require_once __DIR__ . '/transaction_validation.php';
+    require_once __DIR__ . '/functions.php';
 
     $pageName = "Dashboard";
 
     session_start();
+
+     // Require login
+    $userData = getLoggedUserData();
+
+    if(!$userData) {
+        header("Location: login.php");
+        exit();
+    }
+
+    // TODO:
+    // Require status = active
+    // Require role = user
+
     $year = (int) date('Y');
     $month = (int) date('m');
     $yearMonth = date('Y-m');
     $currentDate = date('Y-m-d');
 
-    // Require login
-    // Require status = active
-    // Require role = user
+
 
     if(!empty($_SESSION["user_data"])) {
         $userData["first_name"] = $_SESSION["user_data"]["first_name"];
@@ -26,14 +39,10 @@
         $revenueSum = (float) getSumByUserIDAndMonth($userData["user_id"], $year, $month, "revenue", $pdo)["sum"] ?? 0.00;
         $balance = $revenueSum - $expenseSum;
 
-
     } else {
-        header("Location: login_page.php");
+        header("Location: login.php");
         exit();
     }
-
-    
-
 ?>
 
 
@@ -55,25 +64,13 @@
         <div class="row" style="min-height: 100vh">
 
             <!-- Sidebar -->
-          <?php include 'sidebar.php';?>
+            <?php include __DIR__ . '/sidebar.php'; ?>
+
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
 
-                <!-- Abmelden-Bar -->
-                <nav class="navbar navbar-expand-lg bg-secondary border-bottom px-0 me-0">
-                    <div class="container-fluid px-0">
-                        <ul class="navbar-nav ms-auto me-0">
-                            <li class="nav-item me-0">
-
-                                <a class="btn btn-warning text-dark pe-3 me-3" href="login.php">
-                                    Abmelden <i class="bi bi-arrow-bar-right  text-dark ps-1"></i>
-                                </a>
-
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-
+                <?php include 'header.php';?>
+                
                 <!-- Header -->
                 <header class="py-4 border-bottom p-3">
                     <h2>Übersicht</h2>
@@ -108,8 +105,8 @@
                                             <th scope="col">Datum</th>
                                             <th scope="col">Bezeichnung</th>
                                             <th scope="col">Betrag</th>
-                                            <th scope="col">Kategorie</th>
-                                            <th scope="col">Notiz</th>
+                                            <th scope="col" class="d-none d-md-table-cell">Kategorie</th>
+                                            <th scope="col" class="d-none d-lg-table-cell">Notiz</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -119,26 +116,27 @@
                                                         <?php echo(date("d.m.Y", strtotime($transaction["transaction_date"])) ?? ""); ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo($transaction["transaction_description"] ?? ""); ?>
+                                                        <?php echo($transaction["transaction_title"] ?? ""); ?>
                                                     </td>
-                                                    <td class="<?php echo($transaction["transaction_type"] === "expense" ? "text-danger" : "text-sucess"); ?>">
-                                                        <?php echo($transaction["transaction_amount"] ?? ""); ?>
+                                                    <td class="<?php echo($transaction["transaction_type"] === "expense" ? "text-danger" : "text-success"); ?>">
+                                                        <?php echo($transaction["transaction_type"] === "expense" ? "-" : ""); ?>
+                                                        <?php echo(number_format($transaction["transaction_amount"], 2, ',', '') ?? ""); ?>
                                                     </td>
-                                                    <td>
+                                                    <td class="d-none d-md-table-cell">
                                                         <?php echo($transaction["category_name"] ?? ""); ?>
                                                     </td>
-                                                    <td>
+                                                    <td class="d-none d-lg-table-cell">
                                                         <?php echo($transaction["transaction_note"] ?? ""); ?>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
-                                    <!-- Button trigger modal -->
+                                   
                                     <div class="mb-3">
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#new-modal">
+                                        <a href="new_transaction.php" type="button" class="btn btn-warning">
                                             <i class="bi bi-plus-circle text-black"></i>
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -182,73 +180,9 @@
         </div><!-- /row -->
     </div><!-- /container-fluid -->
 
-   
-
-     <!-- Modal -->
-                    <div class="modal fade" id="new-modal" tabindex="-1">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Neue Buchung</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="mb-3">
-                                            <label for="transaction-date" class="col-form-label">Datum</label>
-                                            <input type="date" class="form-control" id="transaction-date" value="<?php echo($currentDate); ?>">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="transaction-title" class="col-form-label">Bezeichnung</label>
-                                            <input type="text" class="form-control" id="transaction-title"></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="transaction-amount" class="col-form-label">Betrag</label>
-                                            <input type="number" class="form-control" id="transaction-amount" step="0.01" min="0" placeholder="0,00"></textarea>
-                                        </div>
-                                        
-                                        <div class="mb-3">
-                                            <label for="transaction-note" class="col-form-label">Notiz</label>
-                                            <textarea class="form-control" id="transaction-note"></textarea>
-                                        </div>
-                                        
-                                        <div class="mb-3">
-                                            <div class="form-group">
-                                                <label for="category" class="col-form-label">Kategorie</label>
-                                                <select class="form-select" id="category">
-                                                    <option>Lebensmittel</option>
-                                                    <option>Mobilität</option>
-                                                    <option>Haushalt</option>
-                                                    <option>Wohnen</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="mb-3">
-                                            <label class="form-label">Buchungstyp</label>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="transaction-type" id="expense" value="option1" checked>
-                                                <label class="form-check-label" for="expense">Ausgabe</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="transaction-type" id="income" value="option2">
-                                                <label class="form-check-label" for="income">Einnahme</label>
-                                            </div>
-                                            
-                                        </div>
-
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-                                    <button type="button" class="btn btn-secondary">Speichern</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <?php include 'footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<?php include 'footer.php';?>
 </body>
 
 </html>
