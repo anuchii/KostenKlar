@@ -46,3 +46,39 @@
 
         return $result;
     }
+
+    function getTransactionCategories($pdo) {
+         // Prepare SQL statement
+        $statement = $pdo->prepare(
+            "SELECT * FROM categories"
+        );
+
+        $statement->execute();
+
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $results;
+    }
+
+    function createTransaction($transactionData, $user_id, $pdo) {
+
+    // Prepare SQL statement
+        $statement = $pdo->prepare(
+            "INSERT INTO transactions (transaction_date, transaction_title, transaction_amount, transaction_note, transaction_category_id, transaction_type, user_id)
+            VALUES (:transaction_date, :transaction_title, :transaction_amount, :transaction_note, :transaction_category_id, :transaction_type, :user_id)"
+        );
+
+        // Bind values
+        $statement->bindValue(":transaction_date", $transactionData["transaction_date"]);
+        $statement->bindValue(":transaction_title", $transactionData["transaction_title"]);
+        $statement->bindValue(":transaction_amount", $transactionData["transaction_amount"]);
+        $statement->bindValue(":transaction_note", $transactionData["transaction_note"]);
+        $statement->bindValue(":transaction_category_id", $transactionData["transaction_category"]);
+        $statement->bindValue(":transaction_type", $transactionData["transaction_type"]);
+        $statement->bindValue(":user_id", $user_id);
+
+        // Execute statement
+        $success = $statement->execute();
+
+        return $success;
+    }
