@@ -5,8 +5,9 @@ $port = 3306;
 // $port = 8889;
 $dbname = "kostenklar";
 // $dbname = "Kostenklar";
-$dbuser = "";
+$dbuser = "root";
 // $dbpassword = "root";
+$dbpassword = "";
 
 
 try {
