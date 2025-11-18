@@ -20,7 +20,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
       $userData["user_id"] = getUserIDByEmail($userData["email"], $pdo)[0]["user_id"];
       $userData_db = getUserDataByUserID($userData["user_id"], $pdo);
 
-      if (password_verify($userData["password"], $userData_db["password"]) && $userData_db["status"] === "active") {
+      if (password_verify($userData["password"], $userData_db["password"])) {
 
         if ($userData_db["status"] === "active") {
           unset($userData_db["password"]);
@@ -28,22 +28,22 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
           $_SESSION["user_data"] = $userData_db;
 
           if ($userData_db["role"] === "user") {
-            header("Location: dashboard.php");
+            header("Location: user_dashboard.php");
             exit();
           } else if ($userData_db["role"] === "admin") {
             header("Location: admin_dashboard.php");
             exit();
           } else {
-            $validationErrors["role"] = "Role unknown.";
+            $validationErrors["role"] = "Rolle unbekannt.";
           }
         } else {
-          $validationErrors["account"] = "Account inactive.";
+          $validationErrors["account"] = "Benutzerkonto ist inaktiv.";
         }
       } else {
-        $validationErrors["password"] = "Incorrect password.";
+        $validationErrors["password"] = "Ungültiges Passwort.";
       }
     } else {
-      $validationErrors["email"] = "Email not found. Please register.";
+      $validationErrors["email"] = "E-Mail-Adresse konnte nicht gefunden werden.";
     }
   }
 }
@@ -127,7 +127,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
               <i class="fas fa-user"></i>
             </span>
             <label for="emailAddress" class="sr-only"> </label>
-            <input type="email" id="emailAddress" name="email" class="form-control" placeholder="Email Adresse" requiered autofocus>
+            <input type="email" id="emailAddress" name="email" class="form-control <?php echo isset($validationErrors['email']) ? 'is-invalid' : '' ?>" placeholder="Email Adresse" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" requiered autofocus>
             <?php
             echo (!isset($validationErrors["email"]) ? "" :
               '<div class="invalid-feedback">' . $validationErrors["email"] . '</div>');
@@ -139,7 +139,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
               <i class="fas fa-key"></i>
             </span>
             <label for="password" class="sr-only"></label>
-            <input type="password" id="password" name="password" placeholder="Passwort" class="form-control">
+            <input type="password" id="password" name="password" placeholder="Passwort" class="form-control <?php echo isset($validationErrors['password']) ? 'is-invalid' : '' ?>">
             <?php
             echo (!isset($validationErrors["password"]) ? "" :
               '<div class="invalid-feedback">' . $validationErrors["password"] . '</div>');
