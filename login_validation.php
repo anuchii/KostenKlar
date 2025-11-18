@@ -7,12 +7,12 @@ function validateLoginData($userData)
 
     // Check email input
     if (empty($userData["email"])) {
-        $validationErrors["email"] = "Bitte geben Sie eine E-Mail-Adresse ein.";
+        $validationErrors["email"] = "Bitte geben Sie Ihre E-Mail-Adresse ein.";
     }
 
     // Check password input
     if (empty($userData["password"])) {
-        $validationErrors["password"] = "Bitte geben Sie eine E-Mail-Adresse ein.";
+        $validationErrors["password"] = "Bitte geben Sie Ihr Passwort ein.";
     }
 
     return $validationErrors;
