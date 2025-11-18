@@ -39,7 +39,7 @@ $profileImage = isset($_SESSION['profileImage'])
             <div class="col-12 col-lg-10 p-0">
 
                 <!-- Abmelden-Bar -->
-               <?php include 'header.php';?>
+                <?php include 'header.php'; ?>
                 <!-- Header -->
                 <header class="py-4 border-bottom p-3">
                     <h2>Mein Profil</h2>
@@ -59,8 +59,8 @@ $profileImage = isset($_SESSION['profileImage'])
                                     <h5 class="card-title mb-0">
                                         <?php echo htmlspecialchars($userData['first_name'] . ' ' . $userData['last_name']); ?>
                                     </h5>
-                                    
-                                   <p class="text-muted"></p>
+
+                                    <p class="text-muted"></p>
                                     <button class="btn btn-warning btn-sm">
                                         <i class="bi bi-pencil"></i> Profilbild bearbeiten
                                     </button>
@@ -72,9 +72,8 @@ $profileImage = isset($_SESSION['profileImage'])
                         <!--TODO: padding einfügen wenn Bildschrim sehr klein,
                           damit allgemeine infos nicht mit Profil-Kästchen pickt-->
                         <div class="col-md-8">
-                              <br>
                             <div class="card shadow-sm mb-4">
-                  
+
                                 <div class="card-header bg-light">
                                     <strong>Allgemeine Informationen</strong>
                                 </div>
