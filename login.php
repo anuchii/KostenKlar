@@ -10,7 +10,7 @@ $userData = [];
 // Handle registration POST request
 if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
   $userData = $_POST;
-  $sucess = false;
+  $success = false;
 
   $validationErrors = validateLoginData($userData);
 
@@ -24,6 +24,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
 
         if ($userData_db["status"] === "active") {
           unset($userData_db["password"]);
+          $success = true;
           session_start();
           $_SESSION["user_data"] = $userData_db;
 
