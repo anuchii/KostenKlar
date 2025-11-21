@@ -114,7 +114,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
                             <div class="invalid-feedback">
                                 <?php echo $errors['gebdatum']; ?>
                             </div>
-                        <?php endif; ?> 
+                        <?php endif; ?>
 
 
                         <label class="form-label" for="email">E-Mail Adresse: </label>
@@ -151,7 +151,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
 
 
                     </div>
-                
+
 
                     <label class="form-label d-block mt-2">Geschlecht</label>
                     <div class="form-check form-check-inline">
@@ -179,7 +179,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
                             <?php echo $errors['geschlecht']; ?>
                         </div>
                     <?php endif; ?>
-                    <hr> 
+                    <hr>
 
                     <hr>
                     <!-- Eigene test AGB erstellen, Zurzeit werden Vorläufer AGBs verwendet🫀-->
