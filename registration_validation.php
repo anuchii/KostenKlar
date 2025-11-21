@@ -18,8 +18,7 @@ function validateRegistrationData($registrationData)
             $errors["email"] = "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
         }
         //TODO: try-catch block um Exception zu fangen bei falscheingabe.
-        //TODO: gebdatum in DB einfügen als Spalte
-        /*
+       
         if (empty($_POST["gebdatum"])) {
             $errors["gebdatum"] = "Bitte geben Sie Ihr Geburtsdatum ein.";
         } else {
@@ -30,7 +29,7 @@ function validateRegistrationData($registrationData)
                 $errors["gebdatum"] = "Sie müssen mindestens 16 Jahre alt sein.";
             }
         }
-            */
+            
 
         if (empty($_POST["password"])) {
             $errors["password"] = "Passwort kann nicht leer sein.";
@@ -48,12 +47,11 @@ function validateRegistrationData($registrationData)
                 $errors["password-confirmation"] = "Die Passwörter stimmen nicht überein!";
             }
         }
-        //TODO: geschlecht in db als Spalte einfügen. 
-        /*
+      
         if (empty($_POST["geschlecht"])) {
             $errors["geschlecht"] = "Bitte wählen Sie ein Geschlecht aus.";
         }
-            */
+            
 
         if (!isset($_POST["terms-and-conditions"])) {
             $errors["terms-and-conditions"] = "Sie müssen die AGB akzeptieren.";

@@ -13,7 +13,7 @@ $maxGebdatum = (new DateTime('-16 years'))->format('Y-m-d');
 //Registrierungs-POST-Anfrage verarbeiten
 if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
     $userData = $_POST;
-    $sucess = false;
+    $success = false;
 
     $errors = validateRegistrationData($userData);
 
@@ -84,7 +84,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
 
                         <label class="form-label" for="firstname"> Vorname: </label>
                         <input class="form-control <?php echo isset($errors['first_name']) ? 'is-invalid' : '' ?>"
-                            type="text" id="first_name" placeholder="Vorname" name="first_name"
+                            type="text" id="first_name" placeholder="Vorname" name="first_name" required
                             value="<?php echo htmlspecialchars($_POST['first_name'] ?? '') ?>">
                         <?php if (isset($errors['first_name'])): ?>
                             <div class="invalid-feedback">
@@ -103,9 +103,9 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
                             </div>
                         <?php endif; ?>
 
-                        <!-- Gebdatum noch nicht in der tabelle als Spalte-->
 
-                        <!--       <label class="form-label" for="gebdatum">Geburtsdatum</label>
+
+                        <label class="form-label" for="gebdatum">Geburtsdatum</label>
                         <input class="form-control <?php echo isset($errors['gebdatum']) ? 'is-invalid' : '' ?>"
                             id="gebdatum" type="date" min="1920-01-01" max="<?php echo $maxGebdatum; ?>"
                             name="gebdatum" required
@@ -114,7 +114,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
                             <div class="invalid-feedback">
                                 <?php echo $errors['gebdatum']; ?>
                             </div>
-                        <?php endif; ?> -->
+                        <?php endif; ?> 
 
 
                         <label class="form-label" for="email">E-Mail Adresse: </label>
@@ -151,35 +151,35 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
 
 
                     </div>
-                    <!--Geschlecht noch nihct in der DB als Spalte-->
+                
 
-                    <!--  <label class="form-label d-block mt-2">Geschlecht</label>
+                    <label class="form-label d-block mt-2">Geschlecht</label>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input <?php echo isset($errors['geschlecht']) ? 'is-invalid' : '' ?>"
-                            id="weiblich" name="geschlecht" type="radio" value="weiblich"
+                            id="geschlecht_weiblich" name="geschlecht" type="radio" value="weiblich" required
                             <?php echo (($_POST['geschlecht'] ?? '') === 'weiblich') ? 'checked' : ''; ?>>
-                        <label class="form-check-label" for="weiblich">Weiblich</label>
+                        <label class="form-check-label" for="geschlecht_weiblich">Weiblich</label>
                     </div>
 
                     <div class="form-check form-check-inline">
                         <input class="form-check-input <?php echo isset($errors['geschlecht']) ? 'is-invalid' : '' ?>"
-                            id="maenlich" name="geschlecht" type="radio" value="maenlich"
-                            <?php echo (($_POST['geschlecht'] ?? '') === 'maenlich') ? 'checked' : ''; ?>>
-                        <label class="form-check-label" for="maenlich">Männlich</label>
+                            id="geschlecht_männlich" name="geschlecht" type="radio" value="männlich" required
+                            <?php echo (($_POST['geschlecht'] ?? '') === 'männlich') ? 'checked' : ''; ?>>
+                        <label class="form-check-label" for="geschlecht_männlich">Männlich</label>
                     </div>
 
                     <div class="form-check form-check-inline">
                         <input class="form-check-input <?php echo isset($errors['geschlecht']) ? 'is-invalid' : '' ?>"
-                            id="divers" name="geschlecht" type="radio" value="divers"
+                            id="geschlecht_divers" name="geschlecht" type="radio" value="divers" required
                             <?php echo (($_POST['geschlecht'] ?? '') === 'divers') ? 'checked' : ''; ?>>
-                        <label class="form-check-label" for="divers">Divers</label>
+                        <label class="form-check-label" for="geschlecht_divers">Divers</label>
                     </div>
                     <?php if (isset($errors['geschlecht'])): ?>
                         <div class="invalid-feedback d-block">
                             <?php echo $errors['geschlecht']; ?>
                         </div>
                     <?php endif; ?>
-                    <hr> -->
+                    <hr> 
 
                     <hr>
                     <!-- Eigene test AGB erstellen, Zurzeit werden Vorläufer AGBs verwendet🫀-->
