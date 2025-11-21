@@ -3,4 +3,5 @@
 
 # Logs
 *.log
+
 config/db_config.php

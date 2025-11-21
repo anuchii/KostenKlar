@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/db_config.php';
+require_once __DIR__ . '/config/db_config.php';
 
 
 function createUser($userData, $pdo)
@@ -10,8 +10,8 @@ function createUser($userData, $pdo)
 
     // Prepare SQL statement
     $statement = $pdo->prepare(
-        "INSERT INTO users (first_name, last_name, email, password, role, status)
-        VALUES (:first_name, :last_name, :email, :password, 'user', 'active')"
+        "INSERT INTO users (first_name, last_name, email, password, gebdatum, geschlecht, role, status)
+        VALUES (:first_name, :last_name, :email, :password, :gebdatum, :geschlecht, 'user', 'active')"
     );
 
     // Bind values
@@ -19,6 +19,8 @@ function createUser($userData, $pdo)
     $statement->bindValue(":last_name", $userData["last_name"]);
     $statement->bindValue(":email", $userData["email"]);
     $statement->bindValue(":password", $userData["password"]);
+    $statement->bindValue(":gebdatum", $userData["gebdatum"]);
+    $statement->bindValue(":geschlecht", $userData["geschlecht"]);
 
     // Execute statement
     $success = $statement->execute();
