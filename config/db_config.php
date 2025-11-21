@@ -1,13 +1,13 @@
 <?php
 
 $dbhost = "localhost";
-$port = 3306;
-// $port = 8889;
-$dbname = "kostenklar";
-// $dbname = "Kostenklar";
+//$port = 3306;
+ $port = 8889;
+//$dbname = "kostenklar";
+ $dbname = "Kostenklar";
 $dbuser = "root";
-// $dbpassword = "root";
-$dbpassword = "";
+ $dbpassword = "root";
+//$dbpassword = "";
 
 
 try {
