@@ -92,11 +92,16 @@ $profileImage = isset($_SESSION['profileImage'])
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-sm-4 fw-bold">Geburtsdatum:</div>
-                                        <div class="col-sm-8">TODO</div>
+                                        <div class="col-sm-8">
+                                            <?php echo htmlspecialchars($userData['gebdatum'] ) ?>
+                                        </div>
                                     </div>
+                                    <!--TODO: Männlich mit ä statt ae?-->
                                     <div class="row mb-2">
                                         <div class="col-sm-4 fw-bold">Geschlecht:</div>
-                                        <div class="col-sm-8">TODO</div>
+                                        <div class="col-sm-8">
+                                            <?php echo htmlspecialchars(ucfirst($userData['geschlecht'])); ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -113,8 +118,10 @@ $profileImage = isset($_SESSION['profileImage'])
                                         </div>
                                     </div>
                                     <div class="row mb-2">
-                                        <div class="col-sm-4 fw-bold">Passwort:</div>
-                                        <div class="col-sm-8">zubearbeiten</div>
+                                        <!-- Password gehört nicht beim Kontakt-Kästchen-->
+
+                                        <!-- <div class="col-sm-4 fw-bold">Passwort:</div>
+                                        <div class="col-sm-8">zubearbeiten</div>-->
                                     </div>
                                 </div>
                             </div>
