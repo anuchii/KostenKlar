@@ -48,7 +48,7 @@ $profileImage = isset($_SESSION['profileImage'])
 
                 <!-- Profil-Inhalt -->
                 <div class="container py-4">
-                    <div class="row">
+                    <div class="row gy-3">
                         <!-- Profil-Kästchen  -->
                         <div class="col-md-4">
                             <div class="card text-center shadow-sm">
@@ -71,8 +71,8 @@ $profileImage = isset($_SESSION['profileImage'])
                         <!-- Details-Kästchen -->
                         <!--TODO: padding einfügen wenn Bildschrim sehr klein,
                           damit allgemeine infos nicht mit Profil-Kästchen pickt-->
-                        <div class="col-md-8">
-                            <div class="card shadow-sm mb-4">
+                        <div class="col-md-8 ">
+                            <div class="card shadow-sm mb-3">
 
                                 <div class="card-header bg-light">
                                     <strong>Allgemeine Informationen</strong>
@@ -96,7 +96,7 @@ $profileImage = isset($_SESSION['profileImage'])
                                             <?php echo htmlspecialchars($userData['gebdatum'] ) ?>
                                         </div>
                                     </div>
-                                    <!--TODO: Männlich mit ä statt ae?-->
+
                                     <div class="row mb-2">
                                         <div class="col-sm-4 fw-bold">Geschlecht:</div>
                                         <div class="col-sm-8">
@@ -106,7 +106,7 @@ $profileImage = isset($_SESSION['profileImage'])
                                 </div>
                             </div>
                             <!--Kontakt-Kästchen-->
-                            <div class="card shadow-sm">
+                            <div class="card shadow-sm ">
                                 <div class="card-header bg-light">
                                     <strong>Kontakt</strong>
                                 </div>
@@ -129,7 +129,7 @@ $profileImage = isset($_SESSION['profileImage'])
                     </div>
 
                     <!-- Optionaler Abschnitt -->
-                    <div class="row mt-4">
+                    <div class="row mt-3">
                         <div class="col">
                             <div class="card shadow-sm">
                                 <div class="card-header bg-light">
