@@ -63,6 +63,7 @@ function getTransactionCategories($pdo)
     return $results;
 }
 
+
 function createTransaction($transactionData, $user_id, $pdo)
 {
 
@@ -86,20 +87,34 @@ function createTransaction($transactionData, $user_id, $pdo)
 
     return $success;
 }
-// Holt Einnnamen + Ausgaben für den angemeldeten User und gruppiert die Daten 
+
+/**
+ * getMonthlySumByUserIdAndYear: Die Funktion holt monatliche Einnahmen und Ausgaben aus der Datenbank und ergänzt fehlende Monate in PHP
+ * @param mixed $user_id id des angemeldeten Users
+ * @param int $year das ausgewählte Jahr 
+ * @param mixed $pdo PDO-Datenbankverbindung
+ *
+ * @return array<int, array{
+ *   year:int,
+ *   month:int,
+ *   revenue_sum:float,
+ *   expense_sum:float,
+ *   saldo:float
+ * }>
+ */
 function getMonthlySumByUserIdAndYear($user_id, int $year, $pdo)
 {
     $statement = $pdo->prepare(
         "SELECT 
-            MONTH(transaction_date) AS month,
-            SUM(CASE WHEN transaction_type = 'revenue' THEN transaction_amount ELSE 0 END) AS revenue_sum,
-            SUM(CASE WHEN transaction_type = 'expense' THEN transaction_amount ELSE 0 End) As expense_sum
-            FROM transactions
-            WHERE user_id = :user_id
-            AND YEAR(transaction_date) = :year
-            GROUP BY MONTH(transaction_date)
-            ORDER BY MONTH(transaction_date)
-        "
+              MONTH(transaction_date) AS month,
+              SUM(CASE WHEN transaction_type = 'revenue' THEN transaction_amount ELSE 0 END) AS revenue_sum,
+              SUM(CASE WHEN transaction_type = 'expense' THEN transaction_amount ELSE 0 End) As expense_sum
+              FROM transactions
+              WHERE user_id = :user_id
+              AND YEAR(transaction_date) = :year
+              GROUP BY MONTH(transaction_date)
+              ORDER BY MONTH(transaction_date)
+         "
     );
 
     $statement->bindValue(":user_id", $user_id);
@@ -109,7 +124,7 @@ function getMonthlySumByUserIdAndYear($user_id, int $year, $pdo)
 
     $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
     $result = [];
-    //leeres Array vorbereitet, damit falls keine Daten, 0.0 ausgegeben wird.
+    //leeres Array vorbereitet, um auch Monate ohne Daten zu haben 
     for ($m = 1; $m <= 12; $m++) {
         $result[$m] = [
             'year' => $year,
@@ -119,7 +134,7 @@ function getMonthlySumByUserIdAndYear($user_id, int $year, $pdo)
             'saldo' => 0.0,
         ];
     }
-    // Result wird hier befüllt. 
+    // Result wird hier befüllt
     foreach ($rows as $row) {
         $m = (int) $row['month'];
         $revenue = isset($row['revenue_sum']) ? (float) $row['revenue_sum'] : 0.0;
@@ -132,4 +147,51 @@ function getMonthlySumByUserIdAndYear($user_id, int $year, $pdo)
         }
     }
     return $result;
+}
+
+
+function getPieChartData(int $selectedYear, int $user_id, $pdo)
+{
+    $statement = $pdo->prepare(
+        "SELECT 
+            c.category_name AS kategorie,
+            SUM(t.transaction_amount) AS gesamtbetrag
+         FROM transactions t
+         JOIN categories c 
+            ON c.category_id = t.transaction_category_id
+         WHERE t.user_id = :user_id
+           AND YEAR(t.transaction_date) = :year
+         GROUP BY c.category_name
+         ORDER BY gesamtbetrag DESC"
+    );
+
+    $statement->bindValue(':year', $selectedYear);
+    $statement->bindValue(':user_id', $user_id);
+    $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    $pieData = [
+        'category' => [],
+        'totalExpenses' => []
+    ];
+    foreach ($results as $row) {
+        $pieData['category'][] = $row['kategorie'];
+        $pieData['totalExpenses'][] = (float) $row['gesamtbetrag'];
+    }
+    return $pieData;
+}
+
+
+function getYearlyExpenseSumByUserId($user_id, int $year, $pdo){
+    $statement = $pdo->prepare(
+        "SELECT COALESCE(SUM(transaction_amount), 0) AS total_expense
+         FROM transactions
+         WHERE user_id = :user_id
+         AND  transaction_type = 'expense'
+         AND YEAR(transaction_date)= :year"
+    );
+$statement->bindValue('user_id', $user_id);
+$statement->bindValue(':year', $year);
+$statement->execute();
+return (float) $statement->fetchColumn();
 }
