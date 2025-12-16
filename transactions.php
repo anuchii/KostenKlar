@@ -181,7 +181,7 @@ function getPieChartData(int $selectedYear, int $user_id, $pdo)
     return $pieData;
 }
 
-
+//Wird zurzeit nicht mehr gebraucht. Eine andere Lsg wurde gefunden. (deprecated)
 function getYearlyExpenseSumByUserId($user_id, int $year, $pdo){
     $statement = $pdo->prepare(
         "SELECT COALESCE(SUM(transaction_amount), 0) AS total_expense

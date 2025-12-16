@@ -2,6 +2,7 @@
 session_start();
 require_once "transactions.php";
 require_once __DIR__ . '/config/db_config.php';
+require_once __DIR__ . '/helpers/statistik_helper.php';
 
 $user_id = $_SESSION["user_data"]["user_id"];
 $selectedYear = isset($_GET['year'])
@@ -9,6 +10,7 @@ $selectedYear = isset($_GET['year'])
     : (int) date('Y');
 
 $stats = getMonthlySumByUserIdAndYear($user_id, $selectedYear, $pdo);
+$statsPie = getPieChartData($selectedYear, $user_id, $pdo);
 
 $monthNames = [
     1 => 'Januar',
@@ -25,9 +27,12 @@ $monthNames = [
     12 => 'Dezember',
 ];
 
-require_once  __DIR__ . '/helpers/statistik_helper.php';
+
 $chartData = buildChartData($stats, $monthNames);
-     
+$pieData = buildPieChartData($statsPie);
+
+$pieGradient = $pieData['gradient'] ?? 'conic-gradient(#e9ecef 0% 100%)';
+$pieLegendItems = $pieData['legend'] ?? [];
 
 ?>
 
@@ -63,12 +68,13 @@ $chartData = buildChartData($stats, $monthNames);
                 </section>
 
                 <div class="row g-3 px-3 pb-4">
-                    <div class="col-12 col-xl-8">
-                        <div class="card shadow-sm">
+                    <div class="col-12 col-lg-7">
+                        <div class="card shadow-sm h-100">
                             <div class="card-header">
                                 <!--Dropdown für Das Jahr-->
-                                <form method="get" class="d-flex align-items-end gap-2 mt-2" style="max-width: 200px;">
-                                    <select name="year" id="year" class="form-select flex-grow-1"> <!-- kein JS: Auswahl + Button -->
+                                <form method="get" class="d-flex align-items-end gap-2 mt-2" style="max-width: 200px; ">
+                                    <select name="year" id="year" class="form-select flex-grow-1">
+                                        <!-- kein JS: Auswahl + Button -->
                                         <!-- onchange = "this.form.submit"-->
 
                                         <?php
@@ -82,7 +88,8 @@ $chartData = buildChartData($stats, $monthNames);
 
 
                                     </select>
-                                    <button type="submit" class="btn btn-sm btn-warning text-nowrap mt-2 mb-1">Anzeigen</button>
+                                    <button type="submit"
+                                        class="btn btn-sm btn-warning text-nowrap mt-2 mb-1">Anzeigen</button>
                                 </form>
                             </div>
                             <div class="card-body">
@@ -101,8 +108,41 @@ $chartData = buildChartData($stats, $monthNames);
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col-lg-5">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-header">Kategorien</div>
+                            <div class="card-body d-flex justify-content-center align-items-center">
+                                <div
+                                    class="d-flex flex-column flex-sm-row gap-4 align-items-center justify-content-center w-100">
+                                    <div class="pie"
+                                        style="background: <?= htmlspecialchars($pieGradient, ENT_QUOTES, 'UTF-8') ?>;">
+                                    </div>
+
+                                    <ul class="list-unstyled mb-0" style="min-width: 180px;">
+                                        <?php if (empty($pieLegendItems)): ?>
+                                            <li class="text-muted">Keine Daten für <?= (int) $selectedYear ?> vorhanden.
+                                            </li>
+                                        <?php else: ?>
+                                            <?php foreach ($pieLegendItems as $item): ?>
+                                                <li class="d-flex align-items-center gap-2 mb-2">
+                                                    <span
+                                                        style="width: 12px; height: 12px; background: <?= htmlspecialchars($item['color'], ENT_QUOTES, 'UTF-8') ?>; display:inline-block; border-radius: 2px;"></span>
+                                                    <span class="small">
+                                                        <?= htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8') ?>
+                                                        — <?= number_format((float) $item['value'], 2, ',', '.') ?> €
+                                                        (<?= number_format((float) $item['percent'], 1, ',', '.') ?>%)
+                                                    </span>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
+
             </div>
 
         </div> <!--row min-vh-100 -->
