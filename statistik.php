@@ -54,7 +54,7 @@ $pieLegendItems = $pieData['legend'] ?? [];
 <body>
     <div class="container-fluid">
         <div class="row min-vh-100">
-            <?php include 'sidebar.php'; ?>
+            <?php include __DIR__ .'/includes/sidebar.php'; ?>
             <div class="col-12 col-lg-10 p-0">
                 <?php include __DIR__ . '/includes/header.php'; ?>
 
