@@ -140,9 +140,7 @@ $pieLegendItems = $pieData['legend'] ?? [];
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
 
         </div> <!--row min-vh-100 -->
