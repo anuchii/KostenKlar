@@ -26,7 +26,8 @@
     width: 15px;
     display: block;
     border-radius: 4px 4px 0 0;
-    min-height: 3px; /* damit sehr kleine Werte nicht unsichtbar werden */
+    min-height: 3px;
+    /* damit sehr kleine Werte nicht unsichtbar werden */
     min-width: 30px;
 
 }
@@ -41,4 +42,11 @@
 
 .bar-null {
     background-color: dimgrey;
+}
+
+.pie {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+ 
 }
