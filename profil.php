@@ -145,7 +145,7 @@ $profileImage = isset($_SESSION['profileImage'])
             </div><!-- /col-10 -->
         </div><!-- /row -->
     </div><!-- /container-fluid -->
-    <?php include 'footer.php'; ?>
+    <?php include __DIR__ .'/includes/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

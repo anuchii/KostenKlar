@@ -140,5 +140,5 @@
             </div>
         </div>
     </main>
-<?php include __DIR__ . '/footer.php'; ?>
+<?php include __DIR__ . '/includes/footer.php'; ?>
 

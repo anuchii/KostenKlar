@@ -144,7 +144,7 @@ $pieLegendItems = $pieData['legend'] ?? [];
             </div>
 
         </div> <!--row min-vh-100 -->
-        <?php include 'footer.php'; ?>
+        <?php include __DIR__ . '/includes/footer.php'; ?>
     </div> <!--container-fluig -->
 </body>
 
