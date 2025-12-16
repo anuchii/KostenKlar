@@ -69,7 +69,7 @@
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
 
-                <?php include 'header.php';?>
+                <?php include __DIR__ .'/includes/header.php';?>
                 
                 <!-- Header -->
                 <header class="py-4 border-bottom p-3">
