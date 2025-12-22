@@ -65,7 +65,7 @@
     <title>KostenKlar–Profil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="icon" type="image/png" href="images/logo.png">
+     <link rel="icon" type="image/png"  href="<?= asset_url('images/logo_schnell3.png') ?>">
 
 </head>
 

@@ -1,10 +1,12 @@
 <?php
+require_once __DIR__ . '/../config/paths.php';
+require_once HELPERS_PATH . '/url.php';
 session_start();
 
 if (!empty($_SESSION['user_data'])) {
     $userData = $_SESSION['user_data'];
 } else {
-    header("Location: login_page.php");
+    header('Location: ' . page_url('login'));
     exit();
 }
 
@@ -24,7 +26,7 @@ $profileImage = isset($_SESSION['profileImage'])
     <title>KostenKlar–Profil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
 
 </head>
 
@@ -33,13 +35,13 @@ $profileImage = isset($_SESSION['profileImage'])
         <div class="row" style="min-height: 100vh">
 
 
-            <?php include __DIR__ . '/includes/sidebar.php'; ?>
+            <?php include INCLUDES_PATH . '/sidebar.php'; ?>
 
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
 
                 <!-- Abmelden-Bar -->
-                <?php include __DIR__ . '/includes/header.php'; ?>
+                <?php include INCLUDES_PATH . '/header.php'; ?>
                 <!-- Header -->
                 <header class="py-4 border-bottom p-3">
                     <h2>Mein Profil</h2>
@@ -93,7 +95,7 @@ $profileImage = isset($_SESSION['profileImage'])
                                     <div class="row mb-2">
                                         <div class="col-sm-4 fw-bold">Geburtsdatum:</div>
                                         <div class="col-sm-8">
-                                            <?php echo htmlspecialchars($userData['gebdatum'] ) ?>
+                                            <?php echo htmlspecialchars($userData['gebdatum']) ?>
                                         </div>
                                     </div>
 
@@ -145,7 +147,7 @@ $profileImage = isset($_SESSION['profileImage'])
             </div><!-- /col-10 -->
         </div><!-- /row -->
     </div><!-- /container-fluid -->
-    <?php include __DIR__ .'/includes/footer.php'; ?>
+    <?php include INCLUDES_PATH . '/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

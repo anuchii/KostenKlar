@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__ . '/config/db_config.php';
+require_once __DIR__ . '/../config/paths.php';
+require_once CONFIG_PATH . '/db_config.php';
 
 
 function createUser($userData, $pdo)

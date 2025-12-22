@@ -5,8 +5,8 @@
                         <div class="container-fluid flex-lg-column align-items-stretch">
 
                             <div class="d-flex w-100 justify-content-between align-items-center">
-                                <a class="navbar-brand d-flex align-items-center text-white gap-2" href="#">
-                                    <img src="images/logo_schnell3.png" alt="KostenKlar Logo" width="30" height="30"
+                                <a class="navbar-brand d-flex align-items-center text-white gap-2" href="<?= page_url('user_dashboard')?>">
+                                    <img src="<?= asset_url('images/logo_schnell3.png')?>" alt="KostenKlar Logo" width="30" height="30"
                                         class="d-inline-block align-text-top">
                                     <span>KostenKlar</span>
                                 </a>
@@ -23,10 +23,10 @@
                             <div class="collapse navbar-collapse w-100 mt-3" id="sidebarMenu">
                                 <ul class="navbar-nav flex-column w-100">
                                     <li class="nav-item"><a class="nav-link text-white"
-                                            href="user_dashboard.php">Übersicht</a></li>
-                                    <li class="nav-item"><a class="nav-link text-white" href="statistik.php">Statistik</a></li>
+                                            href="<?=page_url('user_dashboard')?>">Übersicht</a></li>
+                                    <li class="nav-item"><a class="nav-link text-white" href="<?= page_url('statistik')?>">Statistik</a></li>
                                     <li class="nav-item"><a class="nav-link active text-white" aria-current="page"
-                                            href="profil.php">Profil</a></li>
+                                            href="<?= page_url('profil')?>">Profil</a></li>
                                 </ul>
                             </div>
                         </div>

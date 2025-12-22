@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/config/db_config.php';
+require_once __DIR__ . '/../config/db_config.php';
 
 function getTransactionsByUserIDAndMonth($user_id, $year, $month, $pdo)
 {

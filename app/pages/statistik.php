@@ -1,8 +1,11 @@
 <?php
 session_start();
-require_once "transactions.php";
-require_once __DIR__ . '/config/db_config.php';
-require_once __DIR__ . '/helpers/statistik_helper.php';
+
+require_once __DIR__ . '/../config/db_config.php';
+require_once HELPERS_PATH . '/url.php';
+require_once CONFIG_PATH . '/db_config.php';
+require_once ACTIONS_PATH . '/transactions.php';
+require_once HELPERS_PATH . '/statistik_helper.php';
 
 $user_id = $_SESSION["user_data"]["user_id"];
 $selectedYear = isset($_GET['year'])
@@ -48,15 +51,16 @@ $pieLegendItems = $pieData['legend'] ?? [];
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/KostenKlar/assets/css/statistik.css">
+    <link rel="stylesheet" href="<?= asset_url('/css/statistik.css') ?>">
+    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row min-vh-100">
-            <?php include __DIR__ .'/includes/sidebar.php'; ?>
+            <?php include INCLUDES_PATH . '/sidebar.php'; ?>
             <div class="col-12 col-lg-10 p-0">
-                <?php include __DIR__ . '/includes/header.php'; ?>
+                <?php include INCLUDES_PATH . '/header.php'; ?>
 
                 <header class="py-4 border-bottom p-3">
                     <h2> Statistik</h2>
@@ -144,7 +148,7 @@ $pieLegendItems = $pieData['legend'] ?? [];
             </div>
 
         </div> <!--row min-vh-100 -->
-        <?php include __DIR__ . '/includes/footer.php'; ?>
+        <?php include INCLUDES_PATH . '/footer.php'; ?>
     </div> <!--container-fluig -->
 </body>
 
