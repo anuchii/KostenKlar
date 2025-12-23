@@ -14,7 +14,7 @@ session_start();
 $userData = getLoggedUserData();
 
 if (!$userData) {
-    header('Location: '. page_url('login') );
+    header('Location: ' . page_url('login'));
     exit();
 }
 
@@ -43,7 +43,7 @@ if (!empty($_SESSION["user_data"])) {
     $balance = $revenueSum - $expenseSum;
 
 } else {
-    header('Location: ' . page_url('login') );
+    header('Location: ' . page_url('login'));
     exit();
 }
 ?>
@@ -58,7 +58,7 @@ if (!empty($_SESSION["user_data"])) {
     <title><?php echo $pageName ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="icon" type="image/png"  href="<?= asset_url('images/logo_schnell3.png') ?>">
+    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
 
 </head>
 
@@ -139,7 +139,8 @@ if (!empty($_SESSION["user_data"])) {
                                     </table>
 
                                     <div class="mb-3">
-                                        <a href="new_transaction.php" type="button" class="btn btn-warning">
+                                        <a href="<?= page_url('new_transaction') ?>" type="button"
+                                            class="btn btn-warning">
                                             <i class="bi bi-plus-circle text-black"></i>
                                         </a>
                                     </div>

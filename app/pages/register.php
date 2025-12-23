@@ -1,10 +1,15 @@
 <?php
-require_once __DIR__ . "/registration_validation.php";
-require_once __DIR__ . '/users.php';
-$pageName = "Register";
+require_once __DIR__ . "/../config/paths.php";
+require_once CONFIG_PATH . '/db_config.php';
+require_once HELPERS_PATH . '/url.php';
+require_once HELPERS_PATH . '/users.php';
+require_once HELPERS_PATH . '/registration_validation.php';
+
+$pageName = "register";
 $errors = $errors ?? [];
 $erfolgsmeldung = $erfolgsmeldung ?? "";
 $maxGebdatum = (new DateTime('-16 years'))->format('Y-m-d');
+$backgroundImageUrl = asset_url('images/option2_hintergrund.png');
 
 ?>
 
@@ -20,7 +25,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
     if (empty($errors)) {
         if (!isEmailRegistered($userData["email"], $pdo)) {
             $success = createUser($userData, $pdo);
-            header("Location: login.php");
+            header('Location: ' . page_url('login'));
             exit();
         } else {
             $errors["email"] = "Diese Email ist schon registriert.";
@@ -37,14 +42,14 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="icon" type="image/png"  href="<?= asset_url('images/logo_schnell3.png') ?>">
+    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
 </head>
 
 
 <body>
     <style>
         body {
-            background-image: url('images/option2_hintergrund.png');
+            background-image: url('<?= $backgroundImageUrl ?>');
             background-size: cover;
             background-position: center center;
             background-attachment: fixed;
@@ -62,7 +67,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
         }
     </style>
     <nav class="navbar navbar-expand-lg navbar-dark justify-content-center" style="background-color: rgba(0,0,0,0);">
-        <img class="me-2" src="images/logo_schnell3.png" width="80px" alt="logo_kostenklar">
+        <img class="me-2" src="<?= asset_url('images/logo_schnell3.png') ?>" width="80px" alt="logo_kostenklar">
         </a>
     </nav>
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
@@ -164,7 +169,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
 
                     <div class="form-check form-check-inline">
                         <input class="form-check-input <?php echo isset($errors['geschlecht']) ? 'is-invalid' : '' ?>"
-                            id="geschlecht_männlich" name="geschlecht" type="radio" value="männlich" required
+                            id="geschlecht_männlich" name="geschlecht" type="radio" value="maennlich" required
                             <?php echo (($_POST['geschlecht'] ?? '') === 'männlich') ? 'checked' : ''; ?>>
                         <label class="form-check-label" for="geschlecht_männlich">Männlich</label>
                     </div>
@@ -203,7 +208,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
                 </form>
         </div>
     </div>
-
+    <?php include INCLUDES_PATH . '/footer.php'; ?>
 </body>
 
 </html>

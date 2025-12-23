@@ -35,7 +35,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
             header('Location: ' . page_url('user_dashboard'));
             exit();
           } else if ($userData_db["role"] === "admin") {
-            header("Location: admin_dashboard.php");
+            header('Location: ' . page_url('admin_dashboard'));
             exit();
           } else {
             $validationErrors["role"] = "Rolle unbekannt.";
@@ -158,7 +158,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
       <hr>
 
       <div class="text-center">
-        Noch kein Account? <a href="register.php" class="text-decoration-none">Registrierung</a> <br>
+              Noch kein Account? <a href="<?= page_url('register') ?>" class="text-decoration-none">Registrierung</a> <br>
         <a href="#" class="text-decoration-none">Passwort vergessen?</a>
       </div>
 
