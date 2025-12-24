@@ -204,7 +204,11 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
                     <?php endif; ?>
 
                     <input class="btn btn-warning" type="submit" value="Registrieren">
-
+                        <div class="mt-3">
+                            <a href="<?= page_url('login') ?>" class="text-white">
+                                 Zurück zum Login
+                            </a>
+                        </div>
                 </form>
         </div>
     </div>
