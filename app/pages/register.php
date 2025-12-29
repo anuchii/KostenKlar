@@ -42,30 +42,13 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="<?= asset_url('css/register.css') ?>" rel="stylesheet">
     <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
 </head>
 
 
 <body>
-    <style>
-        body {
-            background-image: url('<?= $backgroundImageUrl ?>');
-            background-size: cover;
-            background-position: center center;
-            background-attachment: fixed;
-            min-height: 100vh;
-            color: #fff;
-        }
-
-        .register-card {
-            background-color: rgba(0, 0, 0, 0.1);
-            border-radius: 1rem;
-            padding: 2.5rem;
-            max-width: 520px;
-            margin: 60px auto;
-            backdrop-filter: blur(6px);
-        }
-    </style>
+   
     <nav class="navbar navbar-expand-lg navbar-dark justify-content-center" style="background-color: rgba(0,0,0,0);">
         <img class="me-2" src="<?= asset_url('images/logo_schnell3.png') ?>" width="80px" alt="logo_kostenklar">
         </a>
