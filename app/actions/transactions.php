@@ -161,6 +161,7 @@ function getPieChartData(int $selectedYear, int $user_id, $pdo)
             ON c.category_id = t.transaction_category_id
          WHERE t.user_id = :user_id
            AND YEAR(t.transaction_date) = :year
+           AND  t.transaction_type = 'expense'
          GROUP BY c.category_name
          ORDER BY gesamtbetrag DESC"
     );
