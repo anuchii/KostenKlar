@@ -51,13 +51,13 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
    
     <nav class="navbar navbar-expand-lg navbar-dark justify-content-center" style="background-color: rgba(0,0,0,0);">
         <img class="me-2" src="<?= asset_url('images/logo_schnell3.png') ?>" width="80px" alt="logo_kostenklar">
-        </a>
+        
     </nav>
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
 
         <div class="register-card text-center">
             <h1>Registrierung</h1>
-            <a class="navbar-brand text-white" href="#">
+            
 
                 <?php if (!empty($erfolgsmeldung)): ?>
                     <div class="alert alert-success">
