@@ -2,13 +2,13 @@
 
 /**
  * Ermittelt den Basis-Pfad der Anwendung
- *  Bsp.: http://localhost/KostenKlar/public/index.php
+ *  Bsp.: http://localhost/KostenKlar/...
  *  -> /KostenKlar/public
  * @return string Basis-URL ohne abschließenden Slash
  */
-function base_url(): string {
-    $dir = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/');
-    return $dir === '/' ? '' : $dir;
+function base_url(): string{
+    return BASE_URL;
+
 }
 
 /**
@@ -19,7 +19,8 @@ function base_url(): string {
  * @param array $params Optionale zusätzliche URL-Parameter
  * @return string Vollständige interne URL
  */
-function route(string $page, array $params = []): string {
+function route(string $page, array $params = []): string
+{
     $params = array_merge(['page' => $page], $params);
     return base_url() . '/index.php?' . http_build_query($params);
 }
@@ -31,7 +32,8 @@ function route(string $page, array $params = []): string {
  * @return string URL zur gewünschten Seite
  */
 
-function page_url(string $page): string {
+function page_url(string $page): string
+{
     return route($page);
 }
 
@@ -42,6 +44,7 @@ function page_url(string $page): string {
  * @param string $path Relativer Pfad innerhalb von /assets
  * @return string Vollständige Asset-URL
  */
-function asset_url(string $path): string {
+function asset_url(string $path): string
+{
     return base_url() . '/assets/' . ltrim($path, '/');
 }

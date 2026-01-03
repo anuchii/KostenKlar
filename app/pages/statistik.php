@@ -76,7 +76,8 @@ $pieLegendItems = $pieData['legend'] ?? [];
                         <div class="card shadow-sm h-100">
                             <div class="card-header">
                                 <!--Dropdown für Das Jahr-->
-                                <form method="get" class="d-flex align-items-end gap-2 mt-2" style="max-width: 200px; ">
+                                <form method="get" action="<?= page_url('statistik') ?>" class="d-flex align-items-end gap-2 mt-2" style="max-width: 200px; ">
+                                    <input type="hidden" name="page" value="statistik">
                                     <select name="year" id="year" class="form-select flex-grow-1">
                                         <!-- kein JS: Auswahl + Button -->
                                         <!-- onchange = "this.form.submit"-->

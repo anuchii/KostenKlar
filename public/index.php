@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../app/config/paths.php';
-
+define('BASE_URL', '/kostenklar/public');
 $page = $_GET['page'] ?? 'login';
 
 $routes = [
