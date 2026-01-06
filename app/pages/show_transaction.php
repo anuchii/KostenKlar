@@ -1,0 +1,155 @@
+<?php
+require_once __DIR__ . "/../config/paths.php";
+require_once HELPERS_PATH . '/url.php';
+require_once HELPERS_PATH . '/functions.php';
+require_once ACTIONS_PATH . '/transaction_validation.php';
+require_once ACTIONS_PATH . '/transactions.php';
+
+
+$pageName = "Buchungsdetails";
+
+session_start();
+
+// Require login
+$userData = getLoggedUserData();
+
+if (!$userData) {
+    header('Location: ' . page_url('login'));
+    exit();
+}
+
+// TODO:
+// Require status = active
+// Require role = user
+
+$transaction_id = isset($_GET['transaction-id'])
+    ? (int) $_GET['transaction-id']
+    : null;
+
+if (!empty($_SESSION["user_data"])) {
+    $userData["first_name"] = $_SESSION["user_data"]["first_name"];
+    $userData["last_name"] = $_SESSION["user_data"]["last_name"];
+    $userData["user_id"] = $_SESSION["user_data"]["user_id"];
+
+    // Fetch transaction
+    $transaction = getTransactionByID($transaction_id, $pdo);
+
+} else {
+    header('Location: ' . page_url('login'));
+    exit();
+}
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $pageName ?></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row" style="min-height: 100vh">
+
+            <!-- Sidebar -->
+            <?php include INCLUDES_PATH . '/sidebar.php'; ?>
+
+            <!--HauptInhalt -->
+            <div class="col-12 col-lg-10 p-0">
+
+                <?php include INCLUDES_PATH . '/header.php'; ?>
+
+                <!-- Header -->
+                <header class="py-4 border-bottom p-3">
+                    <h2>Buchungsdetails</h2>
+                </header>
+
+                <!-- Profilinhalt -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow-sm my-4">
+                                <div class="card-body">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Datum</th>
+                                                <td>
+                                                    <?php echo (date("d.m.Y", strtotime($transaction["transaction_date"])) ?? ""); ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Bezeichnung</th>
+                                                <td>
+                                                    <?php echo ($transaction["transaction_title"] ?? ""); ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Betrag</th>
+                                                <td>
+                                                    <?php echo (number_format($transaction["transaction_amount"], 2, ',', '') ?? ""); ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Kategorie</th>
+                                                <td>
+                                                    <?php echo ($transaction["category_name"] ?? ""); ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Notiz</th>
+                                                <td>
+                                                    <?php echo ($transaction["transaction_note"] ?? ""); ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Typ</th>
+                                                <td>
+                                                    <?php echo ($transaction["transaction_type"] == 'revenue' ? "Einnahme" : "Ausgabe"); ?>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="mb-3 me-3 d-inline">
+                                        <a href="<?= route('edit_transaction', ['transaction-id' => $transaction["transaction_id"]]) ?>" type="button"
+                                            class="btn btn-warning">
+                                            <i class="bi bi-pencil text-black"></i>
+                                            Bearbeiten
+                                        </a>
+                                    </div>
+
+
+                                    <div class="mb-3 me-3 d-inline">
+                                        <form action="<?= route('delete_transaction', ['transaction-id' => $transaction["transaction_id"]]) ?>" method="post" class="d-inline" onsubmit="return confirm('Eintrag wirklich löschen?');">
+                                            <input type="hidden" name="transaction-id" value="<?= (int) $transaction["transaction_id"] ?>">
+                                            <button type="submit" class="btn btn-warning">
+                                                <i class="bi bi-trash text-black"></i>
+                                                Löschen
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- /container -->
+
+            </div><!-- /col-10 -->
+        </div><!-- /row -->
+    </div><!-- /container-fluid -->
+
+    <?php include INCLUDES_PATH . '/footer.php'; ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
