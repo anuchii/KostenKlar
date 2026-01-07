@@ -53,7 +53,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
         <img class="me-2" src="<?= asset_url('images/logo_schnell3.png') ?>" width="80px" alt="logo_kostenklar">
         
     </nav>
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 100vh;">
 
         <div class="register-card text-center">
             <h1>Registrierung</h1>
@@ -172,14 +172,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
 
                     <hr>
                     <!-- Eigene test AGB erstellen, Zurzeit werden Vorläufer AGBs verwendet🫀-->
-                    <label class="form-check-label" for="terms-and-conditions">
-                        <input id="terms-and-conditions"
-                            type="checkbox"
-                            name="terms-and-conditions" required
-                            class="form-check-input <?php echo isset($errors['terms-and-conditions']) ? 'is-invalid' : '' ?>"
-                            <?php echo isset($_POST['terms-and-conditions']) ? 'checked' : ''; ?>>
-                        Ich akzeptiere die <a href="https://www.freecodecamp.org/news/terms-of-service/"> Allgemeinen Geschäftsbedingungen</a>
-                    </label>
+                 
                     <?php if (isset($errors['terms-and-conditions'])): ?>
                         <div class="invalid-feedback d-block">
                             <?php echo $errors['terms-and-conditions']; ?>
