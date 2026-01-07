@@ -49,6 +49,25 @@ function getSumByUserIDAndMonth($user_id, $year, $month, $transaction_type, $pdo
     return $result;
 }
 
+function getTransactionByID($transaction_id, $pdo)
+{
+    // Prepare SQL statement
+    $statement = $pdo->prepare(
+        "SELECT t.*, c.* FROM transactions t
+            LEFT JOIN categories c ON c.category_id = t.transaction_category_id
+            WHERE transaction_id = :transaction_id"
+    );
+
+    // Bind values
+    $statement->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
+    $statement->execute();
+
+    // Fetch database entries
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+    return $result;
+}
+
 function getTransactionCategories($pdo)
 {
     // Prepare SQL statement
@@ -81,6 +100,52 @@ function createTransaction($transactionData, $user_id, $pdo)
     $statement->bindValue(":transaction_category_id", $transactionData["transaction_category"]);
     $statement->bindValue(":transaction_type", $transactionData["transaction_type"]);
     $statement->bindValue(":user_id", $user_id);
+
+    // Execute statement
+    $success = $statement->execute();
+
+    return $success;
+}
+
+function deleteTransaction($transaction_id, $pdo)
+{
+    // Prepare SQL statement
+    $statement = $pdo->prepare(
+        "DELETE FROM transactions WHERE transaction_id = :transaction_id"
+    );
+
+    // Bind values
+    $statement->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
+
+    // Execute statement
+    $success = $statement->execute();
+
+    return $success;
+}
+
+function updateTransaction($transactionData, $pdo)
+{
+
+    // Prepare SQL statement
+    $statement = $pdo->prepare(
+        "UPDATE transactions 
+            SET transaction_date = :transaction_date, 
+                transaction_title = :transaction_title, 
+                transaction_amount = :transaction_amount, 
+                transaction_note = :transaction_note, 
+                transaction_category_id = :transaction_category_id, 
+                transaction_type = :transaction_type
+            WHERE transaction_id = :transaction_id"
+    );
+
+    // Bind values
+    $statement->bindValue(":transaction_id", $transactionData["transaction_id"], PDO::PARAM_INT);
+    $statement->bindValue(":transaction_date", $transactionData["transaction_date"]);
+    $statement->bindValue(":transaction_title", $transactionData["transaction_title"]);
+    $statement->bindValue(":transaction_amount", $transactionData["transaction_amount"]);
+    $statement->bindValue(":transaction_note", $transactionData["transaction_note"]);
+    $statement->bindValue(":transaction_category_id", $transactionData["category_id"]);
+    $statement->bindValue(":transaction_type", $transactionData["transaction_type"]);
 
     // Execute statement
     $success = $statement->execute();

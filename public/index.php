@@ -12,7 +12,10 @@ $routes = [
     'user_dashboard' => PAGES_PATH . '/user_dashboard.php',
     'logout' => ACTIONS_PATH . '/logout.php',
     'auth_login' => ACTIONS_PATH . '/login.php',
-    'startseite' => PAGES_PATH .  '/startseite.php'
+    'startseite' => PAGES_PATH .  '/startseite.php',
+    'show_transaction' => PAGES_PATH . '/show_transaction.php',
+    'delete_transaction' => PAGES_PATH . '/delete_transaction.php',
+    'edit_transaction' => PAGES_PATH . '/edit_transaction.php',
     //'admin_dashboard' => 
 ];
 if (!isset($routes[$page])) {

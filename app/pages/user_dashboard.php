@@ -22,12 +22,12 @@ if (!$userData) {
 // Require status = active
 // Require role = user
 
-$year = (int) date('Y');
-$month = (int) date('m');
-$yearMonth = date('Y-m');
-$currentDate = date('Y-m-d');
+$selectedYearMonth = isset($_GET['year-month'])
+    ? $_GET['year-month']
+    : date('Y-m');
 
-
+$year = (int) explode('-', $selectedYearMonth)[0];
+$month = (int) explode('-', $selectedYearMonth)[1];
 
 if (!empty($_SESSION["user_data"])) {
     $userData["first_name"] = $_SESSION["user_data"]["first_name"];
@@ -88,9 +88,18 @@ if (!empty($_SESSION["user_data"])) {
                                 <div class="card-header bg-light">
                                     <strong>Abrechnungsmonat</strong>
                                 </div>
-                                <div class="card-body">
-                                    <input type="month" class="form-control" id="month" name="month"
-                                        value="<?php echo ($yearMonth); ?>" style="width: auto" ;>
+                                <div class="card-body d-flex align-items-end gap-2">
+                                    <!--Dropdown für das Monat-->
+                                    <form method="get" action="<?= page_url('user_dashboard') ?>" class="d-flex align-items-end gap-2" style="max-width: 200px; ">
+                                        <!-- kein JS: Auswahl + Button -->
+                                        <!-- onchange = "this.form.submit"-->
+                                        <input type="hidden" id="page-hidden" name="page" value="user_dashboard">
+                                        <input type="month" class="form-control flex-grow-1" id="year-month" name="year-month"
+                                            value="<?php echo ($selectedYearMonth); ?>">
+                                        <button type="submit"
+                                            class="btn btn-sm btn-warning text-nowrap mt-2 mb-1">Anzeigen
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -111,6 +120,7 @@ if (!empty($_SESSION["user_data"])) {
                                                 <th scope="col">Betrag</th>
                                                 <th scope="col" class="d-none d-md-table-cell">Kategorie</th>
                                                 <th scope="col" class="d-none d-lg-table-cell">Notiz</th>
+                                                <th scope="col"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -132,6 +142,9 @@ if (!empty($_SESSION["user_data"])) {
                                                     </td>
                                                     <td class="d-none d-lg-table-cell">
                                                         <?php echo ($transaction["transaction_note"] ?? ""); ?>
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-warning btn-sm text-center" href="<?= route('show_transaction', ['transaction-id' => $transaction["transaction_id"]]) ?>">Details</a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
