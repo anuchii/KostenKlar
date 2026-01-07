@@ -144,28 +144,23 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
           ?>
         </div>
 
-        <div class="form-check">
-          <label class="form-check-label" for="flexCheckdefault">Angemeldet bleiben</label>
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="remember">
-        </div>
-
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-center">
           <button type="submit" class="btn btn-warning" style="width: 100px">Anmelden</button>
         </div>
 
 
       </form>
       <hr>
-
       <div class="text-center">
-              Noch kein Account? <a href="<?= page_url('register') ?>" class="text-decoration-none">Registrierung</a> <br>
-        <a href="#" class="text-decoration-none">Passwort vergessen?</a>
+        Noch kein Account? <a href="<?= page_url('register') ?>" class="text-decoration-none">Registrierung</a> <br>
+
       </div>
+
 
     </div>
 
   </div>
-
+  <?php include INCLUDES_PATH . '/footer.php'; ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
 </body>
