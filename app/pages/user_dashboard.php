@@ -8,7 +8,7 @@ require_once ACTIONS_PATH . '/transactions.php';
 
 $pageName = "Dashboard";
 
-session_start();
+
 
 // Require login
 $userData = getLoggedUserData();

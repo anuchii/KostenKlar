@@ -1,56 +1,19 @@
 <?php
+if (!defined('ROOT_PATH')) {
+  require_once __DIR__ . '/../config/paths.php';
+}
 
-require_once __DIR__ . "/../config/paths.php";
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/login_validation.php';
 require_once HELPERS_PATH . '/users.php';
 
-$validationErrors = [];
-$userData = [];
-?>
 
-<?php
-// Handle registration POST request
-if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
-  $userData = $_POST;
-  $success = false;
+$validationErrors = $_SESSION['login_errors'] ?? [];
+$old = $_SESSION['login_old'] ?? [];
 
-  $validationErrors = validateLoginData($userData);
+unset($_SESSION['login_errors'], $_SESSION['login_old']);
 
-  if (empty($validationErrors)) {
 
-    if (isEmailRegistered($userData["email"], $pdo)) {
-      $userData["user_id"] = getUserIDByEmail($userData["email"], $pdo)[0]["user_id"];
-      $userData_db = getUserDataByUserID($userData["user_id"], $pdo);
-
-      if (password_verify($userData["password"], $userData_db["password"])) {
-
-        if ($userData_db["status"] === "active") {
-          unset($userData_db["password"]);
-          $success = true;
-          session_start();
-          $_SESSION["user_data"] = $userData_db;
-
-          if ($userData_db["role"] === "user") {
-            header('Location: ' . page_url('user_dashboard'));
-            exit();
-          } else if ($userData_db["role"] === "admin") {
-            header('Location: ' . page_url('admin_dashboard'));
-            exit();
-          } else {
-            $validationErrors["role"] = "Rolle unbekannt.";
-          }
-        } else {
-          $validationErrors["account"] = "Benutzerkonto ist inaktiv.";
-        }
-      } else {
-        $validationErrors["password"] = "Ungültiges Passwort.";
-      }
-    } else {
-      $validationErrors["email"] = "E-Mail-Adresse konnte nicht gefunden werden.";
-    }
-  }
-}
 
 ?>
 
@@ -88,7 +51,9 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link text-white" aria-current="page" href="#">Startseite</a>
+              <a class="nav-link text-white" aria-current="page" href="<?= page_url('startseite') ?>">
+                Startseite
+              </a>
             </li>
             <!-- <li class="nav-item">
               <a class="nav-link text-white" href="#">Kontakt</a>
@@ -114,7 +79,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
       <h3 class="px-3 pt-3 ">Einloggen</h3>
       <hr>
 
-      <form method="post" style="max-width:480px; margin:auto;">
+      <form method="post" action="<?= page_url('login_action') ?>" style="max-width:480px; margin:auto;">
 
         <div class="input-group mb-3">
           <span class="input-group-text bg-warning boder boder-warning" style="width: 50px">
@@ -123,7 +88,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") && isset($_POST)) {
           <label for="emailAddress" class="sr-only"> </label>
           <input type="email" id="emailAddress" name="email"
             class="form-control <?php echo isset($validationErrors['email']) ? 'is-invalid' : '' ?>"
-            placeholder="Email Adresse" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" requiered
+            placeholder="Email Adresse" value="<?php echo htmlspecialchars($old['email'] ?? ''); ?>" requiered
             autofocus>
           <?php
           echo (!isset($validationErrors["email"]) ? "" :
