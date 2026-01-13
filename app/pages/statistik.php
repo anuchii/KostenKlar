@@ -1,7 +1,6 @@
 <?php
-session_start();
 
-require_once __DIR__ . '/../config/db_config.php';
+
 require_once HELPERS_PATH . '/url.php';
 require_once CONFIG_PATH . '/db_config.php';
 require_once ACTIONS_PATH . '/transactions.php';

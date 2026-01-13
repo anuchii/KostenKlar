@@ -51,11 +51,6 @@ function validateRegistrationData($registrationData){
             $errors["geschlecht"] = "Bitte wählen Sie ein Geschlecht aus.";
         }
 
-
-        if (!isset($_POST["terms-and-conditions"])) {
-            $errors["terms-and-conditions"] = "Sie müssen die AGB akzeptieren.";
-        }
-
         if (empty($errors)) {
 
             //Felder zurücksetzen
