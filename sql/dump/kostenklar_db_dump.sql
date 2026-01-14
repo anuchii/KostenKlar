@@ -40,7 +40,8 @@ INSERT INTO `categories` (`category_id`, `category_name`) VALUES
 (1, 'Lebensmittel'),
 (2, 'Mobilität'),
 (3, 'Mode'),
-(4, 'Haushalt');
+(4, 'Haushalt'),
+(5, 'Einkommen');
 
 -- --------------------------------------------------------
 
@@ -51,7 +52,7 @@ INSERT INTO `categories` (`category_id`, `category_name`) VALUES
 CREATE TABLE `transactions` (
   `transaction_id` int(10) UNSIGNED NOT NULL,
   `transaction_date` date NOT NULL,
-  `transaction_description` varchar(255) NOT NULL,
+  `transaction_title` varchar(255) NOT NULL,
   `transaction_amount` decimal(12,2) NOT NULL,
   `transaction_type` enum('expense','revenue') NOT NULL,
   `transaction_category_id` int(10) UNSIGNED NOT NULL,
@@ -71,15 +72,20 @@ INSERT INTO `transactions` (`transaction_id`, `transaction_date`, `transaction_d
 --
 -- Table structure for table `users`
 --
+--todo: 
+--einfügen: geschlecht (Enum), gebdatum (Date), avatar_path (Text)
 
 CREATE TABLE `users` (
   `user_id` int(10) UNSIGNED NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
+  `gebdatum` date NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `geschlecht` enum('weiblich','maennlich','divers','') COLLATE utf8mb4_general_ci NOT NULL,
   `role` enum('user','admin') NOT NULL,
-  `status` enum('active','inactive') NOT NULL
+  `status` enum('active','inactive') NOT NULL,
+   `avatar_path` text COLLATE utf8mb4_general_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
