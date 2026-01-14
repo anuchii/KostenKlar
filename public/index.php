@@ -1,6 +1,6 @@
 <?php
 session_set_cookie_params([
-    'path' => '/',   // robust: Cookie gilt für die ganze App
+    'path' => '/',   //Cookie gilt für die ganze App
 ]);
 session_start();
 require_once __DIR__ . '/../app/config/paths.php';
