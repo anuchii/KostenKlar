@@ -10,7 +10,7 @@ require_once ACTIONS_PATH . '/transaction_validation.php';
 $pageName = "new_transaction";
 $pageTitle = "Neue Buchung";
 
-session_start();
+
 
 // Require login
 $userData = getLoggedUserData();

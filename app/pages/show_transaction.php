@@ -8,7 +8,7 @@ require_once ACTIONS_PATH . '/transactions.php';
 
 $pageName = "Buchungsdetails";
 
-session_start();
+
 
 // Require login
 $userData = getLoggedUserData();
