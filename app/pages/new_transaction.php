@@ -11,7 +11,7 @@ require_once ACTIONS_PATH . '/transaction_validation.php';
 
 $pageName = "new_transaction";
 
-session_start();
+
 
 
 // Require login
