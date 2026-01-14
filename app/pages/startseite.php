@@ -15,34 +15,13 @@ require_once HELPERS_PATH . '/url.php';
 </head>
 
 <body class="bg-light">
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white border-bottom">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="<?= page_url('startseite') ?>">
-                <img src="<?= asset_url('images/logo_schnell3.png') ?>" alt="KostenKlar" width="32" height="32" class="rounded">
-                <span class="fw-semibold">KostenKlar</span>
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#kkNav" aria-controls="kkNav" aria-expanded="false" aria-label="Menü">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="kkNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                    <li class="nav-item"><a class="btn btn-outline-secondary ms-lg-2" href="<?= page_url('login') ?>">Login</a></li>
-                    <li class="nav-item"><a class="btn btn-primary" href="<?= page_url('register') ?>">Kostenlos starten</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    <?php include_once INCLUDES_PATH . '/nav_public.php' ?>
     <!-- Hero -->
     <header class="py-5">
         <div class="container">
             <div class="row align-items-center g-4">
                 <div class="col-12 col-lg-6">
-                   
+
                     <h1 class="display-5 fw-bold">Behalte deine Ausgaben im Blick – einfach, schnell, klar.</h1>
                     <p class="lead text-muted mt-3 mb-4">
                         KostenKlar hilft dir, Transaktionen zu erfassen, Statistiken zu sehen und deine Finanzen besser zu verstehen.
@@ -101,7 +80,7 @@ require_once HELPERS_PATH . '/url.php';
         </div>
     </header>
 
-    <!-- Features -->
+    <!-- Funktionen -->
     <section id="features" class="py-5">
         <div class="container">
             <div class="text-center mb-4">
@@ -146,17 +125,18 @@ require_once HELPERS_PATH . '/url.php';
                     </div>
                 </div>
             </div>
-
+            <!--
             <div class="text-center mt-4">
                 <a class="btn btn-primary" href="<?= page_url('register') ?>">Jetzt kostenlos starten</a>
             </div>
+            -->
         </div>
     </section>
 
-    
+
 
     <!-- Footer -->
-  <?php include INCLUDES_PATH . '/footer.php'; ?>
+    <?php include INCLUDES_PATH . '/footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
