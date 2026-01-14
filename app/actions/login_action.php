@@ -1,7 +1,7 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /');
+    header('Location: ' . page_url('startseite'));
     exit;
 }
 
@@ -10,16 +10,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../config/paths.php';
+require_once CONFIG_PATH . '/paths.php';
 require_once HELPERS_PATH . '/url.php';
-
-
-if (function_exists('page_url') === false) {
-}
-
 require_once HELPERS_PATH . '/login_validation.php';
 require_once HELPERS_PATH . '/users.php';
-require_once CONFIG_PATH . '/db_config.php';  
+require_once CONFIG_PATH . '/db_config.php';
 
 if (!isset($pdo)) {
     $_SESSION['login_errors'] = ['account' => 'Serverfehler: Datenbankverbindung fehlt.'];
@@ -73,6 +68,7 @@ if (($userData_db['status'] ?? '') !== 'active') {
     exit;
 }
 
+session_regenerate_id(true);
 
 unset($userData_db['password']);
 $_SESSION['user_data'] = $userData_db;
