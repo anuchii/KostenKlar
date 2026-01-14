@@ -1,6 +1,14 @@
 <?php
 
-// Validates login data
+/**
+ * Validiert die Eingaben des Login-Formulars.
+ *
+ * Prüft, ob E-Mail-Adresse und Passwort vorhanden sind,
+ * und gibt bei fehlenden Angaben entsprechende Fehlermeldungen zurück.
+ *
+ * @param array $userData Die vom Login-Formular übermittelten Daten.
+ * @return array Ein assoziatives Array mit Validierungsfehlern (leer, wenn keine Fehler vorliegen).
+ */
 function validateLoginData($userData)
 {
     $validationErrors = [];
