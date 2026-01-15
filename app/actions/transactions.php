@@ -97,7 +97,7 @@ function createTransaction($transactionData, $user_id, $pdo)
     $statement->bindValue(":transaction_title", $transactionData["transaction_title"]);
     $statement->bindValue(":transaction_amount", $transactionData["transaction_amount"]);
     $statement->bindValue(":transaction_note", $transactionData["transaction_note"]);
-    $statement->bindValue(":transaction_category_id", $transactionData["transaction_category"]);
+    $statement->bindValue(":transaction_category_id", $transactionData["category_id"]);
     $statement->bindValue(":transaction_type", $transactionData["transaction_type"]);
     $statement->bindValue(":user_id", $user_id);
 

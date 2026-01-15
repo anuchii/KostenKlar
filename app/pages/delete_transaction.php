@@ -21,15 +21,32 @@ if (!$userData) {
 // Require status = active
 // Require role = user
 
-$transaction_id = isset($_GET['transaction-id']) ? (int) $_GET['transaction-id'] : 0;
+$transaction_id = isset($_GET['transaction-id'])
+    ? (int) $_GET['transaction-id']
+    : null;
+
+if ($transaction_id) {
+    $transactionData = getTransactionByID($transaction_id, $pdo);
+    $transactionDate = $transactionData['transaction_date'];
+    $yearMonth = date('Y-m', strtotime($transactionDate));
+}
+
+// Check if transaction exists and belongs to logged in user
+if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
+    // Redirect to dashboard if transaction is invalid
+    // TODO: Redirect to dashboard and flash error message
+    header('Location: ' . page_url('user_dashboard'));
+    exit();
+}
 
 $success = deleteTransaction($transaction_id, $pdo);
 
 if ($success) {
-    // Redirect to transactions page after successful deletion
-    header('Location: ' . page_url('user_dashboard'));
+    // Redirect to user dashboard after successful deletion
+    header('Location: ' . page_url('user_dashboard') . '&year-month=' . $yearMonth);
     exit();
 } else {
     // Handle error (e.g., transaction not found or deletion failed)
-    echo "Error: Unable to delete the transaction.";
+    // TODO: Redirect to dashboard and flash error message
+    echo "Fehler: Buchung konnte nicht gelöscht werden.";
 }
