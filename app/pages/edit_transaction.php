@@ -7,13 +7,10 @@ require_once HELPERS_PATH . '/functions.php';
 require_once ACTIONS_PATH . '/transactions.php';
 require_once ACTIONS_PATH . '/transaction_validation.php';
 
-
-
 $pageName = "edit_transaction";
 $pageTitle = "Buchung bearbeiten";
 
 session_start();
-
 
 // Require login
 $userData = getLoggedUserData();
@@ -44,6 +41,13 @@ if ($transaction_id) {
     $transactionData["transaction_amount"] = number_format($transactionData["transaction_amount"], 2, ',', '');
 }
 
+// Check if transaction exists and belongs to logged in user
+if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
+    // Redirect to dashboard if transaction is invalid
+    header('Location: ' . page_url('user_dashboard'));
+    exit();
+}
+
 $validationErrors = [];
 
 // Handle POST request
@@ -55,7 +59,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
     if (empty($validationErrors)) {
         $transactionData["transaction_amount"] = floatval(str_replace(',', '.', $transactionData["transaction_amount"]));
 
-        $success = updateTransaction($transactionData, $pdo);
+        updateTransaction($transactionData, $pdo);
 
         $transactionDate = $transactionData['transaction_date'];
         $yearMonth = date('Y-m', strtotime($transactionDate));
@@ -63,6 +67,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
         exit();
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="de">

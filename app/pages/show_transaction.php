@@ -26,21 +26,20 @@ $transaction_id = isset($_GET['transaction-id'])
     ? (int) $_GET['transaction-id']
     : null;
 
-if (!empty($_SESSION["user_data"])) {
-    $userData["first_name"] = $_SESSION["user_data"]["first_name"];
-    $userData["last_name"] = $_SESSION["user_data"]["last_name"];
-    $userData["user_id"] = $_SESSION["user_data"]["user_id"];
-
+if ($transaction_id) {
     // Fetch transaction
     $transaction = getTransactionByID($transaction_id, $pdo);
+}
 
-} else {
-    header('Location: ' . page_url('login'));
+// Check if transaction exists and belongs to logged in user
+if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
+    // Redirect to dashboard if transaction is invalid
+    // TODO: Redirect to dashboard and flash error message
+    header('Location: ' . page_url('user_dashboard'));
     exit();
 }
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="de">
