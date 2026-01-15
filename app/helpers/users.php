@@ -109,3 +109,18 @@ function getUserDataByUserID($user_id, $pdo)
 
     return $result;
 }
+
+function getAllUsers($pdo)
+{
+    // Prepare SQL statement
+    $statement = $pdo->prepare(
+        "SELECT * FROM users"
+    );
+
+    $statement->execute();
+
+    // Fetch database entries
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    return $results;
+}
