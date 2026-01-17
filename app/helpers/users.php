@@ -7,7 +7,7 @@ require_once CONFIG_PATH . '/db_config.php';
 function createUser($userData, $pdo)
 {
     // Hash password
-    $userData["password"] = password_hash($userData["password"], PASSWORD_DEFAULT);
+    $userData["password"] = password_hash($userData["password"], PASSWORD_BCRYPT);
 
     // Prepare SQL statement
     $statement = $pdo->prepare(
@@ -114,7 +114,8 @@ function getAllUsers($pdo)
 {
     // Prepare SQL statement
     $statement = $pdo->prepare(
-        "SELECT * FROM users"
+        "SELECT * FROM users
+        WHERE role = 'user'"
     );
 
     $statement->execute();
@@ -123,4 +124,43 @@ function getAllUsers($pdo)
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     return $results;
+}
+
+function updateUser($userData, $pdo)
+{
+
+    // Prepare SQL statement
+    $statement = $pdo->prepare(
+        "UPDATE users 
+            SET first_name = :first_name, 
+                last_name = :last_name,
+                status = :status
+            WHERE user_id = :user_id"
+    );
+
+    // Bind values
+    $statement->bindValue(":user_id", $userData["user_id"], PDO::PARAM_INT);
+    $statement->bindValue(":first_name", $userData["first_name"]);
+    $statement->bindValue(":last_name", $userData["last_name"]);
+    $statement->bindValue(":status", $userData["status"]);
+
+    // Execute statement
+    $success = $statement->execute();
+
+    return $success;
+}
+
+function getActiveUserCount ($pdo) {
+    // Prepare SQL statement
+    $statement = $pdo->prepare(
+        "SELECT COUNT(*) FROM users
+            WHERE role = 'user' AND status = 'active'"
+    );
+
+    $statement->execute();
+
+    // Fetch database entries
+    $result = $statement->fetchColumn();
+
+    return $result;
 }

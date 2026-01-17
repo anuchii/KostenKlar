@@ -256,8 +256,22 @@ function getYearlyExpenseSumByUserId($user_id, int $year, $pdo){
          AND  transaction_type = 'expense'
          AND YEAR(transaction_date)= :year"
     );
-    $statement->bindValue('user_id', $user_id);
-    $statement->bindValue(':year', $year);
+$statement->bindValue('user_id', $user_id);
+$statement->bindValue(':year', $year);
+$statement->execute();
+return (float) $statement->fetchColumn();
+}
+
+function getTransactionCount ($pdo) {
+    // Prepare SQL statement
+    $statement = $pdo->prepare(
+        "SELECT COUNT(*) FROM transactions"
+    );
+
     $statement->execute();
-    return (float) $statement->fetchColumn();
+
+    // Fetch database entries
+    $result = $statement->fetchColumn();
+
+    return $result;
 }
