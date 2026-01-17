@@ -5,3 +5,11 @@
 *.log
 
 db_config.php
+
+# User uploads
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Avatars: Ordner behalten, Inhalte ignorieren
+public/uploads/avatars/*
+!public/uploads/avatars/.gitkeep

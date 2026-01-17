@@ -24,6 +24,11 @@ function route(string $page, array $params = []): string
     $params = array_merge(['page' => $page], $params);
     return base_url() . '/index.php?' . http_build_query($params);
 }
+function action_url(string $action): string
+{
+    
+    return base_url() . '/app/actions/' . ltrim($action, '/');
+}
 
 /**
  * Erstellt eine URL zu einer Seite ohne zusätzliche Parameter.
@@ -47,4 +52,21 @@ function page_url(string $page): string
 function asset_url(string $path): string
 {
     return base_url() . '/assets/' . ltrim($path, '/');
+}
+
+/**
+ * Erstellt eine URL zu Upload-Dateien, deren Pfad relativ zu /public in der DB gespeichert ist.
+ * Beispiel DB-Wert: "uploads/avatars/user_5_xxx.jpg"
+ * Ergebnis: "/kostenklar/public/uploads/avatars/user_5_xxx.jpg"
+ *
+ * @param string|null $path Relativer Pfad (z.B. uploads/avatars/...) oder null
+ * @param string|null $fallback Fallback-URL (z.B. Default-Avatar)
+ * @return string Vollständige URL
+ */
+function upload_url(?string $path, ?string $fallback = null): string
+{
+    if (empty($path)) {
+        return $fallback ?? '';
+    }
+    return base_url() . '/' . ltrim($path, '/');
 }

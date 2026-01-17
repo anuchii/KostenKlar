@@ -1,35 +1,43 @@
-<div class="col-12 col-lg-2 bg-secondary p-0">
-    <div class="sticky-top">
-        <nav
-            class="navbar navbar-dark navbar-expand-lg bg-secondary border-bottom flex-lg-column align-items-stretch p-3">
-            <div class="container-fluid flex-lg-column align-items-stretch">
+<aside id="sidebar" class="col-12 col-lg-2 bg-white border-end p-0">
+    <nav class="pt-4">
 
-                <div class="d-flex w-100 justify-content-between align-items-center">
-                    <a class="navbar-brand d-flex align-items-center text-white gap-2" href="<?= page_url('user_dashboard')?>">
-                        <img src="<?= asset_url('images/logo_schnell3.png')?>" alt="KostenKlar Logo" width="30" height="30"
-                            class="d-inline-block align-text-top">
-                        <span>KostenKlar</span>
-                    </a>
+        <ul class="nav nav-pills flex-column gap-1 px-2">
+
+            <li class="nav-item">
+                <a href="<?= page_url('user_dashboard') ?>"
+                    class="nav-link active d-flex align-items-center gap-2">
+                    <i class="bi bi-speedometer2"></i>
+                    Übersicht
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="<?= page_url('new_transaction') ?>"
+                    class="nav-link text-muted d-flex align-items-center gap-2">
+                    <i class="bi bi-plus-circle"></i>
+                    Neue Buchung
+                </a>
+            </li>
 
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-                        aria-label="Menü umschalten">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                </div>
-                <hr>
+            <li class="nav-item">
+                <a href="<?= page_url('statistik') ?>"
+                    class="nav-link text-muted d-flex align-items-center gap-2">
+                    <i class="bi bi-bar-chart"></i>
+                    Statistiken
+                </a>
+            </li>
 
-                <div class="collapse navbar-collapse w-100 mt-3" id="sidebarMenu">
-                    <ul class="navbar-nav flex-column w-100">
-                        <li class="nav-item"><a class="nav-link text-white"
-                                href="<?= page_url('user_dashboard')?>">Übersicht</a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="<?= page_url('statistik')?>">Statistik</a></li>
-                        <li class="nav-item"><a class="nav-link active text-white" aria-current="page"
-                                href="<?= page_url('profil')?>">Profil</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
+            <hr class="my-3">
+
+            <li class="nav-item">
+                <a href="<?= page_url('profil') ?>"
+                    class="nav-link text-muted d-flex align-items-center gap-2">
+                    <i class="bi bi-person-circle"></i>
+                    Profil
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+</aside>
