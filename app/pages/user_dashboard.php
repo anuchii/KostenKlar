@@ -18,16 +18,21 @@ if (!$userData) {
     exit();
 }
 
-// TODO:
-// Require status = active
-// Require role = user
+// Jahr & Monat aus Dropdowns
+$year  = isset($_GET['year'])  ? (int)$_GET['year']  : (int)date('Y');
+$month = isset($_GET['month']) ? (int)$_GET['month'] : (int)date('m');
 
-$selectedYearMonth = isset($_GET['year-month'])
-    ? $_GET['year-month']
-    : date('Y-m');
+// Plausibilitätscheck
+$currentYear = (int)date('Y');
+if ($year < 2000 || $year > $currentYear + 1) {
+    $year = $currentYear;
+}
+if ($month < 1 || $month > 12) {
+    $month = (int)date('m');
+}
 
-$year = (int) explode('-', $selectedYearMonth)[0];
-$month = (int) explode('-', $selectedYearMonth)[1];
+// Nur für UI
+$selectedYearMonth = sprintf('%04d-%02d', $year, $month);
 
 if (!empty($_SESSION["user_data"])) {
     $userData["first_name"] = $_SESSION["user_data"]["first_name"];
@@ -79,12 +84,31 @@ if (!empty($_SESSION["user_data"])) {
                             <h1 class="h3 mb-1">Übersicht</h1>
                             <p class="text-muted mb-0">Willkommen zurück, <?php echo ("{$userData['first_name']} {$userData['last_name']}"); ?>.</p>
                         </div>
-                        <!-- TODO: Sicherheitslücke : refelcted XSS! ein Select daras machen, -->
                         <form method="get" action="<?= page_url('user_dashboard') ?>" class="d-flex align-items-end gap-2">
                             <input type="hidden" id="page-hidden" name="page" value="user_dashboard">
                             <div>
-                                <label for="year-month" class="form-label small text-muted mb-1">Abrechnungsmonat</label>
-                                <input type="month" class="form-control" id="year-month" name="year-month" value="<?php echo ($selectedYearMonth); ?>">
+                                <label class="form-label small text-muted mb-1">Abrechnungsmonat</label>
+                                <div class="d-flex gap-2">
+                                    <select name="year" class="form-select flex-grow-1" style="min-width: 110px;">
+                                        <?php
+                                        $currentYear = (int)date('Y');
+                                        for ($y = $currentYear - 5; $y <= $currentYear; $y++) {
+                                            $selected = ($y === $year) ? 'selected' : '';
+                                            echo "<option value=\"$y\" $selected>$y</option>";
+                                        }
+                                        ?>
+                                    </select>
+
+                                    <select name="month" class="form-select flex-grow-1">
+                                        <?php
+                                        for ($m = 1; $m <= 12; $m++) {
+                                            $value = sprintf('%02d', $m);
+                                            $selected = ($m === $month) ? 'selected' : '';
+                                            echo "<option value=\"$value\" $selected>$value</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary text-nowrap" style="height: 38px;">Anzeigen</button>
                         </form>
