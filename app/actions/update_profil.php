@@ -20,13 +20,13 @@ if ($userId === null) {
     exit;
 }
 
-// Eingaben lesen & normalisieren
+
 $firstName  = trim($_POST['first_name'] ?? '');
 $lastName   = trim($_POST['last_name'] ?? '');
 $email      = trim($_POST['email'] ?? '');
 $geschlecht = trim($_POST['geschlecht'] ?? '');
 
-// Validierung
+// ==== Validierung ====
 $errors = [];
 if ($firstName === '' || mb_strlen($firstName) > 100) {
     $errors[] = 'Vorname ist ungültig.';

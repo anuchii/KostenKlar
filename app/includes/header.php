@@ -1,13 +1,37 @@
- <header> <!--Geschmackssache: class="sticky-top"-->
-     <nav class="navbar navbar-expand-lg bg-secondary border-bottom px-0 me-0">
-         <div class="container-fluid px-0">
-             <ul class="navbar-nav ms-auto me-0">
-                 <li class="nav-item me-0">
-                     <a class="btn btn-warning text-dark pe-3 me-3" href="<?= page_url('logout')?>">
-                         Abmelden <i class="bi bi-arrow-bar-right text-dark ps-1"></i>
-                     </a>
-                 </li>
-             </ul>
-         </div>
-     </nav>
- </header>
+<header class="bg-white border-bottom">
+
+    <div class="container-fluid px-3 px-lg-4 py-2">
+        <div class="d-flex justify-content-between align-items-center">
+
+            <div class="d-flex align-items-center gap-2">
+                <span class="fw-semibold">KostenKlar</span>
+            </div>
+
+
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                    data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle me-1"></i>
+                    <?= htmlspecialchars($userData['first_name']) ?>
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="<?= page_url('profil') ?>">
+                            Profil
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
+                        <a class="dropdown-item text-danger" href="<?= page_url('logout') ?>">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</header>
