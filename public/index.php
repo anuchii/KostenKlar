@@ -16,7 +16,10 @@ $routes = [
     'show_transaction' => PAGES_PATH . '/show_transaction.php',
     'delete_transaction' => PAGES_PATH . '/delete_transaction.php',
     'edit_transaction' => PAGES_PATH . '/edit_transaction.php',
-    //'admin_dashboard' => 
+    'admin_dashboard' => PAGES_PATH . '/admin_dashboard.php',
+    'user_management' => PAGES_PATH . '/user_management.php',
+    'show_user' => PAGES_PATH . '/show_user.php',
+    'edit_user' => PAGES_PATH . '/edit_user.php'
 ];
 if (!isset($routes[$page])) {
     http_response_code(404);

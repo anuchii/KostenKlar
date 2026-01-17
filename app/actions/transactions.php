@@ -261,3 +261,17 @@ $statement->bindValue(':year', $year);
 $statement->execute();
 return (float) $statement->fetchColumn();
 }
+
+function getTransactionCount ($pdo) {
+    // Prepare SQL statement
+    $statement = $pdo->prepare(
+        "SELECT COUNT(*) FROM transactions"
+    );
+
+    $statement->execute();
+
+    // Fetch database entries
+    $result = $statement->fetchColumn();
+
+    return $result;
+}

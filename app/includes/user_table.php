@@ -1,8 +1,3 @@
-<?php
-
-// This file requires: $users
-
-?>
 
 <table class="table">
     <thead>
@@ -19,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($tusers as $user): ?>
+        <?php foreach ($users as $user): ?>
             <tr>
                 <td>
                     <?php echo ($user["user_id"] ?? ""); ?>
@@ -37,7 +32,7 @@
                     <?php echo ($user["geschlecht"] ?? ""); ?>
                 </td>
                 <td class="d-none d-lg-table-cell">
-                    <?php echo (date("d.m.Y", strtotime($user["gebdatum"])) ?? ""); ?>
+                    <?php echo (isset($user["gebdatum"]) ? date("d.m.Y", strtotime($user["gebdatum"])) : ""); ?>
                 </td>
                 <td class="d-none d-lg-table-cell">
                     <?php echo ($user["role"] ?? ""); ?>
