@@ -4,10 +4,17 @@
         <div class="d-flex justify-content-between align-items-center">
 
             <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-outline-secondary d-lg-none"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#sidebar"
+                    aria-controls="sidebar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="bi bi-list"></i>
+                </button>
                 <span class="fw-semibold">KostenKlar</span>
             </div>
-
-
             <div class="dropdown">
                 <button class="btn btn-outline-secondary btn-sm dropdown-toggle"
                     data-bs-toggle="dropdown">
