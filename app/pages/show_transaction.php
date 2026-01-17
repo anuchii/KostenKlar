@@ -54,7 +54,7 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
 
 </head>
 
-<body>
+<body class="bg-light">
     <div class="container-fluid">
         <div class="row" style="min-height: 100vh">
 
@@ -67,17 +67,26 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
                 <?php include INCLUDES_PATH . '/header.php'; ?>
 
                 <!-- Header -->
-                <header class="py-4 border-bottom p-3">
-                    <h2>Buchungsdetails</h2>
+                <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
+                    <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
+                        <div>
+                            <h1 class="h3 mb-1">Buchungsdetails</h1>
+                            <p class="text-muted mb-0">Details zur ausgewählten Buchung.</p>
+                        </div>
+                        <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary" style="height: 38px;">Zurück</a>
+                    </div>
                 </header>
 
                 <!-- Profilinhalt -->
-                <div class="container">
+                <div class="container py-4">
                     <div class="row">
                         <div class="col">
-                            <div class="card shadow-sm my-4">
-                                <div class="card-body">
-                                    <table class="table">
+                            <div class="card shadow-sm rounded-3">
+                                <div class="card-header bg-white">
+                                    <strong>Details</strong>
+                                </div>
+                                <div class="card-body p-0">
+                                    <table class="table table-striped align-middle mb-0">
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Datum</th>
@@ -94,7 +103,9 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
                                             <tr>
                                                 <th scope="row">Betrag</th>
                                                 <td>
-                                                    <?php echo (number_format($transaction["transaction_amount"], 2, ',', '') ?? ""); ?>
+                                                    <span class="fw-semibold <?= ($transaction['transaction_type'] === 'expense') ? 'text-danger' : 'text-success' ?>">
+                                                        <?php echo (number_format($transaction["transaction_amount"], 2, ',', '') ?? ""); ?>
+                                                    </span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -112,27 +123,25 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
                                             <tr>
                                                 <th scope="row">Typ</th>
                                                 <td>
-                                                    <?php echo ($transaction["transaction_type"] == 'revenue' ? "Einnahme" : "Ausgabe"); ?>
+                                                    <span class="badge <?= ($transaction['transaction_type'] === 'revenue') ? 'bg-success' : 'bg-danger' ?>">
+                                                        <?php echo ($transaction["transaction_type"] == 'revenue' ? "Einnahme" : "Ausgabe"); ?>
+                                                    </span>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
 
-                                    <div class="mb-3 me-3 d-inline">
-                                        <a href="<?= route('edit_transaction', ['transaction-id' => $transaction["transaction_id"]]) ?>" type="button"
-                                            class="btn btn-warning">
-                                            <i class="bi bi-pencil text-black"></i>
-                                            Bearbeiten
+                                    <div class="d-flex gap-2 p-3">
+                                        <a href="<?= route('edit_transaction', ['transaction-id' => $transaction['transaction_id']]) ?>"
+                                            class="btn btn-primary">
+                                            <i class="bi bi-pencil me-1"></i>Bearbeiten
                                         </a>
-                                    </div>
 
-
-                                    <div class="mb-3 me-3 d-inline">
-                                        <form action="<?= route('delete_transaction', ['transaction-id' => $transaction["transaction_id"]]) ?>" method="post" class="d-inline" onsubmit="return confirm('Eintrag wirklich löschen?');">
-                                            <input type="hidden" name="transaction-id" value="<?= (int) $transaction["transaction_id"] ?>">
-                                            <button type="submit" class="btn btn-warning">
-                                                <i class="bi bi-trash text-black"></i>
-                                                Löschen
+                                        <form action="<?= route('delete_transaction', ['transaction-id' => $transaction['transaction_id']]) ?>"
+                                            method="post" onsubmit="return confirm('Eintrag wirklich löschen?');">
+                                            <input type="hidden" name="transaction-id" value="<?= (int) $transaction['transaction_id'] ?>">
+                                            <button type="submit" class="btn btn-outline-danger">
+                                                <i class="bi bi-trash me-1"></i>Löschen
                                             </button>
                                         </form>
                                     </div>
