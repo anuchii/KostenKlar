@@ -1,0 +1,9 @@
+
+.register-wrapper {
+    min-height: calc(100vh - 72px);
+}
+
+.register-card {
+    max-width: 520px;
+    width: 100%;
+}
