@@ -150,6 +150,26 @@ function updateUser($userData, $pdo)
     return $success;
 }
 
+function updateUserProfil(array $data, PDO $pdo): bool
+{
+    $stmt = $pdo->prepare(
+        "UPDATE users
+         SET first_name = :first_name,
+             last_name  = :last_name,
+             email      = :email,
+             geschlecht = :geschlecht
+         WHERE user_id = :user_id"
+    );
+
+    $stmt->bindValue(':user_id', $data['user_id'], PDO::PARAM_INT);
+    $stmt->bindValue(':first_name', $data['first_name']);
+    $stmt->bindValue(':last_name', $data['last_name']);
+    $stmt->bindValue(':email', $data['email']);
+    $stmt->bindValue(':geschlecht', $data['geschlecht']);
+
+    return $stmt->execute();
+}
+
 function getActiveUserCount ($pdo) {
     // Prepare SQL statement
     $statement = $pdo->prepare(
