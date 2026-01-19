@@ -1,17 +1,8 @@
 <?php
 require_once HELPERS_PATH . '/url.php';
 ?>
-<!DOCTYPE html>
-<html lang="de">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KostenKlar – Überblick über deine Finanzen</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
-</head>
+<?php include_once INCLUDES_PATH . '/head.php' ?>
 
 <body class="bg-light">
     <?php include_once INCLUDES_PATH . '/nav_public.php' ?>
@@ -27,11 +18,11 @@ require_once HELPERS_PATH . '/url.php';
                         Ohne unnötigen Aufwand.
                     </p>
                     <div class="d-flex flex-wrap gap-2">
-                        <a class="btn btn-primary btn-lg" href="<?= page_url('register') ?>">
+                        <a class="btn btn-primary btn-lg" href="<?= BASE_URL . '/register' ?>">
                             Kostenlos starten
                             <i class="bi bi-arrow-right ms-1"></i>
                         </a>
-                        <a class="btn btn-outline-secondary btn-lg" href="<?= page_url('login') ?>">Ich habe schon einen Account</a>
+                        <a class="btn btn-outline-secondary btn-lg" href="<?= BASE_URL . '/login' ?>">Ich habe schon einen Account</a>
                     </div>
                     <div class="d-flex gap-4 mt-4 text-muted small">
                         <div class="d-flex align-items-center gap-2"><i class="bi bi-shield-check"></i> Intuitiv</div>

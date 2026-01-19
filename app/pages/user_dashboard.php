@@ -1,70 +1,4 @@
-<?php
-require_once __DIR__ . "/../config/paths.php";
-require_once HELPERS_PATH . '/url.php';
-require_once HELPERS_PATH . '/functions.php';
-require_once ACTIONS_PATH . '/transaction_validation.php';
-require_once ACTIONS_PATH . '/transactions.php';
-
-
-$pageName = "Dashboard";
-
-
-
-// Require login
-$userData = getLoggedUserData();
-
-if (!$userData) {
-    header('Location: ' . page_url('login'));
-    exit();
-}
-
-// Jahr & Monat aus Dropdowns
-$year  = isset($_GET['year'])  ? (int)$_GET['year']  : (int)date('Y');
-$month = isset($_GET['month']) ? (int)$_GET['month'] : (int)date('m');
-
-// Plausibilitätscheck
-$currentYear = (int)date('Y');
-if ($year < 2000 || $year > $currentYear + 1) {
-    $year = $currentYear;
-}
-if ($month < 1 || $month > 12) {
-    $month = (int)date('m');
-}
-
-// Nur für UI
-$selectedYearMonth = sprintf('%04d-%02d', $year, $month);
-
-if (!empty($_SESSION["user_data"])) {
-    $userData["first_name"] = $_SESSION["user_data"]["first_name"];
-    $userData["last_name"] = $_SESSION["user_data"]["last_name"];
-    $userData["user_id"] = $_SESSION["user_data"]["user_id"];
-
-    // Fetch transactions for current month and user_id = $_SESSION["user_data"]["user_id]
-    $transactions = getTransactionsByUserIDAndMonth($userData["user_id"], $year, $month, $pdo);
-
-    // Fetch sums for current month and user_id = $_SESSION["user_data"]["user_id]
-    $expenseSum = (float) getSumByUserIDAndMonth($userData["user_id"], $year, $month, "expense", $pdo)["sum"] ?? 0.00;
-    $revenueSum = (float) getSumByUserIDAndMonth($userData["user_id"], $year, $month, "revenue", $pdo)["sum"] ?? 0.00;
-    $balance = $revenueSum - $expenseSum;
-} else {
-    header('Location: ' . page_url('login'));
-    exit();
-}
-?>
-
-
-<!DOCTYPE html>
-<html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageName ?></title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
-</head>
+<?php include INCLUDES_PATH . '/head.php'; ?>
 
 <body class="bg-light">
     <div class="container-fluid">
@@ -84,8 +18,7 @@ if (!empty($_SESSION["user_data"])) {
                             <h1 class="h3 mb-1">Übersicht</h1>
                             <p class="text-muted mb-0">Willkommen zurück, <?php echo ("{$userData['first_name']} {$userData['last_name']}"); ?>.</p>
                         </div>
-                        <form method="get" action="<?= page_url('user_dashboard') ?>" class="d-flex align-items-end gap-2">
-                            <input type="hidden" id="page-hidden" name="page" value="user_dashboard">
+                        <form method="get" action="<?= BASE_URL . '/dashboard' ?>" class="d-flex align-items-end gap-2">
                             <div>
                                 <label class="form-label small text-muted mb-1">Abrechnungsmonat</label>
                                 <div class="d-flex gap-2">
@@ -167,7 +100,7 @@ if (!empty($_SESSION["user_data"])) {
                                 <div class="card-header bg-white">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <strong>Buchungen</strong>
-                                        <a href="<?= page_url('new_transaction') ?>" class="btn btn-primary btn-sm">
+                                        <a href="<?= BASE_URL . '/transaction/new' ?>" class="btn btn-primary btn-sm">
                                             <i class="bi bi-plus-circle me-1"></i>Neue Buchung
                                         </a>
                                     </div>
@@ -204,7 +137,7 @@ if (!empty($_SESSION["user_data"])) {
                                                         <?php echo ($transaction["transaction_note"] ?? ""); ?>
                                                     </td>
                                                     <td>
-                                                        <a class="btn btn-outline-primary btn-sm text-center" href="<?= route('show_transaction', ['transaction-id' => $transaction["transaction_id"]]) ?>">Details</a>
+                                                        <a class="btn btn-outline-primary btn-sm text-center" href="<?= BASE_URL . '/transaction/show?id=' . $transaction["transaction_id"] ?>">Details</a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>

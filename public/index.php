@@ -1,37 +1,44 @@
 <?php
-session_set_cookie_params([
+/* session_set_cookie_params([
     'path' => '/',   //Cookie gilt für die ganze App
-]);
-session_start();
+]); */
+
+// Load required files
 require_once __DIR__ . '/../app/config/paths.php';
-define('BASE_URL', '/kostenklar/public');
-$page = $_GET['page'] ?? 'startseite';
+require_once APP_PATH . '/routing.php';
 
-$routes = [
-    'login' => PAGES_PATH . '/login.php',
-    'new_transaction' => PAGES_PATH . '/new_transaction.php',
-    'profil' => PAGES_PATH . '/profil.php',
-    'update_profil' => ACTIONS_PATH . '/update_profil.php',
-    'register' => PAGES_PATH . '/register.php',
-    'statistik' => PAGES_PATH . '/statistik.php',
-    'user_dashboard' => PAGES_PATH . '/user_dashboard.php',
-    'logout' => ACTIONS_PATH . '/logout.php',
-    'login_action' => ACTIONS_PATH . '/login_action.php',
-    'upload_avatar' => ACTIONS_PATH . '/upload_avatar.php',
-    'startseite' => PAGES_PATH .  '/startseite.php',
-    'show_transaction' => PAGES_PATH . '/show_transaction.php',
-    'delete_transaction' => PAGES_PATH . '/delete_transaction.php',
-    'edit_transaction' => PAGES_PATH . '/edit_transaction.php',
-    'admin_dashboard' => PAGES_PATH . '/admin_dashboard.php',
-    'user_management' => PAGES_PATH . '/user_management.php',
-    'show_user' => PAGES_PATH . '/show_user.php',
-    'edit_user' => PAGES_PATH . '/edit_user.php'
+// --------- ONLY WITHOUT VIRTUAL HOST ---------
+define('BASE_URL', '/kostenklar');
+// --------- ONLY WITHOUT VIRTUAL HOST ---------
+
+// Get request info
+$request['path'] = strtolower(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+$request['method'] = strtoUpper($_SERVER['REQUEST_METHOD']);
+$request['parameters'] = [
+    'GET' => $_GET,
+    'POST' => $_POST
 ];
-if (!isset($routes[$page])) {
-    http_response_code(404);
-    exit('404 - Seite nicht gefunden');
-}
 
-require $routes[$page];
+// Start session
+session_start();
+
+// --------- ONLY WITHOUT VIRTUAL HOST ---------
+$request['path'] = str_replace(BASE_URL, '', $request['path']);
+// --------- ONLY WITHOUT VIRTUAL HOST ---------
+
+//Normalize path
+$request['path'] = '/' . trim($request['path'], '/');
+
+// echo('<pre>');
+// var_dump($request);
+// echo('<pre>');
+// die();
+
+// Load routes
+$routes = require(CONFIG_PATH . '/routes.php');
+
+// Dispatch
+dispatch($request, $routes);
+
 
 

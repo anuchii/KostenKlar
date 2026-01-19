@@ -11,17 +11,17 @@
  */
 function validateLoginData($userData)
 {
-    $validationErrors = [];
+    $errors = [];
 
     // Check email input
     if (empty($userData["email"])) {
-        $validationErrors["email"] = "Bitte geben Sie Ihre E-Mail-Adresse ein.";
+        $errors["email"] = "Bitte geben Sie Ihre E-Mail-Adresse ein.";
     }
 
     // Check password input
     if (empty($userData["password"])) {
-        $validationErrors["password"] = "Bitte geben Sie Ihr Passwort ein.";
+        $errors["password"] = "Bitte geben Sie Ihr Passwort ein.";
     }
 
-    return $validationErrors;
+    return $errors;
 }

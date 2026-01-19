@@ -24,7 +24,7 @@
 
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="<?= page_url('profil') ?>">
+                        <a class="dropdown-item" href="<?= BASE_URL . '/profil' ?>">
                             Profil
                         </a>
                     </li>
@@ -32,7 +32,7 @@
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <a class="dropdown-item text-danger" href="<?= page_url('logout') ?>">
+                        <a class="dropdown-item text-danger" href="<?= BASE_URL . '/logout' ?>">
                             Logout
                         </a>
                     </li>

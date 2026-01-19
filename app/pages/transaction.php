@@ -1,58 +1,4 @@
-<?php
-require_once __DIR__ . "/../config/paths.php";
-require_once HELPERS_PATH . '/url.php';
-require_once HELPERS_PATH . '/functions.php';
-require_once ACTIONS_PATH . '/transaction_validation.php';
-require_once ACTIONS_PATH . '/transactions.php';
-
-
-$pageName = "Buchungsdetails";
-
-
-
-// Require login
-$userData = getLoggedUserData();
-
-if (!$userData) {
-    header('Location: ' . page_url('login'));
-    exit();
-}
-
-// TODO:
-// Require status = active
-// Require role = user
-
-$transaction_id = isset($_GET['transaction-id'])
-    ? (int) $_GET['transaction-id']
-    : null;
-
-if ($transaction_id) {
-    // Fetch transaction
-    $transaction = getTransactionByID($transaction_id, $pdo);
-}
-
-// Check if transaction exists and belongs to logged in user
-if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
-    // Redirect to dashboard if transaction is invalid
-    // TODO: Redirect to dashboard and flash error message
-    header('Location: ' . page_url('user_dashboard'));
-    exit();
-}
-
-?>
-
-<!DOCTYPE html>
-<html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageName ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
-
-</head>
+<?php include INCLUDES_PATH . '/head.php'; ?>
 
 <body class="bg-light">
     <div class="container-fluid">
@@ -73,7 +19,7 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
                             <h1 class="h3 mb-1">Buchungsdetails</h1>
                             <p class="text-muted mb-0">Details zur ausgewählten Buchung.</p>
                         </div>
-                        <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary" style="height: 38px;">Zurück</a>
+                        <a href="<?= BASE_URL . '/dashboard' ?>" class="btn btn-outline-secondary" style="height: 38px;">Zurück</a>
                     </div>
                 </header>
 
@@ -132,14 +78,14 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
                                     </table>
 
                                     <div class="d-flex gap-2 p-3">
-                                        <a href="<?= route('edit_transaction', ['transaction-id' => $transaction['transaction_id']]) ?>"
+                                        <a href="<?= BASE_URL . '/transaction/edit?id=' . $transaction['transaction_id'] ?>"
                                             class="btn btn-primary">
                                             <i class="bi bi-pencil me-1"></i>Bearbeiten
                                         </a>
 
-                                        <form action="<?= route('delete_transaction', ['transaction-id' => $transaction['transaction_id']]) ?>"
+                                        <form action=""
                                             method="post" onsubmit="return confirm('Eintrag wirklich löschen?');">
-                                            <input type="hidden" name="transaction-id" value="<?= (int) $transaction['transaction_id'] ?>">
+                                            <input type="hidden" name="transaction_id" value="<?= (int) $transaction['transaction_id'] ?>">
                                             <button type="submit" class="btn btn-outline-danger">
                                                 <i class="bi bi-trash me-1"></i>Löschen
                                             </button>

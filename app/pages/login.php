@@ -1,31 +1,4 @@
-<?php
-if (!defined('ROOT_PATH')) {
-  require_once __DIR__ . '/../config/paths.php';
-}
-
-require_once HELPERS_PATH . '/url.php';
-
-$validationErrors = $_SESSION['login_errors'] ?? [];
-$old = $_SESSION['login_old'] ?? [];
-
-unset($_SESSION['login_errors'], $_SESSION['login_old']);
-?>
-
-
-<!doctype html>
-<html lang="de">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login </title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <!--für icons-->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-  <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
-
-</head>
+<?php include_once INCLUDES_PATH . '/head.php' ?>
 
 <body>
   <?php include_once INCLUDES_PATH . '/nav_auth.php' ?>
@@ -36,7 +9,7 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
           <h1 class="h3 fw-bold mb-1">Willkommen zurück</h1>
           <p class="text-muted mb-4">Melde dich bei KostenKlar an</p>
 
-          <form method="post" action="<?= page_url('login_action') ?>" novalidate>
+          <form method="post" action="<?= BASE_URL . '/login' ?>" novalidate>
 
             <div class="input-group mb-3">
               <span class="input-group-text bg-light text-secondary" style="width: 50px">
@@ -47,15 +20,15 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
                 type="email"
                 id="emailAddress"
                 name="email"
-                class="form-control <?php echo isset($validationErrors['email']) ? 'is-invalid' : '' ?>"
+                class="form-control <?php echo isset($errors['email']) ? 'is-invalid' : '' ?>"
                 placeholder="E-Mail-Adresse"
                 value="<?php echo htmlspecialchars($old['email'] ?? ''); ?>"
                 required
                 autofocus
                 autocomplete="email">
               <?php
-              echo (!isset($validationErrors["email"]) ? "" :
-                '<div class="invalid-feedback">' . $validationErrors["email"] . '</div>');
+              echo (!isset($errors["email"]) ? "" :
+                '<div class="invalid-feedback">' . $errors["email"] . '</div>');
               ?>
             </div>
 
@@ -69,12 +42,12 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
                 id="password"
                 name="password"
                 placeholder="Passwort"
-                class="form-control <?php echo isset($validationErrors['password']) ? 'is-invalid' : '' ?>"
+                class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : '' ?>"
                 required
                 autocomplete="current-password">
               <?php
-              echo (!isset($validationErrors["password"]) ? "" :
-                '<div class="invalid-feedback">' . $validationErrors["password"] . '</div>');
+              echo (!isset($errors["password"]) ? "" :
+                '<div class="invalid-feedback">' . $errors["password"] . '</div>');
               ?>
             </div>
 
@@ -82,7 +55,7 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
           </form>
 
           <div class="text-center text-muted mt-3">
-            Noch kein Account? <a href="<?= page_url('register') ?>" class="text-decoration-none">Registrierung</a>
+            Noch kein Account? <a href="<?= BASE_URL . '/register' ?>" class="text-decoration-none">Registrierung</a>
           </div>
         </div>
       </div>
