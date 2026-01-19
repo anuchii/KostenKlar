@@ -2,7 +2,6 @@
 require_once __DIR__ . "/../config/paths.php";
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/functions.php';
-require_once ACTIONS_PATH . '/transaction_validation.php';
 require_once ACTIONS_PATH . '/transactions.php';
 
 
@@ -134,14 +133,14 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
                                     <div class="d-flex gap-2 p-3">
                                         <a href="<?= route('edit_transaction', ['transaction-id' => $transaction['transaction_id']]) ?>"
                                             class="btn btn-primary">
-                                            <i class="bi bi-pencil me-1"></i>Bearbeiten
+                                            <i class="bi bi-pencil me-1" aria-hidden="true"></i>Bearbeiten
                                         </a>
 
                                         <form action="<?= route('delete_transaction', ['transaction-id' => $transaction['transaction_id']]) ?>"
                                             method="post" onsubmit="return confirm('Eintrag wirklich löschen?');">
                                             <input type="hidden" name="transaction-id" value="<?= (int) $transaction['transaction_id'] ?>">
                                             <button type="submit" class="btn btn-outline-danger">
-                                                <i class="bi bi-trash me-1"></i>Löschen
+                                                <i class="bi bi-trash me-1" aria-hidden="true"></i>Löschen
                                             </button>
                                         </form>
                                     </div>
