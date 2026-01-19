@@ -52,7 +52,7 @@
                                     <?php endif; ?>
 
                                     <form method="POST" enctype="multipart/form-data"
-                                        action="<?= BASE_URL . '/avatar/upload' ?>">
+                                        action="<?= BASE_URL . '/profile/avatar/upload' ?>">
 
                                         <div class="mb-2">
                                             <input type="file" name="avatar" accept="image/png, image/jpeg, image/webp"
