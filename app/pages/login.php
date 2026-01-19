@@ -1,9 +1,7 @@
 <?php
-if (!defined('ROOT_PATH')) {
-  require_once __DIR__ . '/../config/paths.php';
-}
-
+require_once __DIR__ . '/../config/paths.php';
 require_once HELPERS_PATH . '/url.php';
+require_once HELPERS_PATH . '/form.php';
 
 $validationErrors = $_SESSION['login_errors'] ?? [];
 $old = $_SESSION['login_old'] ?? [];
@@ -23,15 +21,15 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <!--für icons-->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="<?= asset_url('css/auth.css') ?>">
   <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
-
 </head>
 
 <body>
   <?php include_once INCLUDES_PATH . '/nav_auth.php' ?>
   <div class="container-fluid min-vh-100">
     <div class="d-flex justify-content-center align-items-start pt-5">
-      <div class="card shadow border-0" style="max-width: 420px; width: 100%;">
+      <div class="card shadow border-0 auth-card">
         <div class="card-body p-4 p-md-5">
           <h1 class="h3 fw-bold mb-1">Willkommen zurück</h1>
           <p class="text-muted mb-4">Melde dich bei KostenKlar an</p>
@@ -40,28 +38,26 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
 
             <div class="input-group mb-3">
               <span class="input-group-text bg-light text-secondary" style="width: 50px">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-user" aria-hidden="true"></i>
               </span>
               <label for="emailAddress" class="visually-hidden">E-Mail</label>
               <input
                 type="email"
                 id="emailAddress"
                 name="email"
-                class="form-control <?php echo isset($validationErrors['email']) ? 'is-invalid' : '' ?>"
+                class="form-control <?= field_invalid_class($validationErrors, 'email') ?>"
                 placeholder="E-Mail-Adresse"
-                value="<?php echo htmlspecialchars($old['email'] ?? ''); ?>"
+                value="<?= htmlspecialchars($old['email'] ?? '') ?>"
                 required
                 autofocus
                 autocomplete="email">
-              <?php
-              echo (!isset($validationErrors["email"]) ? "" :
-                '<div class="invalid-feedback">' . $validationErrors["email"] . '</div>');
-              ?>
+
+              <?= field_error($validationErrors, 'email') ?>
             </div>
 
             <div class="input-group mb-3">
-              <span class="input-group-text bg-light text-secondary" style="width:50px">
-                <i class="fas fa-key"></i>
+              <span class="input-group-text bg-light text-secondary icon-fixed" style="width:50px">
+                <i class="fas fa-key" aria-hidden="true"></i>
               </span>
               <label for="password" class="visually-hidden">Passwort</label>
               <input
@@ -69,13 +65,10 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
                 id="password"
                 name="password"
                 placeholder="Passwort"
-                class="form-control <?php echo isset($validationErrors['password']) ? 'is-invalid' : '' ?>"
+                class="form-control <?= field_invalid_class($validationErrors, 'password') ?>"
                 required
                 autocomplete="current-password">
-              <?php
-              echo (!isset($validationErrors["password"]) ? "" :
-                '<div class="invalid-feedback">' . $validationErrors["password"] . '</div>');
-              ?>
+              <?= field_error($validationErrors, 'password') ?>
             </div>
 
             <button type="submit" class="btn btn-primary w-100">Anmelden</button>
