@@ -20,5 +20,11 @@ return [
     ['path' => '/profile/avatar/upload', 'method' => 'POST', 'handler' => 'upload_avatar'],
     ['path' => '/admin/dashboard', 'method' => 'GET', 'handler' => 'show_admin_dashboard'],
     ['path' => '/admin/users', 'method' => 'GET', 'handler' => 'show_users_management'],
+    ['path' => '/admin/user', 'method' => 'GET', 'handler' => 'show_user_details'],
+    ['path' => '/admin/user/delete', 'method' => 'POST', 'handler' => 'delete_user'],
+    ['path' => '/admin/user/change-status', 'method' => 'POST', 'handler' => 'change_user_status'],
+    ['path' => '/admin/user/delete', 'method' => 'POST', 'handler' => 'delete_user'],
+    ['path' => '/admin/user/edit', 'method' => 'GET', 'handler' => 'show_edit_user'],
+    ['path' => '/admin/user/edit', 'method' => 'POST', 'handler' => 'process_edit_user'],
     ['path' => '/logout', 'method' => 'GET', 'handler' => 'process_logout']
 ];

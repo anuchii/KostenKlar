@@ -15,9 +15,6 @@ if (!$userData) {
 $user_id = $userData['user_id'];
 $userData = getUserDataByUserID($user_id, $pdo);
 
-var_dump($userData);
-die();
-
 $defaultProfileImage = 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
 
 if (!empty($userData['avatar_path'])) {

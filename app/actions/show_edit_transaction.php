@@ -40,8 +40,7 @@ unset($_SESSION['transaction_errors'], $_SESSION['transaction_old']);
 
 render('edit_transaction', [
     'pageTitle' => 'Buchungsbearbeitung',
-    'errors' => $errors,
-    'old' => $old,
     'userData' => $userData,
-    'categories' => $categories
+    'errors' => $errors,
+    'old' => $old
 ]);

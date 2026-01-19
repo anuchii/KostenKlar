@@ -18,12 +18,14 @@ require_admin();
 
 // Fetch user statistics
 $userCount = getActiveUserCount($pdo);
+$inactiveUserCount = getInActiveUserCount($pdo);
 $transactionCount = getTransactionCount($pdo);
 
 render('admin_dashboard', [
     'pageTitle' => 'Admin Dashboard',
     'userData' => $userData,
     'userCount' => $userCount,
+    'inactiveUserCount' => $inactiveUserCount,
     'transactionCount' => $transactionCount
 ]);
 

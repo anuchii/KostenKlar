@@ -150,7 +150,28 @@ function updateUser($userData, $pdo)
     return $success;
 }
 
-function getActiveUserCount ($pdo) {
+function updateUserProfil(array $data, PDO $pdo): bool
+{
+    $stmt = $pdo->prepare(
+        "UPDATE users
+         SET first_name = :first_name,
+             last_name  = :last_name,
+             email      = :email,
+             geschlecht = :geschlecht
+         WHERE user_id = :user_id"
+    );
+
+    $stmt->bindValue(':user_id', $data['user_id'], PDO::PARAM_INT);
+    $stmt->bindValue(':first_name', $data['first_name']);
+    $stmt->bindValue(':last_name', $data['last_name']);
+    $stmt->bindValue(':email', $data['email']);
+    $stmt->bindValue(':geschlecht', $data['geschlecht']);
+
+    return $stmt->execute();
+}
+
+function getActiveUserCount($pdo)
+{
     // Prepare SQL statement
     $statement = $pdo->prepare(
         "SELECT COUNT(*) FROM users
@@ -163,4 +184,50 @@ function getActiveUserCount ($pdo) {
     $result = $statement->fetchColumn();
 
     return $result;
+}
+
+function getInActiveUserCount($pdo)
+{
+    // Prepare SQL statement
+    $statement = $pdo->prepare(
+        "SELECT COUNT(*) FROM users
+            WHERE role = 'user' AND status = 'inactive'"
+    );
+
+    $statement->execute();
+
+    // Fetch database entries
+    $result = $statement->fetchColumn();
+
+    return $result;
+}
+
+/**
+ * Soft-delete: markiert einen User als inaktiv.
+ */
+function changeUserStatusById(int $user_id, $status, PDO $pdo): bool
+{
+    $statement = $pdo->prepare(
+        "UPDATE users
+         SET status = :status
+         WHERE user_id = :user_id AND role = 'user'"
+    );
+
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    $statement->bindValue(':status', $status);
+    return $statement->execute();
+}
+
+/**
+ * Hard-delete: löscht den Datensatz endgültig aus der DB.
+ */
+function deleteUserById(int $user_id, PDO $pdo): bool
+{
+    $statement = $pdo->prepare(
+        "DELETE FROM users
+         WHERE user_id = :user_id AND role = 'user'"
+    );
+
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    return $statement->execute();
 }

@@ -95,7 +95,7 @@
                                             <label class="col-sm-4 fw-bold" for="gebdatum">Geburtsdatum:</label>
                                             <div class="col-sm-8">
                                                 <input id="gebdatum" type="text" class="form-control"
-                                                    value="<?= htmlspecialchars($userData['gebdatum'] ?? '') ?>" readonly>
+                                                    value="<?= htmlspecialchars(date("d.m.Y", strtotime($userData["gebdatum"]))) ?? '' ?>" readonly>
                                             </div>
                                         </div>
 

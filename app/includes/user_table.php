@@ -41,7 +41,7 @@
                     <?php echo ($user["status"] ?? ""); ?>
                 </td>
                 <td>
-                    <a class="btn btn-warning btn-sm text-center" href="<?= route('show_user', ['user-id' => $user["user_id"]]) ?>">Details</a>
+                    <a class="btn btn-primary btn-sm text-center" href="<?= BASE_URL . '/admin/user?id=' . $user['user_id'] ?>">Details</a>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -1,28 +1,3 @@
-<?php
-require_once __DIR__ . "/../config/paths.php";
-require_once HELPERS_PATH . '/url.php';
-require_once HELPERS_PATH . '/functions.php';
-require_once HELPERS_PATH . '/users.php';
-
-$pageName = "Benutzerdetails";
-
-session_start();
-
-// Require user role 'admin'
-require_admin();
-
-$user_id = isset($_GET['user-id'])
-    ? (int) $_GET['user-id']
-    : null;
-
-if ($user_id) {
-    // Fetch user
-    $user = getUserDataByUserID($user_id, $pdo);
-}
-
-?>
-
-
 <?php include INCLUDES_PATH . '/head.php'; ?>
 
 <body>
@@ -102,7 +77,7 @@ if ($user_id) {
                                     </table>
 
                                     <div class="mb-3 me-3 d-inline">
-                                        <a href="<?= route('edit_user', ['user-id' => $user["user_id"]]) ?>" type="button"
+                                        <a href="<?= BASE_URL . '/admin/user/edit?id=' . $user['user_id'] ?>" type="button"
                                             class="btn btn-primary text-nowrap">
                                             <i class="bi bi-pencil text-black" aria-hidden="true"></i>
                                             Bearbeiten
@@ -111,8 +86,8 @@ if ($user_id) {
 
 
                                     <div class="mb-3 me-3 d-inline">
-                                        <form action="<?= route('delete_user', ['user-id' => $user["user_id"]]) ?>" method="post" class="d-inline" onsubmit="return confirm('Eintrag wirklich löschen?');">
-                                            <input type="hidden" name="transaction-id" value="<?= (int) $user["user_id"] ?>">
+                                        <form action="<?= BASE_URL . '/admin/user/delete' ?>" method="post" class="d-inline" onsubmit="return confirm('Eintrag wirklich löschen?');">
+                                            <input type="hidden" name="user_id" value="<?= (int) $user["user_id"] ?>">
                                             <button type="submit" class="btn btn-primary text-nowrap" aria-hidden="true">
                                                 <i class="bi bi-trash text-black"></i>
                                                 Löschen
@@ -120,11 +95,12 @@ if ($user_id) {
                                         </form>
                                     </div>
                                     <div class="mb-3 me-3 d-inline">
-                                        <form action="<?= route('deactivate_user', ['user-id' => $user['user_id']]) ?>" method="post" class="d-inline"
-                                            onsubmit="return confirm('Benutzer wirklich deaktivieren?');">
+                                        <form action="<?= BASE_URL . '/admin/user/change-status' ?>" method="post" class="d-inline"
+                                            onsubmit="return confirm('Benutzerstatus wirklich ändern?');">
+                                            <input type="hidden" name="user_id" value="<?= (int) $user["user_id"] ?>">
                                             <button type="submit" class="btn btn-primary text-nowrap">
                                                 <i class="bi bi-person-x text-black" aria-hidden="true"></i>
-                                                Inaktivieren
+                                                Aktivierungsstatus ändern
                                             </button>
                                         </form>
                                     </div>
