@@ -12,5 +12,7 @@ return [
     ['path' => '/transaction/new', 'method' => 'POST', 'handler' => 'process_new_transaction'],
     ['path' => '/transaction/show', 'method' => 'GET', 'handler' => 'show_transaction'],
     ['path' => '/transaction/edit', 'method' => 'GET', 'handler' => 'show_edit_transaction'],
-    ['path' => '/transaction/edit', 'method' => 'POST', 'handler' => 'process_edit_transaction']
+    ['path' => '/transaction/edit', 'method' => 'POST', 'handler' => 'process_edit_transaction'],
+    ['path' => '/transaction/delete', 'method' => 'POST', 'handler' => 'process_delete_transaction'],
+    ['path' => '/logout', 'method' => 'GET', 'handler' => 'process_logout']
 ];

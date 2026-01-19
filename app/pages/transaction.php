@@ -83,7 +83,7 @@
                                             <i class="bi bi-pencil me-1"></i>Bearbeiten
                                         </a>
 
-                                        <form action=""
+                                        <form action="<?= BASE_URL . '/transaction/delete' ?>"
                                             method="post" onsubmit="return confirm('Eintrag wirklich löschen?');">
                                             <input type="hidden" name="transaction_id" value="<?= (int) $transaction['transaction_id'] ?>">
                                             <button type="submit" class="btn btn-outline-danger">
