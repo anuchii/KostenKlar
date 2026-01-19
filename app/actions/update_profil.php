@@ -1,16 +1,15 @@
 <?php
-require_once CONFIG_PATH . '/paths.php';
+require_once __DIR__ . '/../config/paths.php';
 require_once CONFIG_PATH . '/db_config.php';
 require_once HELPERS_PATH . '/url.php';
+require_once HELPERS_PATH . '/validator.php';
+require_once HELPERS_PATH . '/users.php';
+require_once ACTIONS_PATH . '/flash.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
 // Nur POST erlauben
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ' . page_url('profil'));
-    exit;
+    redirect_profil();
 }
 
 // Login prüfen
@@ -20,62 +19,42 @@ if ($userId === null) {
     exit;
 }
 
+$rules = [
+    'first_name' => ['required', 'max:100'],
+    'last_name'  => ['required', 'max:100'],
+    'email'      => ['required', 'email', 'max:255'],
+    'geschlecht' => ['required', 'in:maennlich,weiblich,divers'],
+];
 
-$firstName  = trim($_POST['first_name'] ?? '');
-$lastName   = trim($_POST['last_name'] ?? '');
-$email      = trim($_POST['email'] ?? '');
-$geschlecht = trim($_POST['geschlecht'] ?? '');
 
-// ==== Validierung ====
-$errors = [];
-if ($firstName === '' || mb_strlen($firstName) > 100) {
-    $errors[] = 'Vorname ist ungültig.';
-}
-if ($lastName === '' || mb_strlen($lastName) > 100) {
-    $errors[] = 'Nachname ist ungültig.';
-}
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors[] = 'E-Mail-Adresse ist ungültig.';
-}
-$allowedGender = ['maennlich', 'weiblich', 'divers'];
-if (!in_array($geschlecht, $allowedGender, true)) {
-    $errors[] = 'Geschlecht ist ungültig.';
-}
+
+[$clean, $errors] = validate($_POST, $rules);
 
 if (!empty($errors)) {
-    $_SESSION['flash_error'] = implode(' ', $errors);
-    header('Location: ' . page_url('profil'));
-    exit;
+    flash_error_and_redirect(implode(' ', array_values($errors)));
 }
 
+$firstName  = $clean['first_name'];
+$lastName   = $clean['last_name'];
+$email      = $clean['email'];
+$geschlecht = $clean['geschlecht'];
+
 // E-Mail bereits vergeben ist (außer eigene)??
-$stmt = $pdo->prepare('SELECT user_id FROM users WHERE email = :email AND user_id != :user_id');
+$stmt = $pdo->prepare('SELECT user_id FROM users WHERE email = :email AND user_id != :user_id LIMIT 1');
 $stmt->execute([
     ':email' => $email,
     ':user_id' => $userId,
 ]);
-if ($stmt->fetch()) {
-    $_SESSION['flash_error'] = 'Diese E-Mail-Adresse wird bereits verwendet.';
-    header('Location: ' . page_url('profil'));
-    exit;
+if ($stmt->fetchColumn()) {
+    flash_error_and_redirect('Diese E-Mail-Adresse wird bereits verwendet.');
 }
 
 // Update 
-$stmt = $pdo->prepare('
-    UPDATE users
-    SET first_name = :first_name,
-        last_name = :last_name,
-        email = :email,
-        geschlecht = :geschlecht
-    WHERE user_id = :user_id
-');
-$stmt->execute([
-    ':first_name' => $firstName,
-    ':last_name'  => $lastName,
-    ':email'      => $email,
-    ':geschlecht' => $geschlecht,
-    ':user_id'    => $userId,
-]);
+$clean['user_id'] = (int)$userId;
+$ok = updateUserProfil($clean, $pdo);
+if (!$ok) {
+    flash_error_and_redirect('Profil konnte nicht aktualisiert werden.');
+}
 
 // Session synchronisieren
 $_SESSION['user_data']['first_name'] = $firstName;
@@ -83,6 +62,4 @@ $_SESSION['user_data']['last_name']  = $lastName;
 $_SESSION['user_data']['email']      = $email;
 $_SESSION['user_data']['geschlecht'] = $geschlecht;
 
-$_SESSION['flash_success'] = 'Profil erfolgreich aktualisiert.';
-header('Location: ' . page_url('profil'));
-exit;
+flash_success_and_redirect('Profil erfolgreich aktualisiert.');
