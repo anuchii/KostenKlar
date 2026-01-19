@@ -6,7 +6,7 @@ require_once HELPERS_PATH . '/users.php';
 
 $pageName = "Benutzerdetails";
 
-session_start();
+
 
 // Require user role 'admin'
 require_admin();
@@ -41,7 +41,7 @@ if ($user_id) {
         <div class="row" style="min-height: 100vh">
 
             <!-- Sidebar -->
-            <?php include INCLUDES_PATH . '/sidebar-admin.php'; ?>
+            <?php include INCLUDES_PATH . '/sidebar_admin.php'; ?>
 
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">

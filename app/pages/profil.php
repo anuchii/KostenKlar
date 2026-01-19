@@ -3,8 +3,8 @@ require_once HELPERS_PATH . '/url.php';
 if (!empty($_SESSION['user_data'])) {
     $userData = $_SESSION['user_data'];
 } else {
-    header('Location: ' . page_url('login'));
-    exit();
+    header('Location: ' . page_url('startseite'));
+    exit(); 
 }
 
 $defaultProfileImage = 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
