@@ -1,34 +1,4 @@
-<?php
-    require_once __DIR__ . '/../config/db_config.php';
-    require_once HELPERS_PATH . '/url.php';
-    require_once CONFIG_PATH . '/db_config.php';
-    require_once HELPERS_PATH . '/users.php';
-    require_once HELPERS_PATH . '/functions.php';
-    
-    $pageName = 'Benutzerverwaltung';
-
-    session_start();
-
-    // Require user role 'admin'
-    require_admin();
-
-    // Fetch users
-    $users = getAllUsers($pdo);
-
-?>
-
-<!DOCTYPE html>
-<html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageName ?></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
-
-</head>
+<?php include INCLUDES_PATH . '/head.php'; ?>
 
 <body>
     <div class="container-fluid">

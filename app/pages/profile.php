@@ -1,33 +1,4 @@
-<?php
-require_once HELPERS_PATH . '/url.php';
-if (!empty($_SESSION['user_data'])) {
-    $userData = $_SESSION['user_data'];
-} else {
-    header('Location: ' . page_url('login'));
-    exit();
-}
-
-$defaultProfileImage = 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
-
-
-if (!empty($userData['avatar_path'])) {
-    $profileImage = upload_url($userData['avatar_path'] ?? null, $defaultProfileImage);
-} else {
-    $profileImage = $defaultProfileImage;
-}
-?>
-<!DOCTYPE html>
-<html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
-
-</head>
+<?php include INCLUDES_PATH . '/head.php'; ?>
 
 <body class="bg-light">
     <div class=" container-fluid">
@@ -37,7 +8,6 @@ if (!empty($userData['avatar_path'])) {
 
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
-
 
                 <?php include INCLUDES_PATH . '/header.php'; ?>
 
@@ -82,7 +52,7 @@ if (!empty($userData['avatar_path'])) {
                                     <?php endif; ?>
 
                                     <form method="POST" enctype="multipart/form-data"
-                                        action="<?= route('upload_avatar') ?>">
+                                        action="<?= BASE_URL . '/avatar/upload' ?>">
 
                                         <div class="mb-2">
                                             <input type="file" name="avatar" accept="image/png, image/jpeg, image/webp"
@@ -101,7 +71,7 @@ if (!empty($userData['avatar_path'])) {
                         <!--TODO: padding einfügen wenn Bildschrim sehr klein,
                           damit allgemeine infos nicht mit Profil-Kästchen pickt-->
                         <div class="col-md-8 ">
-                            <form method="POST" action="<?= route('update_profil') ?>">
+                            <form method="POST" action="<?= BASE_URL . '/profile/update' ?>" novalidate>
                                 <div class="card shadow-sm rounded-3">
                                     <div class="card-header bg-white">
                                         <strong>Allgemeine Informationen</strong>
@@ -135,7 +105,7 @@ if (!empty($userData['avatar_path'])) {
                                                 <?php $g = $userData['geschlecht'] ?? ''; ?>
                                                 <select id="geschlecht" name="geschlecht" class="form-select" required>
                                                     <option value="" <?= $g === '' ? 'selected' : '' ?>>Bitte wählen</option>
-                                                    <option value="maennlich" <?= $g === 'maennlich' ? 'selected' : '' ?>>Männlich</option>
+                                                    <option value="männlich" <?= $g === 'männlich' ? 'selected' : '' ?>>Männlich</option>
                                                     <option value="weiblich" <?= $g === 'weiblich' ? 'selected' : '' ?>>Weiblich</option>
                                                     <option value="divers" <?= $g === 'divers' ? 'selected' : '' ?>>Divers</option>
                                                 </select>

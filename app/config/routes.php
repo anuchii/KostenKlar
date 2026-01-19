@@ -14,5 +14,11 @@ return [
     ['path' => '/transaction/edit', 'method' => 'GET', 'handler' => 'show_edit_transaction'],
     ['path' => '/transaction/edit', 'method' => 'POST', 'handler' => 'process_edit_transaction'],
     ['path' => '/transaction/delete', 'method' => 'POST', 'handler' => 'process_delete_transaction'],
+    ['path' => '/statistics', 'method' => 'GET', 'handler' => 'show_statistics'],
+    ['path' => '/profile', 'method' => 'GET', 'handler' => 'show_profile'],
+    ['path' => '/profile/update', 'method' => 'POST', 'handler' => 'update_profile'],
+    ['path' => '/profile/avatar/upload', 'method' => 'POST', 'handler' => 'upload_avatar'],
+    ['path' => '/admin/dashboard', 'method' => 'GET', 'handler' => 'show_admin_dashboard'],
+    ['path' => '/admin/users', 'method' => 'GET', 'handler' => 'show_users_management'],
     ['path' => '/logout', 'method' => 'GET', 'handler' => 'process_logout']
 ];

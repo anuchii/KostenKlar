@@ -1,66 +1,4 @@
-<?php
-
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-require_once HELPERS_PATH . '/url.php';
-require_once CONFIG_PATH . '/db_config.php';
-require_once ACTIONS_PATH . '/transactions.php';
-require_once HELPERS_PATH . '/statistik_helper.php';
-
-
-if (!isset($userData) || !is_array($userData)) {
-    $userData = $_SESSION['user_data'] ?? [];
-}
-$userId = $userData['user_id'] ?? null;
-
-$selectedYear = isset($_GET['year'])
-    ? (int) $_GET['year']
-    : (int) date('Y');
-
-$stats = getMonthlySumByUserIdAndYear($userId, $selectedYear, $pdo);
-$statsPie = getPieChartData($selectedYear, $userId, $pdo);
-
-$monthNames = [
-    1 => 'Januar',
-    2 => 'Februar',
-    3 => 'März',
-    4 => 'April',
-    5 => 'Mai',
-    6 => 'Juni',
-    7 => 'Juli',
-    8 => 'August',
-    9 => 'September',
-    10 => 'Oktober',
-    11 => 'November',
-    12 => 'Dezember',
-];
-
-
-$chartData = buildChartData($stats, $monthNames);
-$pieData = buildPieChartData($statsPie);
-
-$pieGradient = $pieData['gradient'] ?? 'conic-gradient(#e9ecef 0% 100%)';
-$pieLegendItems = $pieData['legend'] ?? [];
-
-?>
-
-<!DOCTYPE html>
-<html lang="de">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Statistik</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="<?= asset_url('/css/statistik.css') ?>">
-    <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
-</head>
+<?php include INCLUDES_PATH . '/head.php'; ?>
 
 <body class="bg-light">
     <div class="container-fluid">
@@ -78,8 +16,7 @@ $pieLegendItems = $pieData['legend'] ?? [];
                         </div>
 
                         <!-- Jahr-Auswahl -->
-                        <form method="get" action="<?= page_url('statistik') ?>" class="d-flex align-items-end gap-2">
-                            <input type="hidden" name="page" value="statistik">
+                        <form method="get" action="<?= BASE_URL . '/statistics' ?>" class="d-flex align-items-end gap-2">
                             <div>
                                 <label for="year" class="form-label small text-muted mb-1">Jahr</label>
                                 <select name="year" id="year" class="form-select" style="min-width: 140px;">

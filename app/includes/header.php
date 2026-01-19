@@ -24,7 +24,7 @@
 
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="<?= BASE_URL . '/profil' ?>">
+                        <a class="dropdown-item" href="<?= BASE_URL . '/profile' ?>">
                             Profil
                         </a>
                     </li>

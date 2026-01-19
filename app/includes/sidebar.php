@@ -21,7 +21,7 @@
 
 
             <li class="nav-item">
-                <a href="<?= BASE_URL . '/statistik' ?>"
+                <a href="<?= BASE_URL . '/statistics' ?>"
                     class="nav-link text-muted d-flex align-items-center gap-2">
                     <i class="bi bi-bar-chart"></i>
                     Statistiken
@@ -31,7 +31,7 @@
             <hr class="my-3">
 
             <li class="nav-item">
-                <a href="<?= BASE_URL . '/profil' ?>"
+                <a href="<?= BASE_URL . '/profile' ?>"
                     class="nav-link text-muted d-flex align-items-center gap-2">
                     <i class="bi bi-person-circle"></i>
                     Profil
