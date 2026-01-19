@@ -16,11 +16,12 @@ $routes = [
     'statistik' => PAGES_PATH . '/statistik.php',
     'user_dashboard' => PAGES_PATH . '/user_dashboard.php',
     'logout' => ACTIONS_PATH . '/logout.php',
+    'register_action' => ACTIONS_PATH . '/register_action.php',
     'login_action' => ACTIONS_PATH . '/login_action.php',
     'upload_avatar' => ACTIONS_PATH . '/upload_avatar.php',
     'startseite' => PAGES_PATH .  '/startseite.php',
     'show_transaction' => PAGES_PATH . '/show_transaction.php',
-    'delete_transaction' => PAGES_PATH . '/delete_transaction.php',
+    'delete_transaction' => ACTIONS_PATH . '/delete_transaction.php',
     'edit_transaction' => PAGES_PATH . '/edit_transaction.php',
     'admin_dashboard' => PAGES_PATH . '/admin_dashboard.php',
     'user_management' => PAGES_PATH . '/user_management.php',
@@ -33,5 +34,3 @@ if (!isset($routes[$page])) {
 }
 
 require $routes[$page];
-
-
