@@ -1,20 +1,19 @@
 <?php
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ' . page_url('startseite'));
-    exit;
-}
-
+require_once __DIR__ . "/../config/paths.php";
+require_once CONFIG_PATH . '/db_config.php';
+require_once HELPERS_PATH . '/url.php';
+require_once HELPERS_PATH . '/validator.php';
+require_once HELPERS_PATH . '/users.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once CONFIG_PATH . '/paths.php';
-require_once HELPERS_PATH . '/url.php';
-require_once HELPERS_PATH . '/login_validation.php';
-require_once HELPERS_PATH . '/users.php';
-require_once CONFIG_PATH . '/db_config.php';
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ' . page_url('startseite'));
+    exit;
+}
 
 if (!isset($pdo)) {
     $_SESSION['login_errors'] = ['account' => 'Serverfehler: Datenbankverbindung fehlt.'];
@@ -22,16 +21,15 @@ if (!isset($pdo)) {
     exit;
 }
 
-$userData = [
-    'email' => trim($_POST['email'] ?? ''),
-    'password' => (string)($_POST['password'] ?? ''),
+$rules = [
+    'email' => ['required', 'email', 'max:255'],
+    'password' => ['required'],
 ];
 
+[$clean, $validationErrors] = validate($_POST, $rules);
 
-$validationErrors = validateLoginData($userData);
 
-
-$_SESSION['login_old'] = ['email' => $userData['email']];
+$_SESSION['login_old'] = ['email' => $clean['email'] ?? ''];
 
 if (!empty($validationErrors)) {
     $_SESSION['login_errors'] = $validationErrors;
@@ -40,13 +38,13 @@ if (!empty($validationErrors)) {
 }
 
 
-if (!isEmailRegistered($userData['email'], $pdo)) {
+if (!isEmailRegistered($clean['email'], $pdo)) {
     $_SESSION['login_errors'] = ['email' => 'E-Mail-Adresse konnte nicht gefunden werden.'];
     header('Location: ' . page_url('login'));
     exit;
 }
 
-$userIdRow = getUserIDByEmail($userData['email'], $pdo);
+$userIdRow = getUserIDByEmail($clean['email'], $pdo);
 $userId = $userIdRow[0]['user_id'] ?? null;
 if ($userId === null) {
     $_SESSION['login_errors'] = ['email' => 'E-Mail-Adresse konnte nicht gefunden werden.'];
@@ -56,7 +54,7 @@ if ($userId === null) {
 
 $userData_db = getUserDataByUserID($userId, $pdo);
 
-if (!isset($userData_db['password']) || !password_verify($userData['password'], $userData_db['password'])) {
+if (!isset($userData_db['password']) || !password_verify((string)$clean['password'], (string)$userData_db['password'])) {
     $_SESSION['login_errors'] = ['password' => 'Ungültiges Passwort.'];
     header('Location: ' . page_url('login'));
     exit;
@@ -67,6 +65,7 @@ if (($userData_db['status'] ?? '') !== 'active') {
     header('Location: ' . page_url('login'));
     exit;
 }
+
 
 session_regenerate_id(true);
 
