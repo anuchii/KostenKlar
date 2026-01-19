@@ -9,7 +9,7 @@ require_once HELPERS_PATH . '/users.php';
 $pageTitle = "Benutzer bearbeiten";
 $pageName = "edit_user";
 
-session_start();
+
 
 // Require user role 'admin'
 require_admin();

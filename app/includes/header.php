@@ -1,3 +1,15 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($userData) || !is_array($userData)) {
+    $userData = $_SESSION['user_data'] ?? [];
+}
+
+$isLoggedIn  = !empty($userData) && (isset($userData['first_name']) || isset($userData['email']));
+$displayName = $isLoggedIn ? ($userData['first_name'] ?? ($userData['email'] ?? 'Account')) : 'Gast';
+?>
 <header class="bg-white border-bottom">
 
     <div class="container-fluid px-3 px-lg-4 py-2">
@@ -15,29 +27,35 @@
                 </button>
                 <span class="fw-semibold">KostenKlar</span>
             </div>
-            <div class="dropdown">
-                <button class="btn btn-outline-secondary btn-sm dropdown-toggle"
-                    data-bs-toggle="dropdown">
-                    <i class="bi bi-person-circle me-1"></i>
-                    <?= htmlspecialchars($userData['first_name']) ?>
-                </button>
+            <?php if ($isLoggedIn): ?>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle"
+                        data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i>
+                        <?= htmlspecialchars((string)$displayName) ?>
+                    </button>
 
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="<?= page_url('profil') ?>">
-                            Profil
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item text-danger" href="<?= page_url('logout') ?>">
-                            Logout
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="<?= page_url('profil') ?>">
+                                Profil
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="<?= page_url('logout') ?>">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            <?php else: ?>
+                <a class="btn btn-outline-secondary btn-sm" href="<?= page_url('login') ?>">
+                    Login
+                </a>
+            <?php endif; ?>
 
         </div>
     </div>

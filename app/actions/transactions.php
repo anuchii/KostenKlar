@@ -97,7 +97,7 @@ function createTransaction($transactionData, $user_id, $pdo)
     $statement->bindValue(":transaction_title", $transactionData["transaction_title"]);
     $statement->bindValue(":transaction_amount", $transactionData["transaction_amount"]);
     $statement->bindValue(":transaction_note", $transactionData["transaction_note"]);
-    $statement->bindValue(":transaction_category_id", $transactionData["category_id"]);
+    $statement->bindValue(":transaction_category_id", $transactionData["transaction_category_id"]);
     $statement->bindValue(":transaction_type", $transactionData["transaction_type"]);
     $statement->bindValue(":user_id", $user_id);
 
@@ -247,22 +247,8 @@ function getPieChartData(int $selectedYear, int $user_id, $pdo)
     return $pieData;
 }
 
-//Wird zurzeit nicht mehr gebraucht. Eine andere Lsg wurde gefunden. (deprecated)
-function getYearlyExpenseSumByUserId($user_id, int $year, $pdo){
-    $statement = $pdo->prepare(
-        "SELECT COALESCE(SUM(transaction_amount), 0) AS total_expense
-         FROM transactions
-         WHERE user_id = :user_id
-         AND  transaction_type = 'expense'
-         AND YEAR(transaction_date)= :year"
-    );
-$statement->bindValue('user_id', $user_id);
-$statement->bindValue(':year', $year);
-$statement->execute();
-return (float) $statement->fetchColumn();
-}
-
-function getTransactionCount ($pdo) {
+function getTransactionCount($pdo)
+{
     // Prepare SQL statement
     $statement = $pdo->prepare(
         "SELECT COUNT(*) FROM transactions"

@@ -1,13 +1,12 @@
 <?php
     require_once __DIR__ . '/../config/db_config.php';
     require_once HELPERS_PATH . '/url.php';
-    require_once CONFIG_PATH . '/db_config.php';
     require_once HELPERS_PATH . '/users.php';
     require_once HELPERS_PATH . '/functions.php';
     
     $pageName = 'Benutzerverwaltung';
 
-    session_start();
+
 
     // Require user role 'admin'
     require_admin();
@@ -30,12 +29,12 @@
 
 </head>
 
-<body>
+<body class="bg-light">
     <div class="container-fluid">
         <div class="row" style="min-height: 100vh">
 
             <!-- Sidebar -->
-            <?php include INCLUDES_PATH . '/sidebar-admin.php'; ?>
+            <?php include INCLUDES_PATH . '/sidebar_admin.php'; ?>
 
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
@@ -50,7 +49,6 @@
                 <!-- Profilinhalt -->
                 <div class="container">
                    
-
                     <div class="row">
                         <div class="col">
                             <div class="card shadow-sm my-4">
@@ -58,8 +56,7 @@
                                     <strong>Benutzer</strong>
                                 </div>
                                 <div class="card-body">
-                                    
-                                <?php include INCLUDES_PATH . '/user_table.php'; ?>
+                                    <?php include INCLUDES_PATH . '/user_table.php'; ?>
 
                                 </div>
                             </div>

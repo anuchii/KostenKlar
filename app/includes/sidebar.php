@@ -6,7 +6,7 @@
             <li class="nav-item">
                 <a href="<?= page_url('user_dashboard') ?>"
                     class="nav-link active d-flex align-items-center gap-2">
-                    <i class="bi bi-speedometer2"></i>
+                    <i class="bi bi-speedometer2" aria-hidden="true"></i>
                     Übersicht
                 </a>
             </li>
@@ -14,7 +14,7 @@
             <li class="nav-item">
                 <a href="<?= page_url('new_transaction') ?>"
                     class="nav-link text-muted d-flex align-items-center gap-2">
-                    <i class="bi bi-plus-circle"></i>
+                    <i class="bi bi-plus-circle" aria-hidden="true"></i>
                     Neue Buchung
                 </a>
             </li>
@@ -23,7 +23,7 @@
             <li class="nav-item">
                 <a href="<?= page_url('statistik') ?>"
                     class="nav-link text-muted d-flex align-items-center gap-2">
-                    <i class="bi bi-bar-chart"></i>
+                    <i class="bi bi-bar-chart" aria-hidden="true"></i>
                     Statistiken
                 </a>
             </li>
@@ -33,7 +33,7 @@
             <li class="nav-item">
                 <a href="<?= page_url('profil') ?>"
                     class="nav-link text-muted d-flex align-items-center gap-2">
-                    <i class="bi bi-person-circle"></i>
+                    <i class="bi bi-person-circle" aria-hidden="true"></i>
                     Profil
                 </a>
             </li>
