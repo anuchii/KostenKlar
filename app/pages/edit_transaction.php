@@ -8,6 +8,7 @@ require_once ACTIONS_PATH . '/transactions.php';
 require_once ACTIONS_PATH . '/transaction_validation.php';
 
 $pageName = "edit_transaction";
+$pageTitle = 'Buchung bearbeiten';
 // Require login
 $userData = getLoggedUserData();
 
@@ -16,17 +17,17 @@ if (!$userData) {
     exit();
 }
 
+// Allow transaction_id from POST (after submit), fallback to GET for initial load
+$transaction_id = (int) ($_POST['transaction_id'] ?? ($_GET['transaction-id'] ?? ($_GET['transaction_id'] ?? 0)));
+if ($transaction_id <= 0) {
+    header('Location: ' . page_url('user_dashboard'));
+    exit;
+}
 // TODO:
 // Require status = active
 // Require role = user
 
-if ($_SERVER["REQUEST_METHOD"] === "GET") {
-    $transaction_id = (int) $_GET['transaction-id'];
-} elseif ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $transaction_id = (int) $_POST['transaction_id'];
-} else {
-    $transaction_id = null;
-}
+// Removed the request-method based overwrite block
 
 // Fetch categories
 $categories = getTransactionCategories($pdo);
@@ -38,7 +39,7 @@ if ($transaction_id) {
 }
 
 // Check if transaction exists and belongs to logged in user
-if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
+if (!$transactionData || (int)($transactionData['user_id'] ?? 0) !== (int)($userData['user_id'] ?? 0)) {
     // Redirect to dashboard if transaction is invalid
     header('Location: ' . page_url('user_dashboard'));
     exit();
@@ -106,7 +107,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
                                         <strong>Buchungsdetails</strong>
                                     </div>
                                     <div class="card-body">
-                                        <form method="post" action="<?= page_url('edit_transaction') ?>">
+                                        <form method="post" action="<?= page_url('edit_transaction') . '&transaction-id=' . (int)$transaction_id ?>">
                                             <input type="hidden" name="transaction_id" value="<?php echo $transaction_id; ?>">
                                             <div class="mb-3">
                                                 <label for="transaction-date" class="col-form-label">Datum</label>
@@ -173,12 +174,11 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
                                                     <label class="form-check-label" for="revenue">Einnahme</label>
                                                 </div>
                                             </div>
-
+                                            <div class="d-flex gap-2 mt-3">
+                                                <button type="submit" class="btn btn-primary">Speichern</button>
+                                                <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary">Abbrechen</a>
+                                            </div>
                                         </form>
-                                        <div class="d-flex gap-2 mt-3">
-                                            <button type="submit" class="btn btn-primary btn-sm">Speichern</button>
-                                            <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary">Abbrechen</a>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -143,7 +143,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
                                             <div class="mb-3">
                                                 <div class="form-group">
                                                     <label for="category" class="col-form-label">Kategorie</label>
-                                                    <select class="form-select" id="category" name="transaction_category">
+                                                    <select class="form-select" id="category" name="transaction_category_id">
                                                         <?php foreach ($categories as $category): ?>
                                                             <option value="<?php echo (($category["category_id"])); ?>">
                                                                 <?php echo ($category["category_name"]); ?></option>
