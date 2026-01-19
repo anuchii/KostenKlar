@@ -26,7 +26,9 @@ $routes = [
     'admin_dashboard' => PAGES_PATH . '/admin_dashboard.php',
     'user_management' => PAGES_PATH . '/user_management.php',
     'show_user' => PAGES_PATH . '/show_user.php',
-    'edit_user' => PAGES_PATH . '/edit_user.php'
+    'edit_user' => PAGES_PATH . '/edit_user.php',
+    'delete_user' => ACTIONS_PATH . '/delete_user.php',
+    'deactivate_user' => ACTIONS_PATH . '/deactivate_user.php'
 ];
 if (!isset($routes[$page])) {
     http_response_code(404);

@@ -170,7 +170,8 @@ function updateUserProfil(array $data, PDO $pdo): bool
     return $stmt->execute();
 }
 
-function getActiveUserCount ($pdo) {
+function getActiveUserCount($pdo)
+{
     // Prepare SQL statement
     $statement = $pdo->prepare(
         "SELECT COUNT(*) FROM users
@@ -183,4 +184,48 @@ function getActiveUserCount ($pdo) {
     $result = $statement->fetchColumn();
 
     return $result;
+}
+
+function getInActiveUserCount($pdo)
+{
+    // Prepare SQL statement
+    $statement = $pdo->prepare(
+        "SELECT COUNT(*) FROM users
+            WHERE role = 'user' AND status = 'inactive'"
+    );
+
+    $statement->execute();
+
+    // Fetch database entries
+    $result = $statement->fetchColumn();
+
+    return $result;
+}
+/**
+ * Soft-delete: markiert einen User als inaktiv.
+ */
+function deactivateUserById(int $user_id, PDO $pdo): bool
+{
+    $statement = $pdo->prepare(
+        "UPDATE users
+         SET status = 'inactive'
+         WHERE user_id = :user_id AND role = 'user'"
+    );
+
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    return $statement->execute();
+}
+
+/**
+ * Hard-delete: löscht den Datensatz endgültig aus der DB.
+ */
+function deleteUserById(int $user_id, PDO $pdo): bool
+{
+    $statement = $pdo->prepare(
+        "DELETE FROM users
+         WHERE user_id = :user_id AND role = 'user'"
+    );
+
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    return $statement->execute();
 }

@@ -16,6 +16,7 @@ $userData = getLoggedUserData();
 
 // Fetch user statistics
 $userCount = getActiveUserCount($pdo);
+$inactiveUserCount = getInActiveUserCount($pdo);
 $transactionCount = getTransactionCount($pdo);
 
 ?>
@@ -59,7 +60,8 @@ $transactionCount = getTransactionCount($pdo);
                 <!-- Profilinhalt -->
                 <div class="container py-4">
                     <div class="row g-3 mb-3">
-                        <div class="col-12 col-md-6">
+
+                        <div class="col-12 col-md-4">
                             <div class="card shadow-sm rounded-3">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
@@ -69,13 +71,28 @@ $transactionCount = getTransactionCount($pdo);
                                                 <?php echo ($userCount); ?>
                                             </div>
                                         </div>
-                                        <i class="bi bi-people text-success fs-3"></i>
+                                        <i class="bi bi-people text-success fs-3" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow-sm rounded-3">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <div class="text-muted small">Inaktive Benutzer</div>
+                                            <div class="fw-bold fs-5">
+                                                <?php echo ($inactiveUserCount); ?>
+                                            </div>
+                                        </div>
+                                        <i class="bi bi-person-slash fs-3"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-4">
                             <div class="card shadow-sm rounded-3">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
@@ -85,11 +102,14 @@ $transactionCount = getTransactionCount($pdo);
                                                 <?php echo ($transactionCount); ?>
                                             </div>
                                         </div>
-                                        <i class="bi bi-receipt text-danger fs-3"></i>
+                                        <i class="bi bi-receipt-cutoff text-danger fs-3"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>

@@ -114,8 +114,8 @@ if ($user_id) {
 
                                     <div class="mb-3 me-3 d-inline">
                                         <a href="<?= route('edit_user', ['user-id' => $user["user_id"]]) ?>" type="button"
-                                            class="btn btn-warning">
-                                            <i class="bi bi-pencil text-black"></i>
+                                            class="btn btn-primary text-nowrap">
+                                            <i class="bi bi-pencil text-black" aria-hidden="true"></i>
                                             Bearbeiten
                                         </a>
                                     </div>
@@ -124,12 +124,22 @@ if ($user_id) {
                                     <div class="mb-3 me-3 d-inline">
                                         <form action="<?= route('delete_user', ['user-id' => $user["user_id"]]) ?>" method="post" class="d-inline" onsubmit="return confirm('Eintrag wirklich löschen?');">
                                             <input type="hidden" name="transaction-id" value="<?= (int) $user["user_id"] ?>">
-                                            <button type="submit" class="btn btn-warning">
+                                            <button type="submit" class="btn btn-primary text-nowrap" aria-hidden="true">
                                                 <i class="bi bi-trash text-black"></i>
                                                 Löschen
                                             </button>
                                         </form>
                                     </div>
+                                    <div class="mb-3 me-3 d-inline">
+                                        <form action="<?= route('deactivate_user', ['user-id' => $user['user_id']]) ?>" method="post" class="d-inline"
+                                            onsubmit="return confirm('Benutzer wirklich deaktivieren?');">
+                                            <button type="submit" class="btn btn-primary text-nowrap">
+                                                <i class="bi bi-person-x text-black" aria-hidden="true"></i>
+                                                Inaktivieren
+                                            </button>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
