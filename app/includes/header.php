@@ -36,14 +36,17 @@ $displayName = $isLoggedIn ? ($userData['first_name'] ?? ($userData['email'] ?? 
                     </button>
 
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item" href="<?= page_url('profil') ?>">
-                                Profil
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                        <?php if (($userData['role'] ?? 'user') !== 'admin'): ?>
+                            <li>
+                                <a class="dropdown-item" href="<?= page_url('profil') ?>">
+                                    Profil
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        <?php endif; ?>
+
                         <li>
                             <a class="dropdown-item text-danger" href="<?= page_url('logout') ?>">
                                 Logout
