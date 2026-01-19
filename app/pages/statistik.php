@@ -1,6 +1,5 @@
 <?php
 
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -14,13 +13,24 @@ if (!isset($userData) || !is_array($userData)) {
     $userData = $_SESSION['user_data'] ?? [];
 }
 $userId = $userData['user_id'] ?? null;
+$dbError = '';
 
 $selectedYear = isset($_GET['year'])
     ? (int) $_GET['year']
     : (int) date('Y');
 
-$stats = getMonthlySumByUserIdAndYear($userId, $selectedYear, $pdo);
-$statsPie = getPieChartData($selectedYear, $userId, $pdo);
+
+$stats = [];
+$statsPie = [];
+try {
+    $stats = getMonthlySumByUserIdAndYear((int)$userId, $selectedYear, $pdo);
+    $statsPie = getPieChartData($selectedYear, (int)$userId, $pdo);
+} catch (Throwable $e) {
+    $stats = [];
+    $statsPie = [];
+    $dbError = 'Statistik konnte nicht geladen werden.';
+}
+
 
 $monthNames = [
     1 => 'Januar',
@@ -82,7 +92,7 @@ $pieLegendItems = $pieData['legend'] ?? [];
                             <input type="hidden" name="page" value="statistik">
                             <div>
                                 <label for="year" class="form-label small text-muted mb-1">Jahr</label>
-                                <select name="year" id="year" class="form-select" style="min-width: 140px;">
+                                <select name="year" id="year" class="form-select statistik-year-select">
                                     <?php
                                     $currentYear = (int) date('Y');
                                     for ($y = $currentYear; $y >= $currentYear - 5; $y--):
@@ -93,12 +103,17 @@ $pieLegendItems = $pieData['legend'] ?? [];
                                     <?php endfor; ?>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary text-nowrap" style="height: 38px;">Anzeigen</button>
+                            <button type="submit" class="btn btn-primary text-nowrap statistik-year-btn">Anzeigen</button>
                         </form>
                     </div>
                 </header>
 
                 <div class="container py-4">
+                    <?php if (!empty($dbError)): ?>
+                        <div class="alert alert-warning mb-3" role="alert">
+                            <?= htmlspecialchars($dbError, ENT_QUOTES, 'UTF-8') ?>
+                        </div>
+                    <?php endif; ?>
                     <div class="row g-3">
                         <div class="col-12 col-lg-7">
                             <div class="card shadow-sm rounded-3 h-100">
@@ -131,14 +146,14 @@ $pieLegendItems = $pieData['legend'] ?? [];
                                             style="background: <?= htmlspecialchars($pieGradient, ENT_QUOTES, 'UTF-8') ?>;">
                                         </div>
 
-                                        <ul class="list-unstyled mb-0" style="min-width: 180px;">
+                                        <ul class="list-unstyled mb-0 statistik-legend">
                                             <?php if (empty($pieLegendItems)): ?>
                                                 <li class="text-muted">Keine Daten für <?= (int) $selectedYear ?> vorhanden.
                                                 </li>
                                             <?php else: ?>
                                                 <?php foreach ($pieLegendItems as $item): ?>
                                                     <li class="d-flex align-items-center gap-2 mb-2">
-                                                        <span
+                                                        <span class="statistik-legend-swatch"
                                                             style="width: 12px; height: 12px; background: <?= htmlspecialchars($item['color'], ENT_QUOTES, 'UTF-8') ?>; display:inline-block; border-radius: 2px;"></span>
                                                         <span class="small">
                                                             <?= htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8') ?>
