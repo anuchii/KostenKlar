@@ -41,17 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['transaction_old'] = $clean;
         $_SESSION['transaction_errors'] = $errors;
 
-        header('Location: ' . page_url('new_transaction'));
+        header('Location: ' . route('edit_transaction', ['transaction-id' => $clean['transaction_id']]));
         exit;
     }
 
     // Buchung updaten
     $userId = $_SESSION["user_data"]["user_id"];
-
-    // echo('<pre>');
-    // var_dump($clean);
-    // echo('</pre>');
-    // die();
 
     $ok = updateTransaction($clean, $pdo);
 
