@@ -23,3 +23,21 @@ function require_admin() {
         exit('403 - Zugriff verweigert');
     }
 }
+
+function require_user() {
+    require_login();
+
+    if ($currUser['role'] !== 'user') {
+        http_response_code(403);
+        exit('403 - Zugriff verweigert');
+    }
+}
+
+function require_role($role) {
+    require_login();
+
+    if ($currUser['role'] !== $role) {
+        http_response_code(403);
+        exit('403 - Zugriff verweigert');
+    }
+}
