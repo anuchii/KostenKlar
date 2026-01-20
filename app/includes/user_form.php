@@ -1,5 +1,5 @@
 
-<form method="post" action="<?= page_url($pageName) ?>">
+<form method="post" action="<?= $postAction ?>">
 
     <?php if(isset($user_id)): ?>
         <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-warning m-2">Speichern</button>
+    <button type="submit" class="btn btn-primary m-2">Speichern</button>
     <a href="<?= page_url('user_management') ?>" class="btn btn-secondary">Schließen</a>
 
 </form>

@@ -10,7 +10,8 @@ function getTransactionsByUserIDAndMonth($user_id, $year, $month, $pdo)
             LEFT JOIN categories c ON c.category_id = t.transaction_category_id
             WHERE user_id = :user_id 
                 AND YEAR(transaction_date) = :year 
-                AND MONTH(transaction_date) = :month"
+                AND MONTH(transaction_date) = :month
+            ORDER BY transaction_date DESC"
     );
 
     // Bind values
@@ -144,7 +145,7 @@ function updateTransaction($transactionData, $pdo)
     $statement->bindValue(":transaction_title", $transactionData["transaction_title"]);
     $statement->bindValue(":transaction_amount", $transactionData["transaction_amount"]);
     $statement->bindValue(":transaction_note", $transactionData["transaction_note"]);
-    $statement->bindValue(":transaction_category_id", $transactionData["category_id"]);
+    $statement->bindValue(":transaction_category_id", $transactionData["transaction_category_id"]);
     $statement->bindValue(":transaction_type", $transactionData["transaction_type"]);
 
     // Execute statement

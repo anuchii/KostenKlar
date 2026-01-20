@@ -123,7 +123,7 @@ if ($user_id) {
 
                                     <div class="mb-3 me-3 d-inline">
                                         <form action="<?= route('delete_user', ['user-id' => $user["user_id"]]) ?>" method="post" class="d-inline" onsubmit="return confirm('Eintrag wirklich löschen?');">
-                                            <input type="hidden" name="transaction-id" value="<?= (int) $user["user_id"] ?>">
+                                            <input type="hidden" name="user_id" value="<?= (int) $user["user_id"] ?>">
                                             <button type="submit" class="btn btn-primary text-nowrap" aria-hidden="true">
                                                 <i class="bi bi-trash text-black"></i>
                                                 Löschen

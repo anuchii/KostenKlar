@@ -7,9 +7,7 @@ require_once HELPERS_PATH . '/functions.php';
 require_once HELPERS_PATH . '/users.php';
 
 $pageTitle = "Benutzer bearbeiten";
-$pageName = "edit_user";
-
-
+$postAction = page_url('edit_user');
 
 // Require user role 'admin'
 require_admin();
@@ -56,38 +54,58 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
 }
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="de">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageTitle ?></title>
+    <title><?php echo $pageName ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
+
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row" style="min-height: 100vh">
 
-            <?php include INCLUDES_PATH . '/header.php'; ?>
+            <!-- Sidebar -->
+            <?php include INCLUDES_PATH . '/sidebar_admin.php'; ?>
 
-            <main>
-                <div class="container d-flex justify-content-center align-items-center">
-                    <div class="col-12 col-sm-10 col-md-8 col-lg-6 mx-auto">
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <h5 class="card-title p-2"><?php echo $pageTitle ?></h5>
-                                <?php include INCLUDES_PATH . '/user_form.php'; ?>
+            <!--HauptInhalt -->
+            <div class="col-12 col-lg-10 p-0">
+
+                <?php include INCLUDES_PATH . '/header.php'; ?>
+
+                <!-- Header -->
+                <header class="py-4 border-bottom p-3">
+                    <h2>Benutzerdetails</h2>
+                </header>
+
+                <!-- Profilinhalt -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card shadow-sm my-4">
+                                <div class="card-body">
+                                    <?php include INCLUDES_PATH . '/user_form.php'; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </main>
+                </div> <!-- /container -->
 
-            <?php include INCLUDES_PATH . '/footer.php'; ?>
-            
+            </div><!-- /col-10 -->
+        </div><!-- /row -->
+    </div><!-- /container-fluid -->
+
+    <?php include INCLUDES_PATH . '/footer.php'; ?>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
