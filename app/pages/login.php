@@ -19,8 +19,8 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
   <title>Login </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <!--für icons-->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="<?= asset_url('css/auth.css') ?>">
   <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
 </head>
@@ -38,7 +38,7 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
 
             <div class="input-group mb-3">
               <span class="input-group-text bg-light text-secondary" style="width: 50px">
-                <i class="fas fa-user" aria-hidden="true"></i>
+                <i class="bi bi-person-fill" aria-hidden="true"></i>
               </span>
               <label for="emailAddress" class="visually-hidden">E-Mail</label>
               <input
@@ -57,7 +57,7 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
 
             <div class="input-group mb-3">
               <span class="input-group-text bg-light text-secondary icon-fixed" style="width:50px">
-                <i class="fas fa-key" aria-hidden="true"></i>
+                <i class="bi bi-key-fill" aria-hidden="true"></i>
               </span>
               <label for="password" class="visually-hidden">Passwort</label>
               <input
