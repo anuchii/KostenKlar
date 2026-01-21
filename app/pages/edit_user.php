@@ -12,47 +12,35 @@ $postAction = page_url('edit_user');
 // Require user role 'admin'
 require_admin();
 
-if($_SERVER["REQUEST_METHOD"] === "GET"){
-    $user_id = (int) $_GET['user-id'];
-} elseif($_SERVER["REQUEST_METHOD"] === "POST") {
-    $user_id = (int) $_POST['user_id'];   
-} else {
-    $user_id = null;
+$user_id = (int)($_GET['user_id'] ?? ($_GET['user-id'] ?? 0));
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    require_once ACTIONS_PATH . '/edit_user_action.php';
+    exit;
 }
-
-
 // Fetch user data
-if ($user_id) {
+if ($user_id > 0) {
     $userData = getUserDataByUserID($user_id, $pdo);
 }
 
-$validationErrors = [];
-
-// Handle POST request
-if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
-    $userData = $_POST;
-    
-    // Validate input
-    $first_name = trim($_POST["first_name"] ?? '');
-    if ($first_name === '') {
-        $validationErrors["first_name"] = "Bitte geben Sie einen Vornamen ein.";
-    }
-
-    $last_name = trim($_POST["last_name"] ?? '');
-    if ($last_name === '') {
-        $validationErrors["last_name"] = "Bitte geben Sie einen Nachnamen ein.";
-    }
-
-    if (empty($validationErrors)) {
-
-        updateUser($userData, $pdo);
-
-        // Redirect to user management
-        header('Location: ' . page_url('user_management'));
-        exit();
-    }
+if (empty($userData)) {
+    header('Location: ' . page_url('user_management'));
+    exit;
 }
 
+
+$validationErrors = $_SESSION['edit_user_errors'] ?? [];
+$old = $_SESSION['edit_user_old'] ?? [];
+unset($_SESSION['edit_user_errors'], $_SESSION['edit_user_old']);
+
+if (!empty($old)) {
+
+    foreach (['first_name', 'last_name', 'status'] as $key) {
+        if (array_key_exists($key, $old)) {
+            $userData[$key] = $old[$key];
+        }
+    }
+}
 ?>
 
 
@@ -62,7 +50,7 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageName ?></title>
+    <title><?php echo $pageTitle ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
@@ -98,7 +86,6 @@ if (($_SERVER["REQUEST_METHOD"] === "POST") && isset($_POST)) {
                         </div>
                     </div>
                 </div> <!-- /container -->
-
             </div><!-- /col-10 -->
         </div><!-- /row -->
     </div><!-- /container-fluid -->

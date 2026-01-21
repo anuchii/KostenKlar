@@ -1,6 +1,6 @@
-<aside id="sidebar" class="col-12 col-lg-2 bg-white border-end p-0">
+<aside id="sidebarCollapse"
+       class="collapse d-lg-block col-12 col-lg-2 bg-white border-end p-0">
     <nav class="pt-4">
-
         <ul class="nav nav-pills flex-column gap-1 px-2">
 
             <li class="nav-item">
@@ -21,8 +21,7 @@
 
             <hr class="my-3">
 
-
-
         </ul>
     </nav>
+
 </aside>

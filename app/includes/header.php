@@ -1,7 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+
 
 if (!isset($userData) || !is_array($userData)) {
     $userData = $_SESSION['user_data'] ?? [];
@@ -19,8 +17,8 @@ $displayName = $isLoggedIn ? ($userData['first_name'] ?? ($userData['email'] ?? 
                 <button class="btn btn-outline-secondary d-lg-none"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target="#sidebar"
-                    aria-controls="sidebar"
+                    data-bs-target="#sidebarCollapse"
+                    aria-controls="sidebarCollapse"
                     aria-expanded="false"
                     aria-label="Toggle navigation">
                     <i class="bi bi-list"></i>
@@ -55,8 +53,8 @@ $displayName = $isLoggedIn ? ($userData['first_name'] ?? ($userData['email'] ?? 
                     </ul>
                 </div>
             <?php else: ?>
-                <a class="btn btn-outline-secondary btn-sm" href="<?= page_url('login') ?>">
-                    Login
+                <a class="btn btn-outline-secondary btn-sm" href="<?= page_url('startseite') ?>">
+                    Startseite
                 </a>
             <?php endif; ?>
 

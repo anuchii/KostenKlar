@@ -3,7 +3,7 @@ require_once __DIR__ . "/../config/paths.php";
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/functions.php';
 require_once ACTIONS_PATH . '/transaction_validation.php';
-require_once ACTIONS_PATH . '/transactions.php';
+require_once HELPERS_PATH . '/transactions.php';
 
 
 $pageName = "Dashboard";

@@ -124,11 +124,6 @@ require_once HELPERS_PATH . '/url.php';
                     </div>
                 </div>
             </div>
-            <!--
-            <div class="text-center mt-4">
-                <a class="btn btn-primary" href="<?= page_url('register') ?>">Jetzt kostenlos starten</a>
-            </div>
-            -->
         </div>
     </section>
 

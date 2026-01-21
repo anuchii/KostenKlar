@@ -5,11 +5,6 @@ require_once HELPERS_PATH . '/users.php';
 require_once HELPERS_PATH . '/validator.php';
 require_once HELPERS_PATH . '/url.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-
 // Nur POST erlaubt
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . page_url('startseite'));

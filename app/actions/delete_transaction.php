@@ -4,7 +4,7 @@ require_once __DIR__ . '/../config/paths.php';
 require_once CONFIG_PATH . '/db_config.php';
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/functions.php';
-require_once ACTIONS_PATH . '/transactions.php';
+require_once HELPERS_PATH . '/transactions.php';
 require_once ACTIONS_PATH . '/transaction_validation.php';
 
 if (session_status() === PHP_SESSION_NONE) {

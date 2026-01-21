@@ -221,11 +221,31 @@ function deactivateUserById(int $user_id, PDO $pdo): bool
  */
 function deleteUserById(int $user_id, PDO $pdo): bool
 {
-    $statement = $pdo->prepare(
-        "DELETE FROM users
-         WHERE user_id = :user_id AND role = 'user'"
-    );
+    try {
+        $pdo->beginTransaction();
 
-    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-    return $statement->execute();
+
+        $stmtTx = $pdo->prepare(
+            "DELETE FROM transactions
+             WHERE user_id = :user_id"
+        );
+        $stmtTx->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmtTx->execute();
+
+
+        $stmtUser = $pdo->prepare(
+            "DELETE FROM users
+             WHERE user_id = :user_id AND role = 'user'"
+        );
+        $stmtUser->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $ok = $stmtUser->execute();
+
+        $pdo->commit();
+        return $ok;
+    } catch (Throwable $e) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        return false;
+    }
 }

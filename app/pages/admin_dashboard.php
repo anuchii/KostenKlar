@@ -3,7 +3,7 @@ require_once __DIR__ . "/../config/paths.php";
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/functions.php';
 require_once HELPERS_PATH . '/users.php';
-require_once ACTIONS_PATH . '/transactions.php';
+require_once HELPERS_PATH . '/transactions.php';
 
 $pageName = "Dashboard";
 
@@ -37,22 +37,22 @@ $transactionCount = getTransactionCount($pdo);
 
 <body class="bg-light">
     <div class="container-fluid">
+
+      
         <div class="row" style="min-height: 100vh">
 
             <!-- Sidebar -->
             <?php include INCLUDES_PATH . '/sidebar_admin.php'; ?>
-
+   
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
+ <?php include INCLUDES_PATH . '/header.php'; ?>
 
-                <?php include INCLUDES_PATH . '/header.php'; ?>
-
-                <!-- Header -->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
                         <div>
                             <h2>Übersicht</h2>
-                            <p class="text-muted mb-0">Willkomen Zurück, <?php echo ("{$userData['first_name']} {$userData['last_name']}"); ?></p>
+                            <p class="text-muted mb-0">Willkomen zurück, <?php echo ("{$userData['first_name']} {$userData['last_name']}"); ?></p>
                         </div>
                     </div>
                 </header>

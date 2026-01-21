@@ -6,7 +6,7 @@ require_once HELPERS_PATH . '/form.php';
 
 
 $pageName = "register";
-$maxGebdatum = (new DateTime('-16 years'))->format('Y-m-d');
+$minGebdatum = (new DateTime('-16 years'))->format('Y-m-d');
 $errors = $_SESSION['errors'] ?? [];
 $old = $_SESSION['old'] ?? [];
 $erfolgsmeldung = $_SESSION['success'] ?? '';
@@ -68,7 +68,7 @@ unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['success']);
 
                             <label class="form-label" for="gebdatum">Geburtsdatum</label>
                             <input class="form-control <?php echo field_invalid_class($errors, 'gebdatum') ?>"
-                                id="gebdatum" type="date" min="1920-01-01" max="<?php echo $maxGebdatum; ?>"
+                                id="gebdatum" type="date" min="1920-01-01" max="<?php echo $minGebdatum; ?>"
                                 name="gebdatum" required
                                 value="<?php echo htmlspecialchars($old['gebdatum'] ?? '') ?>">
                             <?php echo field_error($errors, 'gebdatum'); ?>
