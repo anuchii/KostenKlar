@@ -34,6 +34,8 @@ if (!$transactionData) {
     exit();
 }
 
+$transactionData['transaction_amount'] = str_replace('.', ',', (string)$transactionData['transaction_amount']);
+
 // Gehört die Transaction dem eingeloggten User?
 if (($transactionData['user_id'] ?? null) != ($userData['user_id'] ?? null)) {
     header('Location: ' . page_url('user_dashboard'));
@@ -55,7 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'transaction_type' => ['required'],
     ];
 
-    [$clean, $errors] = validate($_POST, $rules);
+    $raw = $_POST;
+
+    $raw['transaction_amount'] = str_replace(',', '.', $raw['transaction_amount']);
+
+    [$clean, $errors] = validate($raw, $rules);
+    
+    $clean['transaction_amount'] = str_replace('.', ',', $clean['transaction_amount']);
 
     if (!empty($errors)) {
         // Aktuelle Eingaben in Session speichern
@@ -66,6 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    $clean['transaction_amount'] = str_replace(',', '.', $clean['transaction_amount']);
+    
     // Buchung updaten
     updateTransaction($clean, $pdo);
 

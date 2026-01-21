@@ -24,7 +24,7 @@
             class="form-control <?= field_invalid_class($validationErrors, 'transaction_amount') ?>"
             id="transaction-amount" 
             name="transaction_amount" 
-            placeholder="0.00" 
+            placeholder="0,00" 
             value="<?= htmlspecialchars($old['transaction_amount'] ?? '') ?>">
         <?= field_error($validationErrors, 'transaction_amount') ?>
     </div>

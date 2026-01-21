@@ -29,7 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'transaction_type' => ['required'],
     ];
 
-    [$clean, $errors] = validate($_POST, $rules);
+    $raw = $_POST;
+
+    $raw['transaction_amount'] = str_replace(',', '.', $raw['transaction_amount']);
+
+    [$clean, $errors] = validate($raw, $rules);
+
+    $clean['transaction_amount'] = str_replace('.', ',', $clean['transaction_amount']);
 
     if (!empty($errors)) {
         // Aktuelle Eingaben in Session speichern
@@ -39,10 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: ' . page_url('new_transaction'));
         exit;
     }
-    // Neue Buchung speichern
+   
     $userId = $_SESSION["user_data"]["user_id"];
 
-    $ok = createTransaction($clean, $userId, $pdo);
+    $clean['transaction_amount'] = str_replace(',', '.', $clean['transaction_amount']);
+
+     // Neue Buchung speichern
+    createTransaction($clean, $userId, $pdo);
 
     $transactionDate = $clean['transaction_date'];
     $yearMonth = date('Y-m', strtotime($transactionDate));
