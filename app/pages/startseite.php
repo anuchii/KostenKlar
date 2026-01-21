@@ -10,11 +10,13 @@ require_once HELPERS_PATH . '/url.php';
     <title>KostenKlar – Überblick über deine Finanzen</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+      <link href="<?= asset_url('css/start.css') ?>" rel="stylesheet">
     <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
 </head>
 
-<body class="bg-light">
+<body class="bg-light d-flex flex-column min-vh-100 pb-5">
     <?php include_once INCLUDES_PATH . '/nav_public.php' ?>
+    <main class="flex-grow-1">
     <!-- Hero -->
     <header class="py-5">
         <div class="container">
@@ -126,10 +128,7 @@ require_once HELPERS_PATH . '/url.php';
             </div>
         </div>
     </section>
-
-
-
-    <!-- Footer -->
+    </main>
     <?php include INCLUDES_PATH . '/footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
