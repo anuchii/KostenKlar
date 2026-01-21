@@ -1,12 +1,13 @@
 <form method="post" action="<?= $postAction ?>">
-    <input type="hidden" name="transaction_id" value="<?= $old['transaction_id'] ?? '' ?>">
+    <input type="hidden" name="transaction_id"
+        value="<?= htmlspecialchars((string) ($old['transaction_id'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
     <div class="mb-3">
         <label for="transaction-date" class="col-form-label">Datum</label>
         <input type="date"
             class="form-control <?= field_invalid_class($validationErrors, 'transaction_date') ?>"
             id="transaction-date" 
             name="transaction_date"
-            value="<?= htmlspecialchars($old['transaction_date'] ?? '') ?>">
+            value="<?= htmlspecialchars((string) ($old['transaction_date'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
         <?= field_error($validationErrors, 'transaction_date') ?>
     </div>
     <div class="mb-3">
@@ -15,7 +16,7 @@
             class="form-control <?= field_invalid_class($validationErrors, 'transaction_title') ?>"
             id="transaction-title" 
             name="transaction_title" 
-            value="<?= htmlspecialchars($old['transaction_title'] ?? '') ?>">
+            value="<?= htmlspecialchars((string) ($old['transaction_title'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
         <?= field_error($validationErrors, 'transaction_title') ?>
     </div>
     <div class="mb-3">
@@ -25,12 +26,13 @@
             id="transaction-amount" 
             name="transaction_amount" 
             placeholder="0.00" 
-            value="<?= htmlspecialchars($old['transaction_amount'] ?? '') ?>">
+            value="<?= htmlspecialchars((string) ($old['transaction_amount'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
         <?= field_error($validationErrors, 'transaction_amount') ?>
     </div>
     <div class="mb-3">
         <label for="transaction-note" class="col-form-label">Notiz</label>
-        <textarea class="form-control" id="transaction-note" name="transaction_note" rows="3"><?= $old['transaction_note'] ?? '' ?></textarea>
+        <textarea class="form-control" id="transaction-note" name="transaction_note"
+            rows="3"><?= htmlspecialchars((string) ($old['transaction_note'] ?? ''), ENT_QUOTES, 'UTF-8') ?></textarea>
     </div>
     <div class="mb-3">
         <div class="form-group">
@@ -42,7 +44,7 @@
                 <?php foreach ($categories as $category): ?>
                     <option value="<?= $category["category_id"] ?>"
                         <?= (isset($old["transaction_category_id"]) && ($old["transaction_category_id"] == $category["category_id"])) ? 'selected' : '' ?>>
-                        <?= $category["category_name"] ?>
+                        <?= htmlspecialchars((string) $category["category_name"], ENT_QUOTES, 'UTF-8') ?>
                     </option>
                 <?php endforeach; ?>
             </select>

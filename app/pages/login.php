@@ -41,7 +41,7 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
               <label for="emailAddress" class="visually-hidden">E-Mail</label>
               <input type="email" id="emailAddress" name="email"
                 class="form-control <?= field_invalid_class($validationErrors, 'email') ?>" placeholder="E-Mail-Adresse"
-                value="<?= htmlspecialchars($old['email'] ?? '') ?>" required autofocus autocomplete="email">
+                value="<?= htmlspecialchars((string)($old['email'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" required autofocus autocomplete="email">
 
               <?= field_error($validationErrors, 'email') ?>
             </div>

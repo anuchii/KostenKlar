@@ -71,7 +71,8 @@ if (!empty($_SESSION["user_data"])) {
                         <div>
                             <h1 class="h3 mb-1">Übersicht</h1>
                             <p class="text-muted mb-0">Willkommen zurück,
-                                <?php echo ("{$userData['first_name']} {$userData['last_name']}"); ?>.
+                                <?= htmlspecialchars((string)($userData['first_name'] ?? ''), ENT_QUOTES, 'UTF-8') ?>
+                                <?= htmlspecialchars((string)($userData['last_name'] ?? ''), ENT_QUOTES, 'UTF-8') ?>.
                             </p>
                         </div>
                         <form method="get" action="<?= page_url('user_dashboard') ?>"
@@ -185,7 +186,7 @@ if (!empty($_SESSION["user_data"])) {
                                                         <?php echo (date("d.m.Y", strtotime($transaction["transaction_date"])) ?? ""); ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo ($transaction["transaction_title"] ?? ""); ?>
+                                                        <?= htmlspecialchars((string)($transaction["transaction_title"] ?? ""), ENT_QUOTES, 'UTF-8') ?>
                                                     </td>
                                                     <td
                                                         class="<?php echo ($transaction["transaction_type"] === "expense" ? "text-danger" : "text-success"); ?> fw-semibold">
@@ -193,10 +194,10 @@ if (!empty($_SESSION["user_data"])) {
                                                         <?php echo (number_format($transaction["transaction_amount"], 2, ',', '') ?? ""); ?>
                                                     </td>
                                                     <td class="d-none d-md-table-cell">
-                                                        <?php echo ($transaction["category_name"] ?? ""); ?>
+                                                        <?= htmlspecialchars((string)($transaction["category_name"] ?? ""), ENT_QUOTES, 'UTF-8') ?>
                                                     </td>
                                                     <td class="d-none d-lg-table-cell">
-                                                        <?php echo ($transaction["transaction_note"] ?? ""); ?>
+                                                        <?= htmlspecialchars((string)($transaction["transaction_note"] ?? ""), ENT_QUOTES, 'UTF-8') ?>
                                                     </td>
                                                     <td>
                                                         <a class="btn btn-outline-primary btn-sm text-center"

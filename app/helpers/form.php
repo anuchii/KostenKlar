@@ -15,6 +15,6 @@ function field_error(array $errors, string $key, string $extraClass = ''): strin
 {
     return isset($errors[$key])
         ? '<div class="invalid-feedback ' . $extraClass . '">'
-        . htmlspecialchars($errors[$key]) . '</div>'
+        . htmlspecialchars($errors[$key], ENT_QUOTES, 'UTF-8') . '</div>'
         : '';
 }

@@ -35,7 +35,7 @@ unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['success']);
                     <p class="text-muted mb-4 text-center">Bitte füllen Sie das Formular vollständig aus.</p>
                     <?php if (!empty($erfolgsmeldung)): ?>
                         <div class="alert alert-success">
-                            <?php echo $erfolgsmeldung; ?>
+                            <?= htmlspecialchars((string)$erfolgsmeldung, ENT_QUOTES, 'UTF-8') ?>
                         </div>
                     <?php endif; ?>
                     <form method="post" action="<?= page_url('register_action') ?>" novalidate>
@@ -44,20 +44,20 @@ unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['success']);
                             <label class="form-label" for="first_name"> Vorname: </label>
                             <input class="form-control <?php echo field_invalid_class($errors, 'first_name'); ?>"
                                 type="text" id="first_name" placeholder="Vorname" name="first_name" required
-                                value="<?php echo htmlspecialchars($old['first_name'] ?? '') ?>">
+                                value="<?= htmlspecialchars((string)($old['first_name'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
                             <?php echo field_error($errors, 'first_name'); ?>
 
                             <label class="form-label" for="last_name"> Nachname: </label>
                             <input class="form-control <?php echo field_invalid_class($errors, 'last_name') ?>"
                                 type="text" id="last_name" placeholder="Nachname" name="last_name" required
-                                value="<?php echo htmlspecialchars($old['last_name'] ?? '') ?>">
+                                value="<?= htmlspecialchars((string)($old['last_name'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
                             <?php echo field_error($errors, 'last_name'); ?>
 
                             <label class="form-label" for="gebdatum">Geburtsdatum</label>
                             <input class="form-control <?php echo field_invalid_class($errors, 'gebdatum') ?>"
                                 id="gebdatum" type="date" min="1920-01-01" max="<?php echo $minGebdatum; ?>"
                                 name="gebdatum" required
-                                value="<?php echo htmlspecialchars($old['gebdatum'] ?? '') ?>">
+                                value="<?= htmlspecialchars((string)($old['gebdatum'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
                             <?php echo field_error($errors, 'gebdatum'); ?>
 
 
@@ -65,7 +65,7 @@ unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['success']);
                             <input class="form-control <?php echo field_invalid_class($errors, 'email') ?>"
                                 type="email" id="email" placeholder="beispiel@email.com"
                                 name="email" required
-                                value="<?php echo htmlspecialchars($old['email'] ?? '') ?>">
+                                value="<?= htmlspecialchars((string)($old['email'] ?? ''), ENT_QUOTES, 'UTF-8') ?>">
                             <?php echo field_error($errors, 'email'); ?>
 
                             <label class="form-label" for="password">Passwort: </label>
