@@ -1,6 +1,26 @@
 <?php
 require_once __DIR__ . '/../config/db_config.php';
 
+/**
+ * Formatiert einen Geldbetrag aus dem Formular so, dass er korrekt in der Datenbank gespeichert werden kann.
+ * (z.B. "22,56" wird zu "22.56")
+ */
+function normalizeAmount(string $value): string
+{
+    $amount = trim($value);
+    $amount = str_replace(' ', '', $amount);
+
+    // Alles außer Zahlen, Komma, Punkt, Minus entfernen
+    $amount = preg_replace('/[^0-9,.\-]/', '', $amount);
+
+    
+    if (strpos($amount, ',') !== false) {
+        $amount = str_replace('.', '', $amount);
+        $amount = str_replace(',', '.', $amount);
+    }
+
+    return $amount;
+}
 
 function getTransactionsByUserIDAndMonth($user_id, $year, $month, $pdo)
 {
@@ -86,6 +106,9 @@ function getTransactionCategories($pdo)
 
 function createTransaction($transactionData, $user_id, $pdo)
 {
+if (isset($transactionData['transaction_amount'])) {
+    $transactionData['transaction_amount'] = normalizeAmount($transactionData['transaction_amount']);
+}
 
     // Prepare SQL statement
     $statement = $pdo->prepare(
@@ -126,6 +149,10 @@ function deleteTransaction($transaction_id, $pdo)
 
 function updateTransaction($transactionData, $pdo)
 {
+if (isset($transactionData['transaction_amount'])) {
+    $transactionData['transaction_amount'] = normalizeAmount($transactionData['transaction_amount']);
+}
+
 
     // Prepare SQL statement
     $statement = $pdo->prepare(
