@@ -15,13 +15,38 @@ $postAction = page_url('edit_transaction');
 require_login_or_redirect('login');
 require_role_or_abort('user');
 
+$userData = getLoggedUserData();
+
+// transaction-id kann aus GET oder POST kommen
+$transaction_id = isset($_POST['transaction_id'])
+    ? (int)$_POST['transaction_id']
+    : (isset($_GET['transaction-id']) ? (int)$_GET['transaction-id'] : null);
+
+if (!$transaction_id) {
+    header('Location: ' . page_url('user_dashboard'));
+    exit();
+}
+
+// Transaction laden
+$transactionData = getTransactionByID($transaction_id, $pdo);
+if (!$transactionData) {
+    header('Location: ' . page_url('user_dashboard'));
+    exit();
+}
+
+// Gehört die Transaction dem eingeloggten User?
+if (($transactionData['user_id'] ?? null) != ($userData['user_id'] ?? null)) {
+    header('Location: ' . page_url('user_dashboard'));
+    exit();
+}
+
 // Kategorien laden
 $categories = getTransactionCategories($pdo);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $rules = [
-        'transaction_id'        => [],
+        'transaction_id'        => ['required'],
         'transaction_date'      => ['required', 'date'],
         'transaction_title'     => ['required', 'max:255'],
         'transaction_amount'    => ['required', 'money'],
@@ -42,9 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Buchung updaten
-    $userId = $_SESSION["user_data"]["user_id"];
-
-    $ok = updateTransaction($clean, $pdo);
+    updateTransaction($clean, $pdo);
 
     $transactionDate = $clean['transaction_date'];
     $yearMonth = date('Y-m', strtotime($transactionDate));
@@ -56,14 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
-    $transaction_id = $_GET['transaction-id'];
-
-    $transaction = getTransactionByID($transaction_id, $pdo);
-
-
-
     $validationErrors = $_SESSION['transaction_errors'] ?? [];
-    $old = $_SESSION['transaction_old'] ?? $transaction;
+    $old = $_SESSION['transaction_old'] ?? $transactionData;
 
     unset($_SESSION['transaction_errors'], $_SESSION['transaction_old']);
 }

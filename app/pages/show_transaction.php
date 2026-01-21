@@ -4,7 +4,6 @@ require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/functions.php';
 require_once HELPERS_PATH . '/transactions.php';
 
-
 $pageName = "Buchungsdetails";
 
 require_login_or_redirect('login');
@@ -16,15 +15,20 @@ $transaction_id = isset($_GET['transaction-id'])
     ? (int) $_GET['transaction-id']
     : null;
 
-if ($transaction_id) {
-    // Fetch transaction
-    $transaction = getTransactionByID($transaction_id, $pdo);
+if (!$transaction_id) {
+    header('Location: ' . page_url('user_dashboard'));
+    exit();
 }
 
-// Check if transaction exists and belongs to logged in user
-if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
-    // Redirect to dashboard if transaction is invalid
-    // TODO: Redirect to dashboard and flash error message
+// Transaction laden
+$transaction = getTransactionByID($transaction_id, $pdo);
+if (!$transaction) {
+    header('Location: ' . page_url('user_dashboard'));
+    exit();
+}
+
+// Gehört die Transaction dem eingeloggten User?
+if (($transaction['user_id'] ?? null) != ($userData['user_id'] ?? null)) {
     header('Location: ' . page_url('user_dashboard'));
     exit();
 }
