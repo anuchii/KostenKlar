@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/paths.php';
 require_once HELPERS_PATH . '/url.php';
-session_start();
 $_SESSION = [];
 
 if (ini_get("session.use_cookies")) {

@@ -27,6 +27,7 @@
             placeholder="0.00" 
             value="<?= htmlspecialchars($old['transaction_amount'] ?? '') ?>">
         <?= field_error($validationErrors, 'transaction_amount') ?>
+        
     </div>
     <div class="mb-3">
         <label for="transaction-note" class="col-form-label">Notiz</label>

@@ -98,8 +98,6 @@ if (!empty($userData['avatar_path'])) {
                         </div>
 
                         <!-- Details-Kästchen -->
-                        <!--TODO: padding einfügen wenn Bildschrim sehr klein,
-                          damit allgemeine infos nicht mit Profil-Kästchen pickt-->
                         <div class="col-md-8 ">
                             <form method="POST" action="<?= route('update_profil') ?>">
                                 <div class="card shadow-sm rounded-3">

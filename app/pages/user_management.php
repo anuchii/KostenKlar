@@ -42,7 +42,7 @@
                 <?php include INCLUDES_PATH . '/header.php'; ?>
 
                 <!-- Header -->
-                <header class="py-4 border-bottom p-3">
+                <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <h2>Benutzerverwaltung</h2>
                 </header>
 
