@@ -5,7 +5,6 @@ require_once CONFIG_PATH . '/db_config.php';
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/functions.php';
 require_once HELPERS_PATH . '/transactions.php';
-require_once ACTIONS_PATH . '/transaction_validation.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -44,12 +43,14 @@ if (($transactionData['user_id'] ?? null) != ($userData['user_id'] ?? null)) {
 // year-month für Redirect bestimmen (für den Monat der gelöschten Buchung)
 $transactionDate = $transactionData['transaction_date'] ?? null;
 $yearMonth = $transactionDate ? date('Y-m', strtotime($transactionDate)) : date('Y-m');
+$year = explode('-', $yearMonth)[0];
+$month = explode('-', $yearMonth)[1];
 
 // Löschen
 $success = deleteTransaction($transaction_id, $pdo);
 
 if ($success) {
-    header('Location: ' . page_url('user_dashboard') . '&year-month=' . $yearMonth);
+    header('Location: ' . route('user_dashboard', ['year' => $year, 'month' => $month]));
     exit();
 }
 

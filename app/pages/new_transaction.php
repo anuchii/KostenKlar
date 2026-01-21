@@ -50,7 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $transactionDate = $clean['transaction_date'];
     $yearMonth = date('Y-m', strtotime($transactionDate));
-    header('Location: ' . page_url('user_dashboard') . '&year-month=' . $yearMonth);
+    $year = explode('-', $yearMonth)[0];
+    $month = explode('-', $yearMonth)[1];
+    header('Location: ' . route('user_dashboard', ['year' => $year, 'month' => $month]));
     exit;
 }
 

@@ -47,7 +47,7 @@ if (!empty($errors)) {
         'status'     => $clean['status'],
     ];
 
-    header('Location: ' . page_url('edit_user') . '?user_id=' . $user_id);
+    header('Location: ' . page_url('edit_user') . '?user-id=' . $user_id);
     exit;
 }
 
@@ -67,7 +67,7 @@ if ($ok === false) {
         'status'     => $userData['status'],
     ];
 
-    header('Location: ' . page_url('edit_user') . '?user_id=' . $user_id);
+    header('Location: ' . page_url('edit_user') . '?user-id=' . $user_id);
     exit;
 }
 
