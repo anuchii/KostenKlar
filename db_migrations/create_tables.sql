@@ -29,15 +29,10 @@ CREATE TABLE `transactions` (
   `user_id` int(10) UNSIGNED NOT NULL,
   CONSTRAINT fk_transactions_users
     FOREIGN KEY (`user_id`)
-    REFERENCES	`users` (`user_id`),
+    REFERENCES	`users` (`user_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT fk_transactions_categories
     FOREIGN KEY (`transaction_category_id`)
     REFERENCES	`categories` (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-INSERT INTO `categories` (`category_id`, `category_name`) VALUES
-(1, 'Lebensmittel'),
-(2, 'Mobilität'),
-(3, 'Mode'),
-(4, 'Haushalt'),
-(5, 'Gehalt')
