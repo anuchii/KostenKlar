@@ -12,7 +12,7 @@ function normalizeAmount(string $value): string
     // Alles außer Zahlen, Komma, Punkt, Minus entfernen
     $amount = preg_replace('/[^0-9,.\-]/', '', $amount);
 
-
+    //Bsp. 1.234,45 -> 1234.45
     if (strpos($amount, ',') !== false) {
         $amount = str_replace('.', '', $amount);
         $amount = str_replace(',', '.', $amount);

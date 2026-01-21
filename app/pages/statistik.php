@@ -136,7 +136,7 @@ $pieLegendItems = $pieData['legend'] ?? [];
                         </div>
                         <div class="col-12 col-lg-5">
                             <div class="card shadow-sm rounded-3 h-100">
-                                <div class="card-header bg-white"><strong>Kategorien</strong></div>
+                                <div class="card-header bg-white"><strong>Monatsausgaben nach Kategorien</strong></div>
                                 <div class="card-body d-flex justify-content-center align-items-center">
                                     <div
                                         class="d-flex flex-column flex-sm-row gap-4 align-items-center justify-content-center w-100">
