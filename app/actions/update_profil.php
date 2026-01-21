@@ -4,7 +4,7 @@ require_once CONFIG_PATH . '/db_config.php';
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/validator.php';
 require_once HELPERS_PATH . '/users.php';
-require_once ACTIONS_PATH . '/flash.php';
+require_once HELPERS_PATH . '/flash.php';
 
 
 // Nur POST erlauben
@@ -39,7 +39,7 @@ $lastName   = $clean['last_name'];
 $email      = $clean['email'];
 $geschlecht = $clean['geschlecht'];
 
-// E-Mail bereits vergeben ist (außer eigene)??
+
 $stmt = $pdo->prepare('SELECT user_id FROM users WHERE email = :email AND user_id != :user_id LIMIT 1');
 $stmt->execute([
     ':email' => $email,

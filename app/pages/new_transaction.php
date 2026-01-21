@@ -3,9 +3,9 @@ require_once __DIR__ . '/../config/paths.php';
 require_once CONFIG_PATH . '/db_config.php';
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/validator.php';
-require_once ACTIONS_PATH . '/transactions.php';
+require_once HELPERS_PATH . '/transactions.php';
 require_once HELPERS_PATH . '/users.php';
-require_once ACTIONS_PATH . '/flash.php';
+require_once HELPERS_PATH . '/flash.php';
 require_once HELPERS_PATH . '/form.php';
 
 $pageTitle = 'Neue Buchung';
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             <div class="col-12 col-lg-10 p-0">
                 <?php include INCLUDES_PATH . '/header.php'; ?>
 
-                <!-- Page Header (Dashboard Style) -->
+                <!-- Page Header -->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
                         <div>

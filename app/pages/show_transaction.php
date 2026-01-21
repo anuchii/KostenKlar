@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../config/paths.php";
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/functions.php';
-require_once ACTIONS_PATH . '/transactions.php';
+require_once HELPERS_PATH . '/transactions.php';
 
 
 $pageName = "Buchungsdetails";
@@ -149,7 +149,6 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
                         </div>
                     </div>
                 </div> <!-- /container -->
-
             </div><!-- /col-10 -->
         </div><!-- /row -->
     </div><!-- /container-fluid -->
