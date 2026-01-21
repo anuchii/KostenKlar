@@ -1,4 +1,5 @@
 <aside id="sidebar" class="col-12 col-lg-2 bg-white border-end p-0">
+    <div id="sidebarCollapse" class="collapse d-lg-block">
     <nav class="pt-4">
 
         <ul class="nav nav-pills flex-column gap-1 px-2">
@@ -40,4 +41,5 @@
 
         </ul>
     </nav>
+</div>
 </aside>
