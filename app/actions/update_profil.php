@@ -5,7 +5,10 @@ require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/validator.php';
 require_once HELPERS_PATH . '/users.php';
 require_once HELPERS_PATH . '/flash.php';
+require_once HELPERS_PATH . '/functions.php';
 
+require_login_or_redirect('login');
+require_role_or_abort('user');
 
 // Nur POST erlauben
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

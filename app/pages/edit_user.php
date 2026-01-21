@@ -9,8 +9,8 @@ require_once HELPERS_PATH . '/users.php';
 $pageTitle = "Benutzer bearbeiten";
 $postAction = page_url('edit_user');
 
-// Require user role 'admin'
-require_admin();
+require_login_or_redirect('login');
+require_role_or_abort('admin');
 
 $user_id = (int)($_GET['user_id'] ?? ($_GET['user-id'] ?? 0));
 

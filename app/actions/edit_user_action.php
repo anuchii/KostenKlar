@@ -7,7 +7,8 @@ require_once HELPERS_PATH . '/functions.php';
 require_once HELPERS_PATH . '/users.php';
 require_once HELPERS_PATH . '/validator.php';
 
-require_admin();
+require_login_or_redirect('login');
+require_role_or_abort('admin');
 
 //Es werden nur POST-Requests erlaubt 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

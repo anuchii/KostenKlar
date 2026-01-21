@@ -5,7 +5,8 @@ require_once HELPERS_PATH . "/functions.php";
 require_once HELPERS_PATH . "/users.php";
 require_once HELPERS_PATH . "/url.php";
 
-require_admin();
+require_login_or_redirect('login');
+require_role_or_abort('admin');
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: " . route("admin_dashboard"));

@@ -10,12 +10,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Require login
+require_login_or_redirect('login');
+require_role_or_abort('user');
+
 $userData = getLoggedUserData();
-if (!$userData) {
-    header('Location: ' . page_url('login'));
-    exit();
-}
 
 // transaction-id kann aus GET oder POST kommen
 $transaction_id = isset($_POST['transaction-id'])

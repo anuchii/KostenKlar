@@ -6,13 +6,10 @@ require_once HELPERS_PATH . '/transactions.php';
 
 $pageName = "Dashboard";
 
-// Require login
-$userData = getLoggedUserData();
+require_login_or_redirect('login');
+require_role_or_abort('user');
 
-if (!$userData) {
-    header('Location: ' . page_url('login'));
-    exit();
-}
+$userData = getLoggedUserData();
 
 // Jahr & Monat aus Dropdowns
 $year  = isset($_GET['year'])  ? (int)$_GET['year']  : (int)date('Y');

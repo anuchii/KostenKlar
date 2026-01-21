@@ -4,39 +4,19 @@ function getLoggedUserData() {
     return $_SESSION["user_data"] ?? null;
 }
 
-function require_login() {
+function require_login_or_redirect ($page) {
     $currUser = getLoggedUserData();
 
     if (!$currUser) {
-        header('Location: ' . page_url('login'));
+        header('Location: ' . page_url($page));
         exit();
     }
 }
 
-function require_admin() {
-    require_login();
-
+function require_role_or_abort($role) {
     $currUser = getLoggedUserData();
 
-    if ($currUser['role'] !== 'admin') {
-        http_response_code(403);
-        exit('403 - Zugriff verweigert');
-    }
-}
-
-function require_user() {
-    require_login();
-
-    if ($currUser['role'] !== 'user') {
-        http_response_code(403);
-        exit('403 - Zugriff verweigert');
-    }
-}
-
-function require_role($role) {
-    require_login();
-
-    if ($currUser['role'] !== $role) {
+    if ($currUser == null || $currUser['role'] !== $role) {
         http_response_code(403);
         exit('403 - Zugriff verweigert');
     }

@@ -7,19 +7,10 @@ require_once HELPERS_PATH . '/transactions.php';
 
 $pageName = "Buchungsdetails";
 
+require_login_or_redirect('login');
+require_role_or_abort('user');
 
-
-// Require login
 $userData = getLoggedUserData();
-
-if (!$userData) {
-    header('Location: ' . page_url('login'));
-    exit();
-}
-
-// TODO:
-// Require status = active
-// Require role = user
 
 $transaction_id = isset($_GET['transaction-id'])
     ? (int) $_GET['transaction-id']

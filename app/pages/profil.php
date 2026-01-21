@@ -1,14 +1,13 @@
 <?php
 require_once HELPERS_PATH . '/url.php';
-if (!empty($_SESSION['user_data'])) {
-    $userData = $_SESSION['user_data'];
-} else {
-    header('Location: ' . page_url('startseite'));
-    exit(); 
-}
+require_once HELPERS_PATH . '/functions.php';
+
+require_login_or_redirect('login');
+require_role_or_abort('user');
+
+$userData = $_SESSION['user_data'];
 
 $defaultProfileImage = 'https://cdn-icons-png.flaticon.com/512/847/847969.png';
-
 
 if (!empty($userData['avatar_path'])) {
     $profileImage = upload_url($userData['avatar_path'] ?? null, $defaultProfileImage);

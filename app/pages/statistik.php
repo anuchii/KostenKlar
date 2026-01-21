@@ -1,13 +1,16 @@
 <?php
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 require_once HELPERS_PATH . '/url.php';
 require_once CONFIG_PATH . '/db_config.php';
 require_once HELPERS_PATH . '/transactions.php';
 require_once HELPERS_PATH . '/statistik_helper.php';
+require_once HELPERS_PATH . '/functions.php';
 
+require_login_or_redirect('login');
+require_role_or_abort('user');
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (!isset($userData) || !is_array($userData)) {
     $userData = $_SESSION['user_data'] ?? [];

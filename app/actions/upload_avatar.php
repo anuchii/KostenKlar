@@ -3,6 +3,7 @@ require_once __DIR__ . '/../config/paths.php';
 require_once  CONFIG_PATH . '/db_config.php';
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/flash.php';
+require_once HELPERS_PATH . '/functions.php';
 
 /**
  * Liest die Benutzer-ID des aktuell eingeloggten Users aus der Session und gibt sie als int zurück.
@@ -54,6 +55,9 @@ function validate_avatar_upload_or_redirect(string $tmpPath): string
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+require_login_or_redirect('login');
+require_role_or_abort('user');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect_profil();

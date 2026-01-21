@@ -6,10 +6,8 @@
     
     $pageName = 'Benutzerverwaltung';
 
-
-
-    // Require user role 'admin'
-    require_admin();
+    require_login_or_redirect('login');
+    require_role_or_abort('admin');
 
     // Fetch users
     $users = getAllUsers($pdo);

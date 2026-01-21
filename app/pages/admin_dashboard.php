@@ -7,10 +7,8 @@ require_once HELPERS_PATH . '/transactions.php';
 
 $pageName = "Dashboard";
 
-
-
-// Require user role 'admin'
-require_admin();
+require_login_or_redirect('login');
+require_role_or_abort('admin');
 
 $userData = getLoggedUserData();
 

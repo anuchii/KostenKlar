@@ -6,10 +6,8 @@ require_once HELPERS_PATH . '/users.php';
 
 $pageName = "Benutzerdetails";
 
-
-
-// Require user role 'admin'
-require_admin();
+require_login_or_redirect('login');
+require_role_or_abort('admin');
 
 $user_id = isset($_GET['user-id'])
     ? (int) $_GET['user-id']

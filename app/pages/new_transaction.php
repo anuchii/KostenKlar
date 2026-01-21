@@ -7,16 +7,13 @@ require_once HELPERS_PATH . '/transactions.php';
 require_once HELPERS_PATH . '/users.php';
 require_once HELPERS_PATH . '/flash.php';
 require_once HELPERS_PATH . '/form.php';
+require_once HELPERS_PATH . '/functions.php';
 
 $pageTitle = 'Neue Buchung';
 $postAction = page_url('new_transaction');
 
-// Login prüfen
-$userId = $_SESSION['user_data']['user_id'] ?? ($_SESSION['user_data']['id'] ?? null);
-if ($userId === null) {
-    header('Location: ' . page_url('login'));
-    exit;
-}
+require_login_or_redirect('login');
+require_role_or_abort('user');
 
 // Kategorien laden
 $categories = getTransactionCategories($pdo);
