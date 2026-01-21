@@ -19,8 +19,8 @@ $userData = getLoggedUserData();
 
 // transaction-id kann aus GET oder POST kommen
 $transaction_id = isset($_POST['transaction_id'])
-    ? (int)$_POST['transaction_id']
-    : (isset($_GET['transaction-id']) ? (int)$_GET['transaction-id'] : null);
+    ? (int) $_POST['transaction_id']
+    : (isset($_GET['transaction-id']) ? (int) $_GET['transaction-id'] : null);
 
 if (!$transaction_id) {
     header('Location: ' . page_url('user_dashboard'));
@@ -46,13 +46,13 @@ $categories = getTransactionCategories($pdo);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $rules = [
-        'transaction_id'        => ['required'],
-        'transaction_date'      => ['required', 'date'],
-        'transaction_title'     => ['required', 'max:255'],
-        'transaction_amount'    => ['required', 'money'],
-        'transaction_note'      => [],
+        'transaction_id' => ['required'],
+        'transaction_date' => ['required', 'date'],
+        'transaction_title' => ['required', 'max:255'],
+        'transaction_amount' => ['required', 'money'],
+        'transaction_note' => [],
         'transaction_category_id' => ['required'],
-        'transaction_type'        => ['required'],
+        'transaction_type' => ['required'],
     ];
 
     [$clean, $errors] = validate($_POST, $rules);
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    
+
     $validationErrors = $_SESSION['transaction_errors'] ?? [];
     $old = $_SESSION['transaction_old'] ?? $transactionData;
 
@@ -101,23 +101,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 <body class="bg-light">
     <div class="container-fluid">
         <div class="row min-vh-100">
-
             <?php include INCLUDES_PATH . '/sidebar.php'; ?>
-
             <div class="col-12 col-lg-10 p-0">
                 <?php include INCLUDES_PATH . '/header.php'; ?>
-
-                <!-- Edit-Transaktion Header-->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
                         <div>
                             <h1 class="h3 mb-1">Buchung bearbeiten</h1>
                             <p class="text-muted mb-0">Passe die Details deiner Buchung an.</p>
                         </div>
-                        <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary" style="height: 38px;">Zurück</a>
+                        <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary"
+                            style="height: 38px;">Zurück</a>
                     </div>
                 </header>
-
                 <main>
                     <div class="container py-4">
                         <div class="row justify-content-center">
@@ -135,7 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     </div>
                 </main>
             </div>
-
         </div>
     </div>
     <?php include INCLUDES_PATH . '/footer.php'; ?>

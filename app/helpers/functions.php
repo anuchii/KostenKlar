@@ -1,10 +1,11 @@
 <?php
-
-function getLoggedUserData() {
+function getLoggedUserData()
+{
     return $_SESSION["user_data"] ?? null;
 }
 
-function require_login_or_redirect ($page) {
+function require_login_or_redirect($page)
+{
     $currUser = getLoggedUserData();
 
     if (!$currUser) {
@@ -13,7 +14,8 @@ function require_login_or_redirect ($page) {
     }
 }
 
-function require_role_or_abort($role) {
+function require_role_or_abort($role)
+{
     $currUser = getLoggedUserData();
 
     if ($currUser == null || $currUser['role'] !== $role) {

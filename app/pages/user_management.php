@@ -1,17 +1,16 @@
 <?php
-    require_once __DIR__ . '/../config/db_config.php';
-    require_once HELPERS_PATH . '/url.php';
-    require_once HELPERS_PATH . '/users.php';
-    require_once HELPERS_PATH . '/functions.php';
-    
-    $pageName = 'Benutzerverwaltung';
+require_once __DIR__ . '/../config/db_config.php';
+require_once HELPERS_PATH . '/url.php';
+require_once HELPERS_PATH . '/users.php';
+require_once HELPERS_PATH . '/functions.php';
 
-    require_login_or_redirect('login');
-    require_role_or_abort('admin');
+$pageName = 'Benutzerverwaltung';
 
-    // Fetch users
-    $users = getAllUsers($pdo);
+require_login_or_redirect('login');
+require_role_or_abort('admin');
 
+// Fetch users
+$users = getAllUsers($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -30,23 +29,16 @@
 <body class="bg-light">
     <div class="container-fluid">
         <div class="row" style="min-height: 100vh">
-
             <!-- Sidebar -->
             <?php include INCLUDES_PATH . '/sidebar_admin.php'; ?>
-
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
-
                 <?php include INCLUDES_PATH . '/header.php'; ?>
-
                 <!-- Header -->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <h2>Benutzerverwaltung</h2>
                 </header>
-
-                <!-- Profilinhalt -->
                 <div class="container">
-                   
                     <div class="row">
                         <div class="col">
                             <div class="card shadow-sm my-4">
@@ -55,20 +47,15 @@
                                 </div>
                                 <div class="card-body">
                                     <?php include INCLUDES_PATH . '/user_table.php'; ?>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-            </div><!-- /col-10 -->
-        </div><!-- /row -->
-    </div><!-- /container-fluid -->
-
+            </div>
+        </div>
+    </div>
     <?php include INCLUDES_PATH . '/footer.php'; ?>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

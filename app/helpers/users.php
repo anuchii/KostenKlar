@@ -1,8 +1,6 @@
 <?php
-
 require_once __DIR__ . '/../config/paths.php';
 require_once CONFIG_PATH . '/db_config.php';
-
 
 function createUser($userData, $pdo)
 {
@@ -177,7 +175,6 @@ function getActiveUserCount($pdo)
         "SELECT COUNT(*) FROM users
             WHERE role = 'user' AND status = 'active'"
     );
-
     $statement->execute();
 
     // Fetch database entries
@@ -223,16 +220,13 @@ function deleteUserById(int $user_id, PDO $pdo): bool
 {
     try {
         $pdo->beginTransaction();
-
-
         $stmtTx = $pdo->prepare(
             "DELETE FROM transactions
              WHERE user_id = :user_id"
         );
         $stmtTx->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmtTx->execute();
-
-
+        
         $stmtUser = $pdo->prepare(
             "DELETE FROM users
              WHERE user_id = :user_id AND role = 'user'"

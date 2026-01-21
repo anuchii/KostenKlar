@@ -21,12 +21,12 @@ $categories = getTransactionCategories($pdo);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $rules = [
-        'transaction_date'      => ['required', 'date'],
-        'transaction_title'     => ['required', 'max:255'],
-        'transaction_amount'    => ['required', 'money'],
-        'transaction_note'      => [],
+        'transaction_date' => ['required', 'date'],
+        'transaction_title' => ['required', 'max:255'],
+        'transaction_amount' => ['required', 'money'],
+        'transaction_note' => [],
         'transaction_category_id' => ['required'],
-        'transaction_type'        => ['required'],
+        'transaction_type' => ['required'],
     ];
 
     [$clean, $errors] = validate($_POST, $rules);
@@ -39,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: ' . page_url('new_transaction'));
         exit;
     }
-
     // Neue Buchung speichern
     $userId = $_SESSION["user_data"]["user_id"];
 
@@ -77,23 +76,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 <body class="bg-light">
     <div class="container-fluid">
         <div class="row min-vh-100">
-
             <?php include INCLUDES_PATH . '/sidebar.php'; ?>
-
             <div class="col-12 col-lg-10 p-0">
                 <?php include INCLUDES_PATH . '/header.php'; ?>
-
-                <!-- Page Header -->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
                         <div>
                             <h1 class="h3 mb-1">Neue Buchung</h1>
                             <p class="text-muted mb-0">Erstelle eine neue Einnahme oder Ausgabe.</p>
                         </div>
-                        <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary" style="height: 38px;">Zurück</a>
+                        <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary"
+                            style="height: 38px;">Zurück</a>
                     </div>
                 </header>
-
                 <main>
                     <div class="container py-4">
                         <div class="row justify-content-center">
@@ -111,7 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     </div>
                 </main>
             </div>
-
         </div>
     </div>
     <?php include INCLUDES_PATH . '/footer.php'; ?>

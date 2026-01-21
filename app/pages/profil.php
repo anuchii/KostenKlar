@@ -31,16 +31,9 @@ if (!empty($userData['avatar_path'])) {
 <body class="bg-light">
     <div class=" container-fluid">
         <div class="row" style="min-height: 100vh">
-
             <?php include INCLUDES_PATH . '/sidebar.php'; ?>
-
-            <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
-
-
                 <?php include INCLUDES_PATH . '/header.php'; ?>
-
-                <!-- Profil Header -->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
                         <div>
@@ -49,8 +42,6 @@ if (!empty($userData['avatar_path'])) {
                         </div>
                     </div>
                 </header>
-
-                <!-- Profil-Inhalt -->
                 <div class="container py-4">
                     <div class="row g-3">
                         <!-- Profil-Kästchen  -->
@@ -67,7 +58,6 @@ if (!empty($userData['avatar_path'])) {
                                             <div class="text-muted small">Profilbild & Konto</div>
                                         </div>
                                     </div>
-
                                     <?php if (!empty($_SESSION['flash_error'])): ?>
                                         <div class="alert alert-danger py-2" role="alert">
                                             <?= htmlspecialchars($_SESSION['flash_error']) ?>
@@ -87,7 +77,6 @@ if (!empty($userData['avatar_path'])) {
                                             <input type="file" name="avatar" accept="image/png, image/jpeg, image/webp"
                                                 class="form-control form-control-sm" required>
                                         </div>
-
                                         <button type="submit" class="btn btn-primary btn-sm">
                                             Hochladen
                                         </button>
@@ -95,7 +84,6 @@ if (!empty($userData['avatar_path'])) {
                                 </div>
                             </div>
                         </div>
-
                         <!-- Details-Kästchen -->
                         <div class="col-md-8 ">
                             <form method="POST" action="<?= route('update_profil') ?>">
@@ -107,22 +95,26 @@ if (!empty($userData['avatar_path'])) {
                                         <div class="row mb-2 align-items-center">
                                             <label class="col-sm-4 fw-bold" for="first_name">Vorname:</label>
                                             <div class="col-sm-8">
-                                                <input id="first_name" name="first_name" type="text" class="form-control"
-                                                    value="<?= htmlspecialchars($userData['first_name'] ?? '') ?>" required>
+                                                <input id="first_name" name="first_name" type="text"
+                                                    class="form-control"
+                                                    value="<?= htmlspecialchars($userData['first_name'] ?? '') ?>"
+                                                    required>
                                             </div>
                                         </div>
                                         <div class="row mb-2 align-items-center">
                                             <label class="col-sm-4 fw-bold" for="last_name">Nachname:</label>
                                             <div class="col-sm-8">
                                                 <input id="last_name" name="last_name" type="text" class="form-control"
-                                                    value="<?= htmlspecialchars($userData['last_name'] ?? '') ?>" required>
+                                                    value="<?= htmlspecialchars($userData['last_name'] ?? '') ?>"
+                                                    required>
                                             </div>
                                         </div>
                                         <div class="row mb-2 align-items-center">
                                             <label class="col-sm-4 fw-bold" for="gebdatum">Geburtsdatum:</label>
                                             <div class="col-sm-8">
                                                 <input id="gebdatum" type="text" class="form-control"
-                                                    value="<?= htmlspecialchars($userData['gebdatum'] ?? '') ?>" readonly>
+                                                    value="<?= htmlspecialchars($userData['gebdatum'] ?? '') ?>"
+                                                    readonly>
                                             </div>
                                         </div>
 
@@ -131,10 +123,14 @@ if (!empty($userData['avatar_path'])) {
                                             <div class="col-sm-8">
                                                 <?php $g = $userData['geschlecht'] ?? ''; ?>
                                                 <select id="geschlecht" name="geschlecht" class="form-select" required>
-                                                    <option value="" <?= $g === '' ? 'selected' : '' ?>>Bitte wählen</option>
-                                                    <option value="maennlich" <?= $g === 'maennlich' ? 'selected' : '' ?>>Männlich</option>
-                                                    <option value="weiblich" <?= $g === 'weiblich' ? 'selected' : '' ?>>Weiblich</option>
-                                                    <option value="divers" <?= $g === 'divers' ? 'selected' : '' ?>>Divers</option>
+                                                    <option value="" <?= $g === '' ? 'selected' : '' ?>>Bitte wählen
+                                                    </option>
+                                                    <option value="maennlich" <?= $g === 'maennlich' ? 'selected' : '' ?>>
+                                                        Männlich</option>
+                                                    <option value="weiblich" <?= $g === 'weiblich' ? 'selected' : '' ?>>
+                                                        Weiblich</option>
+                                                    <option value="divers" <?= $g === 'divers' ? 'selected' : '' ?>>Divers
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -161,10 +157,10 @@ if (!empty($userData['avatar_path'])) {
                             </form>
                         </div>
                     </div>
-                </div><!-- /container -->
-            </div><!-- /col-10 -->
-        </div><!-- /row -->
-    </div><!-- /container-fluid -->
+                </div>
+            </div>
+        </div>
+    </div>
     <?php include INCLUDES_PATH . '/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

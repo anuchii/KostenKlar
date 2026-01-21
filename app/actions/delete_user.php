@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
-$userId = isset($_GET["user-id"]) ? (int)$_GET["user-id"] : (int)($_POST["user-id"] ?? 0);
+$userId = isset($_GET["user-id"]) ? (int) $_GET["user-id"] : (int) ($_POST["user-id"] ?? 0);
 if ($userId <= 0) {
     header("Location: " . route("admin_dashboard"));
     exit;

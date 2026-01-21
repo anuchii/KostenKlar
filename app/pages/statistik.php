@@ -22,18 +22,16 @@ $selectedYear = isset($_GET['year'])
     ? (int) $_GET['year']
     : (int) date('Y');
 
-
 $stats = [];
 $statsPie = [];
 try {
-    $stats = getMonthlySumByUserIdAndYear((int)$userId, $selectedYear, $pdo);
-    $statsPie = getPieChartData($selectedYear, (int)$userId, $pdo);
+    $stats = getMonthlySumByUserIdAndYear((int) $userId, $selectedYear, $pdo);
+    $statsPie = getPieChartData($selectedYear, (int) $userId, $pdo);
 } catch (Throwable $e) {
     $stats = [];
     $statsPie = [];
     $dbError = 'Statistik konnte nicht geladen werden.';
 }
-
 
 $monthNames = [
     1 => 'Januar',
@@ -49,7 +47,6 @@ $monthNames = [
     11 => 'November',
     12 => 'Dezember',
 ];
-
 
 $chartData = buildChartData($stats, $monthNames);
 $pieData = buildPieChartData($statsPie);
@@ -81,7 +78,6 @@ $pieLegendItems = $pieData['legend'] ?? [];
             <?php include INCLUDES_PATH . '/sidebar.php'; ?>
             <div class="col-12 col-lg-10 p-0">
                 <?php include INCLUDES_PATH . '/header.php'; ?>
-
                 <!-- Statistik Header -->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
@@ -89,7 +85,6 @@ $pieLegendItems = $pieData['legend'] ?? [];
                             <h1 class="h3 mb-1">Statistik</h1>
                             <p class="text-muted mb-0">Überblick über Einnahmen und Ausgaben.</p>
                         </div>
-
                         <!-- Jahr-Auswahl -->
                         <form method="get" action="<?= page_url('statistik') ?>" class="d-flex align-items-end gap-2">
                             <input type="hidden" name="page" value="statistik">
@@ -99,18 +94,18 @@ $pieLegendItems = $pieData['legend'] ?? [];
                                     <?php
                                     $currentYear = (int) date('Y');
                                     for ($y = $currentYear; $y >= $currentYear - 5; $y--):
-                                    ?>
+                                        ?>
                                         <option value="<?= $y ?>" <?= $y === $selectedYear ? 'selected' : '' ?>>
                                             <?= $y ?>
                                         </option>
                                     <?php endfor; ?>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary text-nowrap statistik-year-btn">Anzeigen</button>
+                            <button type="submit"
+                                class="btn btn-primary text-nowrap statistik-year-btn">Anzeigen</button>
                         </form>
                     </div>
                 </header>
-
                 <div class="container py-4">
                     <?php if (!empty($dbError)): ?>
                         <div class="alert alert-warning mb-3" role="alert">
@@ -148,7 +143,6 @@ $pieLegendItems = $pieData['legend'] ?? [];
                                         <div class="pie"
                                             style="background: <?= htmlspecialchars($pieGradient, ENT_QUOTES, 'UTF-8') ?>;">
                                         </div>
-
                                         <ul class="list-unstyled mb-0 statistik-legend">
                                             <?php if (empty($pieLegendItems)): ?>
                                                 <li class="text-muted">Keine Daten für <?= (int) $selectedYear ?> vorhanden.
@@ -174,11 +168,10 @@ $pieLegendItems = $pieData['legend'] ?? [];
                     </div>
                 </div>
             </div>
-
-        </div> <!--row min-vh-100 -->
+        </div>
         <?php include INCLUDES_PATH . '/footer.php'; ?>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    </div> <!--container-fluig -->
+    </div>
 </body>
 
 </html>

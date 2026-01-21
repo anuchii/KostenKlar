@@ -12,9 +12,9 @@ $postAction = page_url('edit_user');
 require_login_or_redirect('login');
 require_role_or_abort('admin');
 
-$user_id = (int)($_GET['user_id'] ?? ($_GET['user-id'] ?? 0));
+$user_id = (int) ($_GET['user_id'] ?? ($_GET['user-id'] ?? 0));
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once ACTIONS_PATH . '/edit_user_action.php';
     exit;
 }
@@ -27,7 +27,6 @@ if (empty($userData)) {
     header('Location: ' . page_url('user_management'));
     exit;
 }
-
 
 $validationErrors = $_SESSION['edit_user_errors'] ?? [];
 $old = $_SESSION['edit_user_old'] ?? [];
@@ -60,21 +59,12 @@ if (!empty($old)) {
 <body>
     <div class="container-fluid">
         <div class="row" style="min-height: 100vh">
-
-            <!-- Sidebar -->
             <?php include INCLUDES_PATH . '/sidebar_admin.php'; ?>
-
-            <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
-
                 <?php include INCLUDES_PATH . '/header.php'; ?>
-
-                <!-- Header -->
                 <header class="py-4 border-bottom p-3">
                     <h2>Benutzerdetails</h2>
                 </header>
-
-                <!-- Profilinhalt -->
                 <div class="container">
                     <div class="row">
                         <div class="col">
@@ -85,13 +75,11 @@ if (!empty($old)) {
                             </div>
                         </div>
                     </div>
-                </div> <!-- /container -->
-            </div><!-- /col-10 -->
-        </div><!-- /row -->
-    </div><!-- /container-fluid -->
-
+                </div>
+            </div>
+        </div>
+    </div>
     <?php include INCLUDES_PATH . '/footer.php'; ?>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

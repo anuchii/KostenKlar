@@ -17,8 +17,8 @@ $userData = getLoggedUserData();
 
 // transaction-id kann aus GET oder POST kommen
 $transaction_id = isset($_POST['transaction-id'])
-    ? (int)$_POST['transaction-id']
-    : (isset($_GET['transaction-id']) ? (int)$_GET['transaction-id'] : null);
+    ? (int) $_POST['transaction-id']
+    : (isset($_GET['transaction-id']) ? (int) $_GET['transaction-id'] : null);
 
 if (!$transaction_id) {
     header('Location: ' . page_url('user_dashboard'));
