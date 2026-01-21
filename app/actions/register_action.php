@@ -13,11 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $rules = [
     'first_name' => ['required', 'max:100'],
-    'last_name'  => ['required', 'max:100'],
-    'email'      => ['required', 'email'],
-    'password'   => ['required', 'min:12'],
+    'last_name' => ['required', 'max:100'],
+    'email' => ['required', 'email'],
+    'password' => ['required', 'min:12'],
     'password-confirmation' => ['required', 'min:12'],
-    'gebdatum'   => ['required', 'date'],
+    'gebdatum' => ['required', 'date'],
     'geschlecht' => ['required', 'in:weiblich,maennlich,divers'],
 ];
 

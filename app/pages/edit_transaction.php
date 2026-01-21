@@ -17,20 +17,19 @@ if ($userId === null) {
     header('Location: ' . page_url('login'));
     exit;
 }
-
 // Kategorien laden
 $categories = getTransactionCategories($pdo);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $rules = [
-        'transaction_id'        => [],
-        'transaction_date'      => ['required', 'date'],
-        'transaction_title'     => ['required', 'max:255'],
-        'transaction_amount'    => ['required', 'money'],
-        'transaction_note'      => [],
+        'transaction_id' => [],
+        'transaction_date' => ['required', 'date'],
+        'transaction_title' => ['required', 'max:255'],
+        'transaction_amount' => ['required', 'money'],
+        'transaction_note' => [],
         'transaction_category_id' => ['required'],
-        'transaction_type'        => ['required'],
+        'transaction_type' => ['required'],
     ];
 
     [$clean, $errors] = validate($_POST, $rules);
@@ -43,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: ' . route('edit_transaction', ['transaction-id' => $clean['transaction_id']]));
         exit;
     }
-
     // Buchung updaten
     $userId = $_SESSION["user_data"]["user_id"];
 
@@ -56,18 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: ' . route('user_dashboard', ['year' => $year, 'month' => $month]));
     exit;
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    
+
     $transaction_id = $_GET['transaction-id'];
 
     $transaction = getTransactionByID($transaction_id, $pdo);
-
-
-
     $validationErrors = $_SESSION['transaction_errors'] ?? [];
     $old = $_SESSION['transaction_old'] ?? $transaction;
-
     unset($_SESSION['transaction_errors'], $_SESSION['transaction_old']);
 }
 
@@ -87,12 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 <body class="bg-light">
     <div class="container-fluid">
         <div class="row min-vh-100">
-
             <?php include INCLUDES_PATH . '/sidebar.php'; ?>
-
             <div class="col-12 col-lg-10 p-0">
                 <?php include INCLUDES_PATH . '/header.php'; ?>
-
                 <!-- Edit-Transaktion Header-->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
@@ -100,10 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                             <h1 class="h3 mb-1">Buchung bearbeiten</h1>
                             <p class="text-muted mb-0">Passe die Details deiner Buchung an.</p>
                         </div>
-                        <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary" style="height: 38px;">Zurück</a>
+                        <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary"
+                            style="height: 38px;">Zurück</a>
                     </div>
                 </header>
-
                 <main>
                     <div class="container py-4">
                         <div class="row justify-content-center">

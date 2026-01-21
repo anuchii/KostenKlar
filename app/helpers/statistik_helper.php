@@ -23,7 +23,6 @@ function buildChartData(array $stats, array $monthNames): array
         $maxSaldo = 1;// Schutz vor Division durch 0
     }
 
-
     $chartData = [];
     for ($m = 1; $m <= 12; $m++) {
         $saldo = (float) ($stats[$m]['saldo'] ?? 0);
@@ -43,10 +42,8 @@ function buildChartData(array $stats, array $monthNames): array
             'barClass' => $barClass,
         ];
     }
-
     return $chartData;
 }
-
 
 /**
  * Erstellt die Daten für das Kuchendiagramm (PieChart).
@@ -72,30 +69,27 @@ function buildPieChartData(array $statsPie): array
     $labels = $statsPie['category'] ?? [];
     $valuesRaw = $statsPie['totalExpenses'] ?? [];
 
-
     $values = [];
     foreach ($valuesRaw as $v) {
         $values[] = (float) $v;
     }
 
-
     $total = array_sum($values);
     if ($total <= 0) {
-           return [
-        'gradient' => 'conic-gradient(#e9ecef 0% 100%)',
-        'legend' => [],
-        'total' => 0.0,
-    ];
+        return [
+            'gradient' => 'conic-gradient(#e9ecef 0% 100%)',
+            'legend' => [],
+            'total' => 0.0,
+        ];
     }
-
     $colors = [
-         '#EEB422', 
-        '#4e79a7', 
-        '#59a14f', 
-        '#b07aa1', 
-        '#76b7b2', 
-        '#e15759', 
-        '#2f4b7c', 
+        '#EEB422',
+        '#4e79a7',
+        '#59a14f',
+        '#b07aa1',
+        '#76b7b2',
+        '#e15759',
+        '#2f4b7c',
     ];
 
     $gradient = 'conic-gradient(#e9ecef 0% 100%)';
@@ -109,7 +103,6 @@ function buildPieChartData(array $statsPie): array
             if ($value <= 0) {
                 continue;
             }
-
             $percent = ($value / $total) * 100.0;
             $start = $current;
             $end = $current + $percent;

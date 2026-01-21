@@ -1,19 +1,16 @@
 <?php
-    require_once __DIR__ . '/../config/db_config.php';
-    require_once HELPERS_PATH . '/url.php';
-    require_once HELPERS_PATH . '/users.php';
-    require_once HELPERS_PATH . '/functions.php';
-    
-    $pageName = 'Benutzerverwaltung';
+require_once __DIR__ . '/../config/db_config.php';
+require_once HELPERS_PATH . '/url.php';
+require_once HELPERS_PATH . '/users.php';
+require_once HELPERS_PATH . '/functions.php';
 
+$pageName = 'Benutzerverwaltung';
 
+// Require user role 'admin'
+require_admin();
 
-    // Require user role 'admin'
-    require_admin();
-
-    // Fetch users
-    $users = getAllUsers($pdo);
-
+// Fetch users
+$users = getAllUsers($pdo);
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +29,6 @@
 <body class="bg-light">
     <div class="container-fluid">
         <div class="row" style="min-height: 100vh">
-
             <!-- Sidebar -->
             <?php include INCLUDES_PATH . '/sidebar_admin.php'; ?>
 
@@ -45,10 +41,8 @@
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <h2>Benutzerverwaltung</h2>
                 </header>
-
                 <!-- Profilinhalt -->
                 <div class="container">
-                   
                     <div class="row">
                         <div class="col">
                             <div class="card shadow-sm my-4">
@@ -62,15 +56,11 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-            </div><!-- /col-10 -->
-        </div><!-- /row -->
-    </div><!-- /container-fluid -->
-
+            </div>
+        </div>
+    </div>
     <?php include INCLUDES_PATH . '/footer.php'; ?>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

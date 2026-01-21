@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Leitet den Benutzer sofort auf die Profilseite weiter und beendet das Skript.
  */

@@ -5,7 +5,6 @@ require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/validator.php';
 require_once HELPERS_PATH . '/users.php';
 
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . page_url('startseite'));
     exit;
@@ -50,7 +49,7 @@ if ($userId === null) {
 
 $userData_db = getUserDataByUserID($userId, $pdo);
 
-if (!isset($userData_db['password']) || !password_verify((string)$clean['password'], (string)$userData_db['password'])) {
+if (!isset($userData_db['password']) || !password_verify((string) $clean['password'], (string) $userData_db['password'])) {
     $_SESSION['login_errors'] = ['password' => 'Ungültiges Passwort.'];
     header('Location: ' . page_url('login'));
     exit;
@@ -61,7 +60,6 @@ if (($userData_db['status'] ?? '') !== 'active') {
     header('Location: ' . page_url('login'));
     exit;
 }
-
 
 session_regenerate_id(true);
 

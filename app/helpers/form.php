@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Prüft on Formularfeld einen Validierungsfehler hat
  */

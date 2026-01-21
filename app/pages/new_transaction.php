@@ -80,12 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 <body class="bg-light">
     <div class="container-fluid">
         <div class="row min-vh-100">
-
             <?php include INCLUDES_PATH . '/sidebar.php'; ?>
-
             <div class="col-12 col-lg-10 p-0">
                 <?php include INCLUDES_PATH . '/header.php'; ?>
-
                 <!-- Page Header -->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
@@ -96,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary" style="height: 38px;">Zurück</a>
                     </div>
                 </header>
-
                 <main>
                     <div class="container py-4">
                         <div class="row justify-content-center">
@@ -114,7 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     </div>
                 </main>
             </div>
-
         </div>
     </div>
     <?php include INCLUDES_PATH . '/footer.php'; ?>

@@ -6,14 +6,9 @@ require_once HELPERS_PATH . '/users.php';
 require_once HELPERS_PATH . '/transactions.php';
 
 $pageName = "Dashboard";
-
-
-
-// Require user role 'admin'
 require_admin();
 
 $userData = getLoggedUserData();
-
 // Fetch user statistics
 $userCount = getActiveUserCount($pdo);
 $inactiveUserCount = getInActiveUserCount($pdo);
@@ -37,30 +32,25 @@ $transactionCount = getTransactionCount($pdo);
 
 <body class="bg-light">
     <div class="container-fluid">
-
-      
         <div class="row" style="min-height: 100vh">
-
             <!-- Sidebar -->
             <?php include INCLUDES_PATH . '/sidebar_admin.php'; ?>
-   
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
- <?php include INCLUDES_PATH . '/header.php'; ?>
+                <?php include INCLUDES_PATH . '/header.php'; ?>
 
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
                         <div>
                             <h2>Übersicht</h2>
-                            <p class="text-muted mb-0">Willkomen zurück, <?php echo ("{$userData['first_name']} {$userData['last_name']}"); ?></p>
+                            <p class="text-muted mb-0">Willkomen zurück,
+                                <?php echo ("{$userData['first_name']} {$userData['last_name']}"); ?>
+                            </p>
                         </div>
                     </div>
                 </header>
-
-                <!-- Profilinhalt -->
                 <div class="container py-4">
                     <div class="row g-3 mb-3">
-
                         <div class="col-12 col-md-4">
                             <div class="card shadow-sm rounded-3">
                                 <div class="card-body">
@@ -91,7 +81,6 @@ $transactionCount = getTransactionCount($pdo);
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-12 col-md-4">
                             <div class="card shadow-sm rounded-3">
                                 <div class="card-body">
@@ -107,21 +96,12 @@ $transactionCount = getTransactionCount($pdo);
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    </div><!-- /col-10 -->
-    </div><!-- /row -->
-    </div><!-- /container-fluid -->
-
     <?php include INCLUDES_PATH . '/footer.php'; ?>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

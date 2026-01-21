@@ -3,18 +3,15 @@
 require_once __DIR__ . '/../config/paths.php';
 require_once CONFIG_PATH . '/db_config.php';
 
-
 function createUser($userData, $pdo)
 {
     // Hash password
     $userData["password"] = password_hash($userData["password"], PASSWORD_BCRYPT);
-
     // Prepare SQL statement
     $statement = $pdo->prepare(
         "INSERT INTO users (first_name, last_name, email, password, gebdatum, geschlecht, role, status)
         VALUES (:first_name, :last_name, :email, :password, :gebdatum, :geschlecht, 'user', 'active')"
     );
-
     // Bind values
     $statement->bindValue(":first_name", $userData["first_name"]);
     $statement->bindValue(":last_name", $userData["last_name"]);
@@ -22,13 +19,11 @@ function createUser($userData, $pdo)
     $statement->bindValue(":password", $userData["password"]);
     $statement->bindValue(":gebdatum", $userData["gebdatum"]);
     $statement->bindValue(":geschlecht", $userData["geschlecht"]);
-
     // Execute statement
     $success = $statement->execute();
 
     return $success;
 }
-
 function getUserIDByEmail($email, $pdo)
 {
     // Prepare SQL statement
@@ -42,7 +37,6 @@ function getUserIDByEmail($email, $pdo)
 
     // Fetch database entries
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
     return $result;
 }
 
@@ -69,7 +63,6 @@ function getPasswordByEmail($email, $pdo)
     $statement = $pdo->prepare(
         "SELECT password FROM users WHERE email = :email"
     );
-
     // Bind values
     $statement->bindValue(":email", $email);
     $statement->execute();
@@ -99,7 +92,6 @@ function getUserDataByUserID($user_id, $pdo)
     $statement = $pdo->prepare(
         "SELECT * FROM users WHERE user_id = :user_id"
     );
-
     // Bind values
     $statement->bindValue(":user_id", $user_id, PDO::PARAM_INT);
     $statement->execute();
@@ -128,7 +120,6 @@ function getAllUsers($pdo)
 
 function updateUser($userData, $pdo)
 {
-
     // Prepare SQL statement
     $statement = $pdo->prepare(
         "UPDATE users 
@@ -137,7 +128,6 @@ function updateUser($userData, $pdo)
                 status = :status
             WHERE user_id = :user_id"
     );
-
     // Bind values
     $statement->bindValue(":user_id", $userData["user_id"], PDO::PARAM_INT);
     $statement->bindValue(":first_name", $userData["first_name"]);

@@ -6,7 +6,8 @@
  *  -> /KostenKlar/public
  * @return string Basis-URL ohne abschließenden Slash
  */
-function base_url(): string{
+function base_url(): string
+{
     return BASE_URL;
 
 }
@@ -26,7 +27,7 @@ function route(string $page, array $params = []): string
 }
 function action_url(string $action): string
 {
-    
+
     return base_url() . '/app/actions/' . ltrim($action, '/');
 }
 

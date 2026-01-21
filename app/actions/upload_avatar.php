@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/../config/paths.php';
-require_once  CONFIG_PATH . '/db_config.php';
+require_once CONFIG_PATH . '/db_config.php';
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/flash.php';
+
 
 /**
  * Liest die Benutzer-ID des aktuell eingeloggten Users aus der Session und gibt sie als int zurück.
@@ -14,9 +15,8 @@ function get_logged_in_user_id(): ?int
     if ($userId === null) {
         return null;
     }
-    return (int)$userId;
+    return (int) $userId;
 }
-
 /**
  * Validiert den Avatar-Upload und gibt bei Erfolg die Dateiendung (ext) zurueck.
  * Bei Fehlern wird direkt mit Flash-Message zur Profilseite redirected.
@@ -36,11 +36,11 @@ function validate_avatar_upload_or_redirect(string $tmpPath): string
 
     // MIME-Type serverseitig prüfen
     $finfo = new finfo(FILEINFO_MIME_TYPE);
-    $mime  = $finfo->file($tmpPath);
+    $mime = $finfo->file($tmpPath);
 
     $allowed = [
         'image/jpeg' => 'jpg',
-        'image/png'  => 'png',
+        'image/png' => 'png',
         'image/webp' => 'webp',
     ];
 
@@ -59,8 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect_profil();
 }
 
-
-
 if (
     !isset($_FILES['avatar']) ||
     $_FILES['avatar']['error'] !== UPLOAD_ERR_OK
@@ -70,17 +68,14 @@ if (
 
 $tmp = $_FILES['avatar']['tmp_name'];
 
-
 if (!is_uploaded_file($tmp)) {
     redirect_profil();
 }
-
 
 // ===== Validieren =====
 $ext = validate_avatar_upload_or_redirect($tmp);
 
 /*Sicherer Dateiname*/
-
 $userId = get_logged_in_user_id();
 if ($userId === null) {
     header('Location: ' . page_url('login'));
@@ -109,7 +104,6 @@ if (!isset($pdo)) {
     flash_error_and_redirect('Datenbankverbindung fehlt.');
 }
 
-
 try {
     $stmt = $pdo->prepare("
         UPDATE users
@@ -119,9 +113,8 @@ try {
 
     $stmt->execute([
         ':path' => $publicPath,
-        ':user_id'   => $userId,
+        ':user_id' => $userId,
     ]);
-
 
     $changed = $stmt->rowCount();
 

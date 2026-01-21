@@ -13,7 +13,6 @@ function normalizeAmount(string $value): string
     // Alles außer Zahlen, Komma, Punkt, Minus entfernen
     $amount = preg_replace('/[^0-9,.\-]/', '', $amount);
 
-    
     if (strpos($amount, ',') !== false) {
         $amount = str_replace('.', '', $amount);
         $amount = str_replace(',', '.', $amount);
@@ -33,7 +32,6 @@ function getTransactionsByUserIDAndMonth($user_id, $year, $month, $pdo)
                 AND MONTH(transaction_date) = :month
             ORDER BY transaction_date DESC"
     );
-
     // Bind values
     $statement->bindValue(":user_id", $user_id, PDO::PARAM_INT);
     $statement->bindValue(":year", $year, PDO::PARAM_INT);
@@ -56,7 +54,6 @@ function getSumByUserIDAndMonth($user_id, $year, $month, $transaction_type, $pdo
                 AND YEAR(transaction_date) = :year 
                 AND MONTH(transaction_date) = :month"
     );
-
     // Bind values
     $statement->bindValue(":user_id", $user_id, PDO::PARAM_INT);
     $statement->bindValue(":year", $year, PDO::PARAM_INT);
@@ -78,7 +75,6 @@ function getTransactionByID($transaction_id, $pdo)
             LEFT JOIN categories c ON c.category_id = t.transaction_category_id
             WHERE transaction_id = :transaction_id"
     );
-
     // Bind values
     $statement->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
     $statement->execute();
@@ -103,12 +99,11 @@ function getTransactionCategories($pdo)
     return $results;
 }
 
-
 function createTransaction($transactionData, $user_id, $pdo)
 {
-if (isset($transactionData['transaction_amount'])) {
-    $transactionData['transaction_amount'] = normalizeAmount($transactionData['transaction_amount']);
-}
+    if (isset($transactionData['transaction_amount'])) {
+        $transactionData['transaction_amount'] = normalizeAmount($transactionData['transaction_amount']);
+    }
 
     // Prepare SQL statement
     $statement = $pdo->prepare(
@@ -137,7 +132,6 @@ function deleteTransaction($transaction_id, $pdo)
     $statement = $pdo->prepare(
         "DELETE FROM transactions WHERE transaction_id = :transaction_id"
     );
-
     // Bind values
     $statement->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
 
@@ -149,11 +143,9 @@ function deleteTransaction($transaction_id, $pdo)
 
 function updateTransaction($transactionData, $pdo)
 {
-if (isset($transactionData['transaction_amount'])) {
-    $transactionData['transaction_amount'] = normalizeAmount($transactionData['transaction_amount']);
-}
-
-
+    if (isset($transactionData['transaction_amount'])) {
+        $transactionData['transaction_amount'] = normalizeAmount($transactionData['transaction_amount']);
+    }
     // Prepare SQL statement
     $statement = $pdo->prepare(
         "UPDATE transactions 
@@ -165,7 +157,6 @@ if (isset($transactionData['transaction_amount'])) {
                 transaction_type = :transaction_type
             WHERE transaction_id = :transaction_id"
     );
-
     // Bind values
     $statement->bindValue(":transaction_id", $transactionData["transaction_id"], PDO::PARAM_INT);
     $statement->bindValue(":transaction_date", $transactionData["transaction_date"]);
@@ -241,7 +232,6 @@ function getMonthlySumByUserIdAndYear($user_id, int $year, $pdo)
     }
     return $result;
 }
-
 
 function getPieChartData(int $selectedYear, int $user_id, $pdo)
 {

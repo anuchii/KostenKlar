@@ -1,13 +1,8 @@
 <?php
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 require_once HELPERS_PATH . '/url.php';
 require_once CONFIG_PATH . '/db_config.php';
 require_once HELPERS_PATH . '/transactions.php';
 require_once HELPERS_PATH . '/statistik_helper.php';
-
 
 if (!isset($userData) || !is_array($userData)) {
     $userData = $_SESSION['user_data'] ?? [];
@@ -19,18 +14,16 @@ $selectedYear = isset($_GET['year'])
     ? (int) $_GET['year']
     : (int) date('Y');
 
-
 $stats = [];
 $statsPie = [];
 try {
-    $stats = getMonthlySumByUserIdAndYear((int)$userId, $selectedYear, $pdo);
-    $statsPie = getPieChartData($selectedYear, (int)$userId, $pdo);
+    $stats = getMonthlySumByUserIdAndYear((int) $userId, $selectedYear, $pdo);
+    $statsPie = getPieChartData($selectedYear, (int) $userId, $pdo);
 } catch (Throwable $e) {
     $stats = [];
     $statsPie = [];
     $dbError = 'Statistik konnte nicht geladen werden.';
 }
-
 
 $monthNames = [
     1 => 'Januar',
@@ -47,7 +40,6 @@ $monthNames = [
     12 => 'Dezember',
 ];
 
-
 $chartData = buildChartData($stats, $monthNames);
 $pieData = buildPieChartData($statsPie);
 
@@ -63,10 +55,8 @@ $pieLegendItems = $pieData['legend'] ?? [];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meine Statistiken</title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="<?= asset_url('/css/statistik.css') ?>">
     <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
@@ -78,7 +68,6 @@ $pieLegendItems = $pieData['legend'] ?? [];
             <?php include INCLUDES_PATH . '/sidebar.php'; ?>
             <div class="col-12 col-lg-10 p-0">
                 <?php include INCLUDES_PATH . '/header.php'; ?>
-
                 <!-- Statistik Header -->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
@@ -96,18 +85,19 @@ $pieLegendItems = $pieData['legend'] ?? [];
                                     <?php
                                     $currentYear = (int) date('Y');
                                     for ($y = $currentYear; $y >= $currentYear - 5; $y--):
-                                    ?>
+                                        ?>
                                         <option value="<?= $y ?>" <?= $y === $selectedYear ? 'selected' : '' ?>>
                                             <?= $y ?>
                                         </option>
                                     <?php endfor; ?>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary text-nowrap statistik-year-btn">Anzeigen</button>
+                            <button type="submit"
+                                class="btn btn-primary text-nowrap statistik-year-btn">Anzeigen</button>
                         </form>
                     </div>
                 </header>
-
+                
                 <div class="container py-4">
                     <?php if (!empty($dbError)): ?>
                         <div class="alert alert-warning mb-3" role="alert">
@@ -171,11 +161,10 @@ $pieLegendItems = $pieData['legend'] ?? [];
                     </div>
                 </div>
             </div>
-
-        </div> <!--row min-vh-100 -->
+        </div>
         <?php include INCLUDES_PATH . '/footer.php'; ?>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    </div> <!--container-fluig -->
+    </div>
 </body>
 
 </html>

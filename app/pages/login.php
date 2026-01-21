@@ -20,7 +20,6 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-  <!--für icons-->
   <link rel="stylesheet" href="<?= asset_url('css/auth.css') ?>">
   <link rel="icon" type="image/png" href="<?= asset_url('images/logo_schnell3.png') ?>">
 </head>
@@ -33,47 +32,31 @@ unset($_SESSION['login_errors'], $_SESSION['login_old']);
         <div class="card-body p-4 p-md-5">
           <h1 class="h3 fw-bold mb-1">Willkommen zurück</h1>
           <p class="text-muted mb-4">Melde dich bei KostenKlar an</p>
-
           <form method="post" action="<?= page_url('login_action') ?>" novalidate>
-
             <div class="input-group mb-3">
               <span class="input-group-text bg-light text-secondary" style="width: 50px">
                 <i class="bi bi-person-fill" aria-hidden="true"></i>
               </span>
-              <label for="emailAddress" class="visually-hidden">E-Mail</label>
-              <input
-                type="email"
-                id="emailAddress"
-                name="email"
-                class="form-control <?= field_invalid_class($validationErrors, 'email') ?>"
-                placeholder="E-Mail-Adresse"
-                value="<?= htmlspecialchars($old['email'] ?? '') ?>"
-                required
-                autofocus
-                autocomplete="email">
 
+              <label for="emailAddress" class="visually-hidden">E-Mail</label>
+              <input type="email" id="emailAddress" name="email"
+                class="form-control <?= field_invalid_class($validationErrors, 'email') ?>" placeholder="E-Mail-Adresse"
+                value="<?= htmlspecialchars($old['email'] ?? '') ?>" required autofocus autocomplete="email">
               <?= field_error($validationErrors, 'email') ?>
             </div>
-
             <div class="input-group mb-3">
               <span class="input-group-text bg-light text-secondary icon-fixed" style="width:50px">
                 <i class="bi bi-key-fill" aria-hidden="true"></i>
               </span>
+              
               <label for="password" class="visually-hidden">Passwort</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Passwort"
-                class="form-control <?= field_invalid_class($validationErrors, 'password') ?>"
-                required
+              <input type="password" id="password" name="password" placeholder="Passwort"
+                class="form-control <?= field_invalid_class($validationErrors, 'password') ?>" required
                 autocomplete="current-password">
               <?= field_error($validationErrors, 'password') ?>
             </div>
-
             <button type="submit" class="btn btn-primary w-100">Anmelden</button>
           </form>
-
           <div class="text-center text-muted mt-3">
             Noch kein Account? <a href="<?= page_url('register') ?>" class="text-decoration-none">Registrierung</a>
           </div>

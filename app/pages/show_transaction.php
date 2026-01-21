@@ -4,11 +4,7 @@ require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/functions.php';
 require_once HELPERS_PATH . '/transactions.php';
 
-
 $pageName = "Buchungsdetails";
-
-
-
 // Require login
 $userData = getLoggedUserData();
 
@@ -16,10 +12,6 @@ if (!$userData) {
     header('Location: ' . page_url('login'));
     exit();
 }
-
-// TODO:
-// Require status = active
-// Require role = user
 
 $transaction_id = isset($_GET['transaction-id'])
     ? (int) $_GET['transaction-id']
@@ -33,11 +25,9 @@ if ($transaction_id) {
 // Check if transaction exists and belongs to logged in user
 if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
     // Redirect to dashboard if transaction is invalid
-    // TODO: Redirect to dashboard and flash error message
     header('Location: ' . page_url('user_dashboard'));
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -56,15 +46,11 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
 <body class="bg-light">
     <div class="container-fluid">
         <div class="row" style="min-height: 100vh">
-
             <!-- Sidebar -->
             <?php include INCLUDES_PATH . '/sidebar.php'; ?>
-
             <!--HauptInhalt -->
             <div class="col-12 col-lg-10 p-0">
-
                 <?php include INCLUDES_PATH . '/header.php'; ?>
-
                 <!-- Header -->
                 <header class="py-4 px-3 px-lg-4 border-bottom bg-white">
                     <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3">
@@ -75,8 +61,6 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
                         <a href="<?= page_url('user_dashboard') ?>" class="btn btn-outline-secondary" style="height: 38px;">Zurück</a>
                     </div>
                 </header>
-
-                <!-- Profilinhalt -->
                 <div class="container py-4">
                     <div class="row">
                         <div class="col">
@@ -129,7 +113,6 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
                                             </tr>
                                         </tbody>
                                     </table>
-
                                     <div class="d-flex gap-2 p-3">
                                         <a href="<?= route('edit_transaction', ['transaction-id' => $transaction['transaction_id']]) ?>"
                                             class="btn btn-primary">
@@ -148,13 +131,11 @@ if (!$transaction || $transaction["user_id"] != $userData["user_id"]) {
                             </div>
                         </div>
                     </div>
-                </div> <!-- /container -->
-            </div><!-- /col-10 -->
-        </div><!-- /row -->
-    </div><!-- /container-fluid -->
-
+                </div> 
+            </div>
+        </div>
+    </div>
     <?php include INCLUDES_PATH . '/footer.php'; ?>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

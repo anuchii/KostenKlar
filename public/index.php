@@ -19,7 +19,7 @@ $routes = [
     'register_action' => ACTIONS_PATH . '/register_action.php',
     'login_action' => ACTIONS_PATH . '/login_action.php',
     'upload_avatar' => ACTIONS_PATH . '/upload_avatar.php',
-    'startseite' => PAGES_PATH .  '/startseite.php',
+    'startseite' => PAGES_PATH . '/startseite.php',
     'show_transaction' => PAGES_PATH . '/show_transaction.php',
     'delete_transaction' => ACTIONS_PATH . '/delete_transaction.php',
     'edit_transaction' => PAGES_PATH . '/edit_transaction.php',
@@ -29,12 +29,11 @@ $routes = [
     'edit_user' => PAGES_PATH . '/edit_user.php',
     'delete_user' => ACTIONS_PATH . '/delete_user.php',
     'deactivate_user' => ACTIONS_PATH . '/deactivate_user.php',
-    'datenschutz' => PAGES_PATH . '/datenschutz.html', 
+    'datenschutz' => PAGES_PATH . '/datenschutz.html',
     'impressum' => PAGES_PATH . '/impressum.html'
 ];
 if (!isset($routes[$page])) {
     http_response_code(404);
     exit('404 - Seite nicht gefunden');
 }
-
 require $routes[$page];

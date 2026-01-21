@@ -1,14 +1,9 @@
 <?php
-
 require_once __DIR__ . '/../config/paths.php';
 require_once CONFIG_PATH . '/db_config.php';
 require_once HELPERS_PATH . '/url.php';
 require_once HELPERS_PATH . '/functions.php';
 require_once HELPERS_PATH . '/transactions.php';
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
 // Require login
 $userData = getLoggedUserData();
@@ -19,8 +14,8 @@ if (!$userData) {
 
 // transaction-id kann aus GET oder POST kommen
 $transaction_id = isset($_POST['transaction-id'])
-    ? (int)$_POST['transaction-id']
-    : (isset($_GET['transaction-id']) ? (int)$_GET['transaction-id'] : null);
+    ? (int) $_POST['transaction-id']
+    : (isset($_GET['transaction-id']) ? (int) $_GET['transaction-id'] : null);
 
 if (!$transaction_id) {
     header('Location: ' . page_url('user_dashboard'));

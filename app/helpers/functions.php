@@ -1,10 +1,11 @@
 <?php
-
-function getLoggedUserData() {
+function getLoggedUserData()
+{
     return $_SESSION["user_data"] ?? null;
 }
 
-function require_login() {
+function require_login()
+{
     $currUser = getLoggedUserData();
 
     if (!$currUser) {
@@ -13,9 +14,9 @@ function require_login() {
     }
 }
 
-function require_admin() {
+function require_admin()
+{
     require_login();
-
     $currUser = getLoggedUserData();
 
     if ($currUser['role'] !== 'admin') {
@@ -24,20 +25,21 @@ function require_admin() {
     }
 }
 
-function require_user() {
+function require_user()
+{
     require_login();
-
     if ($currUser['role'] !== 'user') {
         http_response_code(403);
         exit('403 - Zugriff verweigert');
     }
 }
 
-function require_role($role) {
+function require_role($role)
+{
     require_login();
-
     if ($currUser['role'] !== $role) {
         http_response_code(403);
         exit('403 - Zugriff verweigert');
     }
 }
+
