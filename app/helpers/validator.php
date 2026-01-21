@@ -30,7 +30,7 @@ function validate(array $data, array $rules, array $messages = []): array
                 'max' => (is_string($value) && mb_strlen($value) > (int) $param),
                 'in' => !in_array($value, explode(',', (string) $param), true),
                 'date' => ($value !== null && $value !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) $value)),
-                'money' => (floatval($value) <= 0 || (abs(floatval($value) * 100 - round(floatval($value) * 100)) > 1e-10)),
+                'money' => (preg_match('/^\d+(\,\d{1,2})?$/', $value) !== 1),
                 default => false,
             };
 

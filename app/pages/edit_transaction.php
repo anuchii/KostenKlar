@@ -57,13 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'transaction_type' => ['required'],
     ];
 
-    $raw = $_POST;
-
-    $raw['transaction_amount'] = str_replace(',', '.', $raw['transaction_amount']);
-
-    [$clean, $errors] = validate($raw, $rules);
-    
-    $clean['transaction_amount'] = str_replace('.', ',', $clean['transaction_amount']);
+    [$clean, $errors] = validate($_POST, $rules);
 
     if (!empty($errors)) {
         // Aktuelle Eingaben in Session speichern
@@ -74,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    $clean['transaction_amount'] = str_replace(',', '.', $clean['transaction_amount']);
+    $clean['transaction_amount'] = normalizeAmount($clean['transaction_amount']);
     
     // Buchung updaten
     updateTransaction($clean, $pdo);
