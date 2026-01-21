@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Validiert Eingabedaten anhand definierter Regeln und liefert bereinigte Werte sowie Validierungs-Errors zurück.
+ * @param array $data Die zu validierenden Daten (z.B. $_POST)
+ * @param array $rules Ein Array mit Validierungsregeln, z.B. ['email' => 'required|email']
+ * @param mixed $messages Optionale nebutzerdefinrte Errors im format 'feld.regel' 
+ * @return array Ein Array mit Fehlernahcrichten, falls Validierungen fehlschlagen, ansonsten leer und die bereignite Daten.
+ */
 function validate(array $data, array $rules, array $messages = []): array
 {
     $errors = [];
@@ -30,14 +36,19 @@ function validate(array $data, array $rules, array $messages = []): array
 
             if ($failed) {
                 $errors[$field] = $messages["$field.$name"] ?? default_message($field, $name, $param);
-                break; // pro Feld: nur erste Fehlermeldung (einfacher fürs UI)
+                break; // pro Feld: nur erste Fehlermeldung 
             }
         }
     }
 
     return [$clean, $errors];
 }
-
+/**
+ * Zerlegt eine Regel wie "min:3" in Regelname und optionalen Parameter.
+ *
+ * @param string $rule Regel als String (z. B. "max:255").
+ * @return array{0: string, 1: string|null} [Regelname, Parameter|null].
+ */
 function parse_rule(string $rule): array
 {
     $parts = explode(':', $rule, 2);
@@ -45,7 +56,14 @@ function parse_rule(string $rule): array
     $param = $parts[1] ?? null;
     return [$name, $param];
 }
-
+/**
+ * Liefert die Standard-Fehlermeldung für eine Validierungsregel.
+ *
+ * @param string $field Feldname.
+ * @param string $rule Regelname.
+ * @param mixed $param Optionaler Regelparameter.
+ * @return string Fehlermeldung.
+ */
 function default_message(string $field, string $rule, $param): string
 {
     return match ($rule) {
